@@ -141,17 +141,7 @@
             "bindingGroup": "Controller",
             "devices": [
                 {
-                    "devicePath": "<SwitchProControllerHID>",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<XInputController>",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<DualShockGamepad>",
+                    "devicePath": "<Gamepad>",
                     "isOptional": false,
                     "isOR": false
                 }
