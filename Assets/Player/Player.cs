@@ -5,12 +5,20 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private Transform spriteTransform;
+    
+    // melee swing animation
+    [SerializeField] private GameObject swingPrefab;
+    [SerializeField] private float swingLifetime;
+    [SerializeField] private float swingAngleOffset;
+    [SerializeField] private float attackCooldown = 0.4f;
+    private float _nextAttackTime;
 
     private Rigidbody2D _rb;
     private PlayerInput _playerInput;
     private InputActionMap _combatActions;
 
     private InputAction _moveAction;
+    private InputAction _attackAction;
     private InputAction _aimAction;
     private Vector2 facingDir = Vector2.right;
 
@@ -24,15 +32,29 @@ public class Player : MonoBehaviour
 
         _moveAction = _combatActions.FindAction("Move");
         _aimAction = _combatActions.FindAction("Aim");
+        _attackAction = _combatActions.FindAction("Attack");
     }
 
-    private void Attack(InputAction.CallbackContext ctx)
+    private void Attack()
     {
+        if (Time.time < _nextAttackTime) return;
 
+        _nextAttackTime = Time.time + attackCooldown;
+        
+        Quaternion rotation = spriteTransform.rotation * Quaternion.Euler(0f, 0f, swingAngleOffset);
+        GameObject swing =  Instantiate(swingPrefab, transform.position, rotation, transform);
+        Destroy(swing, swingLifetime);
     }
 
     private void Update()
     {
+        if (_attackAction.WasPressedThisFrame())
+        {
+            Attack();
+        }
+        
+        /* Aiming */
+        
         Vector2 aim = _aimAction.ReadValue<Vector2>();
 
         // note: for now im just putting everything in a single file since it's still quite small but refactor later if it gets too large
