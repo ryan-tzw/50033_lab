@@ -6,15 +6,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;
     
     private Rigidbody2D _rb;
-    private PlayerInputActions _actions;
+    private PlayerInput _playerInput;
+    private InputActionMap _combatActions;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        
-        _actions = new PlayerInputActions();
-        _actions.Combat.Enable();
-        _actions.Combat.Attack.performed += Attack;
+        _playerInput = GetComponent<PlayerInput>();
+        _combatActions = _playerInput.actions.FindActionMap("Combat");
     }
 
     private void Attack(InputAction.CallbackContext ctx)
@@ -23,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 inputVector = _actions.Combat.Move.ReadValue<Vector2>();
+        Vector2 inputVector = _combatActions["Move"].ReadValue<Vector2>();
         _rb.linearVelocity = inputVector.normalized * moveSpeed;
     }
     
