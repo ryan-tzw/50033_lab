@@ -1,17 +1,22 @@
-using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    // health
     [SerializeField] private int maxHealth = 3;
     private int _currentHealth;
 
-    [SerializeField] private float hitstunDuration = 0.15f;
-    [SerializeField] private float recoilSpeed = 5f;
+    // hitstun/knockback
+    [SerializeField] private float hitstunDuration = 0.5f;
+    [SerializeField] private float recoilSpeed = 25f;
+    [SerializeField] private float recoilFalloffPower = 3f;
+    private float _hitstunStartTime;
+    private float _hitstunEndTime;
+    private Vector2 _recoilDirection;
 
     private EnemyState _state = EnemyState.Alive;
-    private float _hitstunEndTime;
     private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
 
     private enum EnemyState
     {
@@ -21,20 +26,24 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _currentHealth = maxHealth;
     }
     
     public void TakeDamage(int damage, Vector2 attackerPosition)
     {
-        _state = EnemyState.Hitstunned;
-        _hitstunEndTime = Time.time + hitstunDuration;
-
         // todo: die when hp <= 0
         _currentHealth -= damage;
         
-        Vector2 recoilDir = (_rb.position - attackerPosition).normalized;
-        _rb.linearVelocity = recoilDir * recoilSpeed;
+        // hitstun
+        _state = EnemyState.Hitstunned;
+        _hitstunStartTime = Time.time;
+        _hitstunEndTime = Time.time + hitstunDuration;
+        _spriteRenderer.color = Color.white;
+        
+        _recoilDirection = (_rb.position - attackerPosition).normalized;
+        _rb.linearVelocity = _recoilDirection * recoilSpeed;
     }
 
     private void FixedUpdate()
@@ -43,11 +52,17 @@ public class Enemy : MonoBehaviour
         {
             case EnemyState.Hitstunned:
             {
-                if (Time.time > _hitstunEndTime)
+                float progress = Mathf.InverseLerp(_hitstunStartTime,  _hitstunEndTime, Time.time);
+                float speedMultiplier = Mathf.Pow((1 - progress), recoilFalloffPower);
+
+                _rb.linearVelocity = recoilSpeed * speedMultiplier * _recoilDirection;
+                if (progress >= 1f)
                 {
-                    _state = EnemyState.Alive;
                     _rb.linearVelocity = Vector2.zero;
+                    _state = EnemyState.Alive;
+                    _spriteRenderer.color = new Color32(243, 86, 86, 255);
                 }
+                
                 break;
             }
         }
