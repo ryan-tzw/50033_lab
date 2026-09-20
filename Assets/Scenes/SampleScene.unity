@@ -348,6 +348,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7554915548569731633, guid: ba7d6e0632d1e68fcaae644caa476326, type: 3}
+      propertyPath: hitstunDuration
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 440751509059337187, guid: ba7d6e0632d1e68fcaae644caa476326, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.81
@@ -433,6 +437,7 @@ MonoBehaviour:
   hitstunDuration: 0.15
   recoilSpeed: 5
   recoilFalloffPower: 3
+  hitstopDuration: 0.1
 --- !u!50 &1835222861
 Rigidbody2D:
   serializedVersion: 5

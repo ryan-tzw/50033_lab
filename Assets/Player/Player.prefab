@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3613246768855882792}
   - component: {fileID: 5073783264669400262}
   - component: {fileID: 6893246444757116983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ MonoBehaviour:
   spriteTransform: {fileID: 8873108596784905418}
   swingPrefab: {fileID: 2816230516997887671, guid: 4e046d7c2bc2575bea72283266775c90, type: 3}
   swingLifetime: 0.2
-  swingAngleOffset: 0
+  attackCooldown: 0.4
 --- !u!114 &6893246444757116983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 2767833193701900970}
   - component: {fileID: 6812439992098204273}
   - component: {fileID: 7410686267115101915}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

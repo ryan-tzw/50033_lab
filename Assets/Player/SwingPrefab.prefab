@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8614882905347300838}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SwingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1838131391944078477}
   - component: {fileID: 3342190646034690523}
   - component: {fileID: 1869383423753015472}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddc1e254135f3243906831382e49956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackHitbox
+  damage: 1
+  hitstopDuration: 0.1
 --- !u!1001 &6906531483996146912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135,6 +137,10 @@ PrefabInstance:
     - target: {fileID: -2253911629886400664, guid: fc2d9d1927fdecbbf8199e85122057f9, type: 3}
       propertyPath: m_Name
       value: SwingVisual
+      objectReference: {fileID: 0}
+    - target: {fileID: -2253911629886400664, guid: fc2d9d1927fdecbbf8199e85122057f9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: fc2d9d1927fdecbbf8199e85122057f9, type: 3}
       propertyPath: m_LocalPosition.x

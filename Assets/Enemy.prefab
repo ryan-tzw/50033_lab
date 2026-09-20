@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3817706181900754203}
   - component: {fileID: 4555911294177296498}
   - component: {fileID: -7554915548569731633}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,3 +183,4 @@ MonoBehaviour:
   hitstunDuration: 0.5
   recoilSpeed: 25
   recoilFalloffPower: 3
+  hitstopDuration: 0.1
