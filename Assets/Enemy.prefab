@@ -134,8 +134,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 3
-  hitstunDuration: 0.5
-  recoilSpeed: 15
+  dissolveDuration: 1
+  hitstunDuration: 0.25
+  recoilSpeed: 25
   recoilFalloffPower: 3
   hitstopDuration: 0.1
 --- !u!61 &4472803222021401695
