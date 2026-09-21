@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float hitstunDuration = 0.5f;
     [SerializeField] private float recoilSpeed = 25f;
     [SerializeField] private float recoilFalloffPower = 3f;
+    [SerializeField] private float collisionDamage = 1;
     private float _hitstunStartTime;
     private float _hitstunEndTime;
     private Vector2 _recoilDirection;
@@ -52,6 +53,15 @@ public class Enemy : MonoBehaviour
         // start with hitstop first
         _state = EnemyState.Hitstopped;
         _hitstopEndTime =  Time.time + hitstopDuration;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Player player = collision.GetComponentInParent<Player>();
+        if (player != null && collision == player.PlayerCollider)
+        {
+            player.TakeDamage(collisionDamage,_rb.position);
+        }
     }
 
     private void FixedUpdate()
