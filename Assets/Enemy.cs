@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 
     // hitstun/knockback
     [SerializeField] private float hitstunDuration = 0.5f;
-    [SerializeField] private float recoilSpeed = 25f;
+    [SerializeField] private float recoilSpeed = 15f;
     [SerializeField] private float recoilFalloffPower = 3f;
     private float _hitstunStartTime;
     private float _hitstunEndTime;
