@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
@@ -10,11 +11,28 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnMargin = 1f;
     
     private float _nextSpawnTime;
+    
+    private ObjectPool<Enemy> _pool;
 
     private void Awake()
     {
         spawnCamera ??= Camera.main;
         _nextSpawnTime = Time.time + spawnInterval;
+
+        _pool = new ObjectPool<Enemy>(
+                createFunc: () =>
+                {
+                    Enemy enemy = Instantiate(enemyPrefab);
+                    enemy.gameObject.SetActive(false);
+                    return enemy;
+                },
+                actionOnGet: null, // we dont activate here cuz we need to reset its state first by calling Spawn()
+                actionOnRelease: enemy => enemy.gameObject.SetActive(false),
+                actionOnDestroy: enemy => Destroy(enemy.gameObject),
+                collectionCheck: true,
+                defaultCapacity: 10,
+                maxSize: 100
+            );
     }
 
     // Update is called once per frame
@@ -45,10 +63,9 @@ public class EnemySpawner : MonoBehaviour
         }
 
         if (closestPlayer is null) return;
-        
-        // todo: probably should use an object pool instead
-        Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        enemy.SetTarget(closestPlayer);
+
+        Enemy enemy = _pool.Get();
+        enemy.Spawn(spawnPosition, closestPlayer, _pool);
         _nextSpawnTime = Time.time + spawnInterval;
     }
 

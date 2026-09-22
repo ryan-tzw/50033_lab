@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private Collider2D _collider;
+    
+    private IObjectPool<Enemy>  _pool;
 
     private enum EnemyState
     {
@@ -58,22 +60,30 @@ public class Enemy : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
-        _currentHealth = maxHealth;
         _collider = GetComponent<Collider2D>();
         
-        // copy the renderer's existing properties first 
         _materialProperties = new MaterialPropertyBlock();
         _spriteRenderer.GetPropertyBlock(_materialProperties);
-        
-        // modify the properties with our random values, then update it 
-        _materialProperties.SetFloat(DissolveAmountId, 0f);
-        _materialProperties.SetVector(NoiseOffsetId, new Vector4(Random.Range(0f, 100f), Random.Range(0f, 100f), 0f, 0f));
-        _spriteRenderer.SetPropertyBlock(_materialProperties);
     }
 
-    public void SetTarget(Player target)
+    public void Spawn(Vector2 position, Player target, IObjectPool<Enemy> pool)
     {
+        _pool = pool;
         _target = target;
+        _currentHealth = maxHealth;
+        _state = EnemyState.Alive;
+        _collider.enabled = true;
+        _spriteRenderer.flipX = false;
+        transform.position = position;
+        
+        _materialProperties.SetFloat(DissolveAmountId, 0f);
+        _materialProperties.SetFloat(FlashAmountId, 0f);
+        _materialProperties.SetVector(NoiseOffsetId, new Vector4(Random.Range(0f, 100f), Random.Range(0f, 100f), 0f, 0f));
+        _spriteRenderer.SetPropertyBlock(_materialProperties);
+        
+        gameObject.SetActive(true);
+        
+        _rb.linearVelocity = Vector2.zero;
     }
 
     public void TakeDamage(int damage, Vector2 attackerPosition)
@@ -107,7 +117,16 @@ public class Enemy : MonoBehaviour
                 if (progress >= 1f)
                 {
                     _state = EnemyState.Dead;
-                    gameObject.SetActive(false);
+                    
+                    // in case we put an enemy into the game manually (without the spawner) for testing or wtv
+                    if (_pool is null)
+                    {
+                        gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        _pool.Release(this);
+                    }
                 }
                 
                 break;
