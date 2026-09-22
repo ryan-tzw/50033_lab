@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject swingPrefab;
     [SerializeField] private float swingLifetime;
     [SerializeField] private float attackCooldown = 0.4f;
-    [SerializeField] private float healthPoints = 3;
+    [SerializeField] private int healthPoints = 3;
     [SerializeField] private float immunityDuration = 0.8f;
     private float _nextAttackTime;
 
@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private float _hitstunEndTime;
 
     private Rigidbody2D _rb;
+
+    private SpriteRenderer _spriteRenderer;
     
     // player inputs
     private PlayerInput _playerInput;
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _attackAction;
     private InputAction _aimAction;
+    private bool _immune;
     
     private Vector2 facingDir = Vector2.right;
     private Vector2 _moveDir;
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float recoilFalloffPower = 2f;
 
     public event System.Action OnDeath;
+    public event System.Action<int> OnHealthChanged;
 
 
 
@@ -63,6 +67,7 @@ public class Player : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _playerCollider = GetComponentInChildren<PolygonCollider2D>();
         _combatActions = _playerInput.actions.FindActionMap("Combat");
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         _moveAction = _combatActions.FindAction("Move");
         _aimAction = _combatActions.FindAction("Aim");
@@ -81,25 +86,36 @@ public class Player : MonoBehaviour
     }
 
     //public fn so that enemy can callback
-    public void TakeDamage(float damage, Vector2 enemyPosition)
+    public void TakeDamage(int damage, Vector2 enemyPosition)
     {
-        if(healthPoints > 1)
+        if (_immune)
         {
-            _state = PlayerState.Hitstopped;
+            return;
+        } else
+        {
             healthPoints -= damage;
-            Debug.Log("HP: " + healthPoints);
-            _staggerDirection = ((Vector2)_rb.transform.position - enemyPosition).normalized;
+            _spriteRenderer.color = Color.red;
             DamageImmunity(immunityDuration);
+            OnHealthChanged?.Invoke(healthPoints);
+            Debug.Log("HP: " + healthPoints);
+            if (healthPoints > 0)
+            {
+                _state = PlayerState.Hitstopped;
+                _staggerDirection = ((Vector2)_rb.transform.position - enemyPosition).normalized;
+
+            }
+            else
+            {
+                _state = PlayerState.Dead;
+            }
         }
-        else
-        {
-            _state = PlayerState.Dead;
-        }
+        
     }
 
     private void DamageImmunity(float duration)
     {
-        _playerCollider.enabled = false;
+        _immune = true;
+        //_playerCollider.enabled = false;
         _immunityEndTime = Time.time + duration;
     }
 
@@ -157,9 +173,12 @@ public class Player : MonoBehaviour
             spriteTransform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
         }
 
-        if (!_playerCollider.enabled && Time.time >= _immunityEndTime)
+        //if (!_playerCollider.enabled && Time.time >= _immunityEndTime)
+        if (_immune && Time.time >= _immunityEndTime)
         {
-            _playerCollider.enabled = true;
+            //_playerCollider.enabled = true;
+            _immune = false;
+            _spriteRenderer.color = Color.white;
         }
     }
 

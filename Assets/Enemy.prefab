@@ -133,11 +133,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e60dfe5e3183cf8a5ffd3e54fb3840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  moveSpeed: 2
   maxHealth: 3
   dissolveDuration: 1
   hitstunDuration: 0.25
   recoilSpeed: 25
   recoilFalloffPower: 3
+  collisionDamage: 1
   hitstopDuration: 0.1
 --- !u!61 &4472803222021401695
 BoxCollider2D:
@@ -169,7 +171,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
