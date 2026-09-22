@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     
     private ObjectPool<Enemy> _pool;
 
+    public event System.Action<Enemy> OnEnemySpawned;
+
     private void Awake()
     {
         spawnCamera ??= Camera.main;
@@ -24,6 +26,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     Enemy enemy = Instantiate(enemyPrefab);
                     enemy.gameObject.SetActive(false);
+                    OnEnemySpawned?.Invoke(enemy);
                     return enemy;
                 },
                 actionOnGet: null, // we dont activate here cuz we need to reset its state first by calling Spawn()
@@ -33,6 +36,8 @@ public class EnemySpawner : MonoBehaviour
                 defaultCapacity: 10,
                 maxSize: 100
             );
+
+        
     }
 
     // Update is called once per frame

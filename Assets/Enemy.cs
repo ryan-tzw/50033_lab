@@ -30,6 +30,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float hitstunDuration = 0.25f;
     [SerializeField] private float recoilSpeed = 25f;
     [SerializeField] private float recoilFalloffPower = 3f;
+    [SerializeField] private int collisionDamage = 1;
+    [SerializeField] private int points = 10;
+
+    public event System.Action<Enemy,int> OnDeath;
     private float _hitstunStartTime;
     private float _hitstunEndTime;
     private Vector2 _recoilDirection;
@@ -80,7 +84,7 @@ public class Enemy : MonoBehaviour
         _materialProperties.SetFloat(FlashAmountId, 0f);
         _materialProperties.SetVector(NoiseOffsetId, new Vector4(Random.Range(0f, 100f), Random.Range(0f, 100f), 0f, 0f));
         _spriteRenderer.SetPropertyBlock(_materialProperties);
-        
+
         gameObject.SetActive(true);
         
         _rb.linearVelocity = Vector2.zero;
@@ -102,6 +106,15 @@ public class Enemy : MonoBehaviour
         _hitstopEndTime =  Time.time + hitstopDuration;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Player player = collision.GetComponentInParent<Player>();
+        if (player != null && collision == player.PlayerCollider)
+        {
+            player.TakeDamage(collisionDamage,_rb.position);
+        }
+    }
+
     private void Update()
     {
         switch (_state)
@@ -117,6 +130,11 @@ public class Enemy : MonoBehaviour
                 if (progress >= 1f)
                 {
                     _state = EnemyState.Dead;
+
+                    if(OnDeath != null)
+                        {
+                            OnDeath.Invoke(this, points);
+                        }
                     
                     // in case we put an enemy into the game manually (without the spawner) for testing or wtv
                     if (_pool is null)

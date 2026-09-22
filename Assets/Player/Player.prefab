@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3613246768855882792}
   - component: {fileID: 5073783264669400262}
   - component: {fileID: 6893246444757116983}
+  - component: {fileID: 5379543593992129232}
   m_Layer: 10
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,9 +81,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 5
   spriteTransform: {fileID: 8873108596784905418}
+  _staggerSpeed: 15
+  hitstunDuration: 0.5
   swingPrefab: {fileID: 2816230516997887671, guid: 4e046d7c2bc2575bea72283266775c90, type: 3}
   swingLifetime: 0.2
   attackCooldown: 0.4
+  healthPoints: 3
+  immunityDuration: 1.5
+  recoilFalloffPower: 1.5
 --- !u!114 &6893246444757116983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,11 +122,30 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3e90dfa2-0a6b-4530-b29c-1feef5153a7a
     m_ActionName: 'Combat/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Gamepad/leftStick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ecde4c0c-a55b-456e-8bb5-4cd84b6f6a62
+    m_ActionName: 'Combat/Aim[/Mouse/position]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5379543593992129232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934883364395339323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f78fc8d01c4c344a8864dc2ab89c31b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthDisplay
+  maxHealth: 0
+  hearts:
+  - {fileID: 0}
 --- !u!1 &4579245948123527276
 GameObject:
   m_ObjectHideFlags: 0
