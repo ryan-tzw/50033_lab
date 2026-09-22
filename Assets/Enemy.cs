@@ -1,8 +1,13 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private float moveSpeed = 2f;
+    private Player _target;
+    
     // health
     [SerializeField] private int maxHealth = 3;
     private int _currentHealth;
@@ -66,6 +71,11 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.SetPropertyBlock(_materialProperties);
     }
 
+    public void SetTarget(Player target)
+    {
+        _target = target;
+    }
+
     public void TakeDamage(int damage, Vector2 attackerPosition)
     {
         if (_state is EnemyState.Dying or EnemyState.Dead) return;
@@ -110,6 +120,25 @@ public class Enemy : MonoBehaviour
     {
         switch (_state)
         {
+            case EnemyState.Alive:
+            {
+                if (_target is null)
+                {
+                    _rb.linearVelocity = Vector2.zero;
+                    break;
+                }
+                
+                Vector2 moveDir = ((Vector2)_target.transform.position - _rb.position).normalized;
+                _rb.linearVelocity = moveDir * moveSpeed;
+
+                // when moving vertically then dont flip cuz otherwise the sprite will go crazy
+                if (Math.Abs(moveDir.x) > 0.01f)
+                {
+                    _spriteRenderer.flipX = moveDir.x < 0f;
+                }
+                
+                break;
+            }
             case EnemyState.Hitstopped:
             {
                 _rb.linearVelocity = Vector2.zero;
