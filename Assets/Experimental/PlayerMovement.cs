@@ -36,7 +36,8 @@ namespace Experimental
         private void FixedUpdate()
         {
             var moveDir = _moveAction.ReadValue<Vector2>();
-            _rb.linearVelocity = Vector3.ClampMagnitude(new Vector3(moveDir.x, 0, moveDir.y), 1f) * moveSpeed;
+            var hVelocity = Vector3.ClampMagnitude(new Vector3(moveDir.x, 0, moveDir.y), 1f) * moveSpeed;
+            _rb.linearVelocity = new Vector3(hVelocity.x, _rb.linearVelocity.y, hVelocity.z);
         }
     }
 }
