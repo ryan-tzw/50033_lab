@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MeleeAttack : MonoBehaviour
@@ -18,7 +17,7 @@ public class MeleeAttack : MonoBehaviour
         Animator.StringToHash("Base Layer.Attack3")
     };
 
-    public void Spawn(Vector3 direction, int comboIndex)
+    public void Spawn(Vector3 direction, int comboIndex, float duration)
     {
         // this is really dumb but i have to make the sprite stand upright (aligned on the XY plane) so that 
         // it will actually display in Unity's Project preview because they just assume all sprites are aligned to XY
@@ -31,7 +30,7 @@ public class MeleeAttack : MonoBehaviour
         finisherHitbox.SetActive(isFinisher);
         
         animator.Play(AttackStateIds[comboIndex], 0, 0f);
-        
-        Destroy(gameObject, isFinisher ? _finisherLifetime : _lifetime);
+
+        Destroy(gameObject, duration);
     }
 }

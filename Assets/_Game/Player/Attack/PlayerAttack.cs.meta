@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 59240bf636ca183628200a40d2031bc2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - attackPrefab: {instanceID: 0}
+  - attackSchedule: {instanceID: 0}
+  - worldCamera: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

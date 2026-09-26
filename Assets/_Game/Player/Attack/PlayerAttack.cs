@@ -4,19 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private MeleeAttack attackPrefab;
-    [SerializeField] private float attackCooldown = 0.25f;
-    [SerializeField] private float comboResetDelay = 0.6f;
-
-    private float _comboExpireTime;
-    private int _comboIndex;
-    private const int ComboLength = 3;
+    [SerializeField] private AttackSchedule attackSchedule;
     
     private Vector3 _facingDirection = Vector3.right;
-    private float _nextAttackTime;
     
     // raycast from camera to compute the direction to attack
     [SerializeField] private Camera worldCamera;
-    
+
+    private AttackScheduler _attackScheduler;
     private PlayerInput _playerInput;
     private InputAction _attackAction;
     private InputAction _aimAction;
@@ -24,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Awake()
     {
+        _attackScheduler = new AttackScheduler(attackSchedule);
+        
         _playerInput = GetComponent<PlayerInput>();
         var combatActions = _playerInput.actions.FindActionMap("Combat");
 
@@ -73,20 +70,23 @@ public class PlayerAttack : MonoBehaviour
         }
         
         // attack
-        if (_attackAction.WasPressedThisFrame() && Time.time >= _nextAttackTime)
+        if (_attackAction.WasPressedThisFrame())
         {
-            if (Time.time >= _comboExpireTime)
-            {
-                _comboIndex = 0;
-            }
-            
-            _nextAttackTime = Time.time + attackCooldown;
+            _attackScheduler.RequestAttack();
+        }
+        
+        _attackScheduler.SetContinuousRequest(_attackAction.IsPressed());
+
+        if (_attackScheduler.Tick(Time.deltaTime, out ScheduledAttack scheduledAttack))
+        {
             var attack = Instantiate(attackPrefab, transform.position, Quaternion.identity, transform);
-            attack.Spawn(_facingDirection, _comboIndex);
-            
-            _comboIndex =  (_comboIndex + 1) % ComboLength;
-            _comboExpireTime =  Time.time + comboResetDelay;
+            attack.Spawn(_facingDirection, scheduledAttack.Index, scheduledAttack.Duration);
         }
 
+    }
+
+    private void OnDisable()
+    {
+        _attackScheduler?.Reset();
     }
 }

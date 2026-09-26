@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMeleeAttack
   attackPrefab: {fileID: 3970382171235528529, guid: 48261dc3900f51d5c8190988ce6dacae, type: 3}
-  attackCooldown: 0.25
+  attackSchedule: {fileID: 11400000, guid: 863ebd42e355211c3b2155ec9b31cd25, type: 2}
   worldCamera: {fileID: 0}
 --- !u!1 &7680870583070295396
 GameObject:
