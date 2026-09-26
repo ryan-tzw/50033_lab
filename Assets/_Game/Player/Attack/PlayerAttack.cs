@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +5,14 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private MeleeAttack attackPrefab;
     [SerializeField] private float attackCooldown = 0.25f;
+    [SerializeField] private float comboResetDelay = 0.6f;
+
+    private float _comboExpireTime;
+    private int _comboIndex;
+    private const int ComboLength = 3;
+    
+    private Vector3 _facingDirection = Vector3.right;
+    private float _nextAttackTime;
     
     // raycast from camera to compute the direction to attack
     [SerializeField] private Camera worldCamera;
@@ -14,9 +21,6 @@ public class PlayerAttack : MonoBehaviour
     private InputAction _attackAction;
     private InputAction _aimAction;
     private InputAction _moveAction;
-
-    private Vector3 _facingDirection = Vector3.right;
-    private float _nextAttackTime;
 
     private void Awake()
     {
@@ -71,9 +75,17 @@ public class PlayerAttack : MonoBehaviour
         // attack
         if (_attackAction.WasPressedThisFrame() && Time.time >= _nextAttackTime)
         {
+            if (Time.time >= _comboExpireTime)
+            {
+                _comboIndex = 0;
+            }
+            
             _nextAttackTime = Time.time + attackCooldown;
             var attack = Instantiate(attackPrefab, transform.position, Quaternion.identity, transform);
-            attack.Spawn(_facingDirection, 0);
+            attack.Spawn(_facingDirection, _comboIndex);
+            
+            _comboIndex =  (_comboIndex + 1) % ComboLength;
+            _comboExpireTime =  Time.time + comboResetDelay;
         }
 
     }

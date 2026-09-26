@@ -152,6 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5f7551b4350a7368ee9b871c387d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeAttack
+  animator: {fileID: 3312622712519124137}
+  normalHitbox: {fileID: 2774148548746356175}
+  finisherHitbox: {fileID: 3581704858709234926}
 --- !u!1 &5207348433308625618
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +289,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -8435245712485981826, guid: ef480edad3978128e94d163ffbdfa2b8, type: 3}
+--- !u!95 &3312622712519124137 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1160356261127867848, guid: ef480edad3978128e94d163ffbdfa2b8, type: 3}
+  m_PrefabInstance: {fileID: 4459308075429046625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5816153515537651308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: ef480edad3978128e94d163ffbdfa2b8, type: 3}
