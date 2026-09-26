@@ -178,7 +178,10 @@ Varyings LitPassVertex(Attributes input)
     
     float3 billboardPositionVS = originVS + float3(input.positionOS.xy * scale, 0);
     
-    // modifications (almost) end here. below we also replace output.positionCS
+    float4 billboardPositionCS = TransformWViewToHClip(billboardPositionVS);
+    billboardPositionCS.z = vertexInput.positionCS.z / vertexInput.positionCS.w * billboardPositionCS.w;
+    
+    // modifications (almost) end here. below we also replace output.positionCS to just take billBoardPositionCS
 
     // normalWS and tangentWS already normalize.
     // this is required to avoid skewing the direction during interpolation
@@ -229,8 +232,7 @@ Varyings LitPassVertex(Attributes input)
     output.shadowCoord = GetShadowCoord(vertexInput);
 #endif
 
-    //output.positionCS = vertexInput.positionCS;
-    output.positionCS = TransformWViewToHClip(billboardPositionVS);
+    output.positionCS = billboardPositionCS;
 
     return output;
 }
