@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 211001e9908a5a3b4babc81b31e65e77, type: 3}
-  m_Name: AttackSchedule
+  m_Name: MeleeAttackSchedule
   m_EditorClassIdentifier: Assembly-CSharp::AttackSchedule
-  sequenceLength: 3
+  attackString:
+  - duration: 0.2
+    recovery: 0.2
+  - duration: 0.2
+    recovery: 0.2
+  - duration: 0.25
+    recovery: 0.4
   repeatWhileHeld: 1
   inputBufferDuration: 0.15
-  interAttackDelay: 0.08
   comboContinuationWindow: 0.3
-  endCooldown: 0.25

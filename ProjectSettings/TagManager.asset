@@ -15,9 +15,9 @@ TagManager:
   - 
   - 
   - 
-  - PlayerCollider
+  - PlayerWorldCollider
   - PlayerAttack
-  - 
+  - PlayerCombatHitboxCollider
   - 
   - 
   - EnemyCollider
