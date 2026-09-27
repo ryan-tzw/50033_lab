@@ -8,8 +8,18 @@ Shader "Experimental/2D Sprite Lit"
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
         [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
         
+        // flash when entity gets hit
         _FlashAmount("Flash Amount", Range(0.0, 1.0)) = 0.0
-        [HDR] _FlashColor("Flash Color", Color) = (1,1,1,1)
+        [HDR] _FlashColor("Flash Color", Color)       = (1,1,1,1)
+        
+        // dissolve shader properties
+        _DissolveAmount("Dissolve Amount", Range(0.0, 1.0)) = 0.0
+        _NoiseOffset("Noise Offset", Vector)                = (0,0,0,0)
+        _NoiseScale("Noise Scale", Float)                   = 5.0
+        _EdgeWidth("Edge Width", Range(0.0, 0.5))           = 0.045
+        _EdgeColor("Edge Color", Color)               = (1.0,0.32,0.32,1.0)
+        _EdgeBrightness("Edge Brightness", Float)           = 3.0
+        _EdgeSaturation("Edge Saturation", Float)           = 1.311 
 
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
@@ -179,8 +189,19 @@ Shader "Experimental/2D Sprite Lit"
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             
+            // hlsl variables for flash
             half _FlashAmount;
             half4 _FlashColor;
+            
+            // hlsl variables for dissolve effect
+            half _DissolveAmount;
+            float4 _NoiseOffset;
+            float _NoiseScale;
+            half _EdgeWidth;
+            half4 _EdgeColor;
+            half _EdgeBrightness;
+            half _EdgeSaturation;            
+            
             #include "2DSpriteLitForwardPass.hlsl"
             ENDHLSL
         }
@@ -537,5 +558,5 @@ Shader "Experimental/2D Sprite Lit"
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.LitShader"
+    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.LitShader"
 }
