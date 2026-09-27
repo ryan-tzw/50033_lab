@@ -73,7 +73,7 @@ public class AttackScheduler
 
             AttackStep attack = _schedule.GetAttack(_nextAttackIndex);
             scheduledAttack = new ScheduledAttack(_nextAttackIndex, attack);
-            _attackLockRemaining = attack.Duration + attack.Recovery;
+            _attackLockRemaining = attack.AnimDuration + attack.Recovery;
 
             if (_nextAttackIndex >= _schedule.SequenceLength - 1)
             {

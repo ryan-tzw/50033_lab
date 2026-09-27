@@ -4,19 +4,22 @@ using UnityEngine;
 [Serializable]
 public struct AttackStep
 {
-    [SerializeField, Min(0f)] private float duration;
+    [SerializeField, Min(0f)] private float animDuration;
+    [SerializeField, Min(0f)] private float hitboxDuration;
     [SerializeField, Min(0f)] private float recovery;
     [SerializeField, Min(0)]  private int   damage;
     [SerializeField, Min(0f)] private float knockback;
     
-    public float Duration => duration;
+    public float AnimDuration => animDuration;
+    public float HitboxDuration => hitboxDuration;
     public float Recovery => recovery;
     public int Damage => damage;
     public float Knockback => knockback;
 
-    public AttackStep(float duration, float recovery, int  damage, float knockback)
+    public AttackStep(float animDuration, float hitboxDuration, float recovery, int  damage, float knockback)
     {
-        this.duration = duration;
+        this.animDuration = animDuration;
+        this.hitboxDuration = hitboxDuration;
         this.recovery = recovery;
         this.damage = damage;
         this.knockback = knockback;
@@ -28,9 +31,9 @@ public class AttackSchedule : ScriptableObject
 {
     [SerializeField] private AttackStep[] attackString =
     {
-        new AttackStep(0.20f, 0.20f, 1, 1f),
-        new AttackStep(0.20f, 0.20f, 1, 1f),
-        new AttackStep(0.25f, 0.25f, 1, 5f)
+        new AttackStep(0.20f, 0.15f, 0.20f, 1, 1f),
+        new AttackStep(0.20f, 0.15f, 0.20f, 1, 1f),
+        new AttackStep(0.25f, 0.15f, 0.25f, 1, 5f)
     };
     
     [SerializeField]         private bool  repeatWhileHeld         = true;

@@ -6,9 +6,6 @@ public class MeleeAttack : MonoBehaviour
     
     [SerializeField] private MeleeHitbox normalHitbox;
     [SerializeField] private MeleeHitbox finisherHitbox;
-    
-    private float _lifetime = 0.2f;
-    private float _finisherLifetime = 0.25f;
 
     private static readonly int[] AttackStateIds =
     {
@@ -30,11 +27,10 @@ public class MeleeAttack : MonoBehaviour
         
         bool isFinisher = comboIndex == 2;
         var activeHitbox = isFinisher ? finisherHitbox : normalHitbox;
-        activeHitbox.Init(new HitData(attack.Damage, direction, attack.Knockback));
-        activeHitbox.gameObject.SetActive(true);
+        activeHitbox.Activate(new HitData(attack.Damage, direction, attack.Knockback), attack.HitboxDuration);
         
         animator.Play(AttackStateIds[comboIndex], 0, 0f);
 
-        Destroy(gameObject, attack.Duration);
+        Destroy(gameObject, attack.AnimDuration);
     }
 }
