@@ -260,7 +260,7 @@ Shader "Experimental/2D Sprite Lit"
             float4 _NoiseOffset;
             float _NoiseScale;
             
-            // modification of the ShadowPassFragment, taken from
+            // this fragment shader is a modification of the ShadowPassFragment, taken from
             // Library/PackageCache/com.unity.render-pipelines.universal@37583deabdbe/Shaders/ShadowCasterPass.hlsl
             half4 DissolveShadowPassFragment(Varyings input) : SV_TARGET
             {

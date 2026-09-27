@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 3
   currentHealth: 0
+  contactDmgCollider: {fileID: 9208016904171459392}
 --- !u!1 &7178382778442638832
 GameObject:
   m_ObjectHideFlags: 0
