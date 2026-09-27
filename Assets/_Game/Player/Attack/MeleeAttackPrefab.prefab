@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 346721932271881371}
   - component: {fileID: 8091821116113264885}
+  - component: {fileID: 4082490185138277686}
   m_Layer: 11
   m_Name: Hitbox
   m_TagString: Untagged
@@ -51,8 +52,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.4, y: 2.5, z: 1}
+  m_Size: {x: 2.4, y: 2.5, z: 0.2}
   m_Center: {x: 0, y: 1.35, z: 0}
+--- !u!114 &4082490185138277686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2774148548746356175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4262d8935afc4ec8beb7a2faf1ea58d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeHitbox
 --- !u!1 &3581704858709234926
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,6 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1053899660164252929}
   - component: {fileID: 3454586318941378048}
+  - component: {fileID: 1266793635312882753}
   m_Layer: 11
   m_Name: HitboxLarge
   m_TagString: Untagged
@@ -104,8 +118,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 2.9, z: 1}
+  m_Size: {x: 3, y: 2.9, z: 0.2}
   m_Center: {x: 0, y: 1.4, z: 0}
+--- !u!114 &1266793635312882753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581704858709234926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4262d8935afc4ec8beb7a2faf1ea58d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeHitbox
 --- !u!1 &5065619609329294927
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,8 +179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeAttack
   animator: {fileID: 3312622712519124137}
-  normalHitbox: {fileID: 2774148548746356175}
-  finisherHitbox: {fileID: 3581704858709234926}
+  normalHitbox: {fileID: 4082490185138277686}
+  finisherHitbox: {fileID: 1266793635312882753}
 --- !u!1 &5207348433308625618
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: ef480edad3978128e94d163ffbdfa2b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: ef480edad3978128e94d163ffbdfa2b8, type: 3}
       propertyPath: m_LocalRotation.w

@@ -79,8 +79,9 @@ public class PlayerAttack : MonoBehaviour
 
         if (_attackScheduler.Tick(Time.deltaTime, out ScheduledAttack scheduledAttack))
         {
-            var attack = Instantiate(attackPrefab, transform.position, Quaternion.identity, transform);
-            attack.Spawn(_facingDirection, scheduledAttack.Index, scheduledAttack.Duration);
+            var attackPosition = transform.position + new Vector3(0f, 0.25f, 0f);
+            var attack = Instantiate(attackPrefab, attackPosition, Quaternion.identity, transform);
+            attack.Spawn(_facingDirection, scheduledAttack.Index, scheduledAttack.Step);
         }
 
     }

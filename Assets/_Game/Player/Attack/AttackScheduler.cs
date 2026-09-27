@@ -1,15 +1,12 @@
-using System;
-using UnityEngine;
-
 public readonly struct ScheduledAttack
 {
     public int Index { get; }
-    public float Duration { get; }
+    public AttackStep Step { get; }
 
-    public ScheduledAttack(int index, float duration)
+    public ScheduledAttack(int index, AttackStep step)
     {
         Index = index;
-        Duration = duration;
+        Step = step;
     }
 }
 
@@ -74,9 +71,9 @@ public class AttackScheduler
             _attackBuffered = false;
             _bufferRemaining = 0f;
 
-            AttackTiming timing = _schedule.GetTiming(_nextAttackIndex);
-            scheduledAttack = new ScheduledAttack(_nextAttackIndex, timing.Duration);
-            _attackLockRemaining = timing.Duration + timing.Recovery;
+            AttackStep attack = _schedule.GetAttack(_nextAttackIndex);
+            scheduledAttack = new ScheduledAttack(_nextAttackIndex, attack);
+            _attackLockRemaining = attack.Duration + attack.Recovery;
 
             if (_nextAttackIndex >= _schedule.SequenceLength - 1)
             {
