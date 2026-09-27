@@ -227,7 +227,8 @@ Shader "Experimental/2D Sprite Lit"
             // -------------------------------------
             // Shader Stages
             #pragma vertex ShadowPassVertex
-            #pragma fragment ShadowPassFragment
+            // #pragma fragment ShadowPassFragment
+            #pragma fragment DissolveShadowPassFragment
 
             // -------------------------------------
             // Material Keywords
@@ -253,6 +254,39 @@ Shader "Experimental/2D Sprite Lit"
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
+            
+            #include "SimpleNoise.hlsl"
+            half _DissolveAmount;
+            float4 _NoiseOffset;
+            float _NoiseScale;
+            
+            // modification of the ShadowPassFragment, taken from
+            // Library/PackageCache/com.unity.render-pipelines.universal@37583deabdbe/Shaders/ShadowCasterPass.hlsl
+            half4 DissolveShadowPassFragment(Varyings input) : SV_TARGET
+            {
+                UNITY_SETUP_INSTANCE_ID(input);
+
+                #if defined(_ALPHATEST_ON)
+                    Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a, _BaseColor, _Cutoff);
+                
+                    // modifications for the dissolve effect to work with shadows
+                    // ====================================================================== 
+                    float2 dissolveUV = UNDO_TRANSFORM_TEX(input.uv, _BaseMap) + _NoiseOffset.xy;
+                    float dissolveNoise;
+                    Unity_SimpleNoise_float(dissolveUV, _NoiseScale, dissolveNoise);
+                
+                    float dissolveThreshold = lerp(-0.001, 1.0, _DissolveAmount);
+                    clip(dissolveNoise - dissolveThreshold);
+                    // ====================================================================== 
+                
+                #endif
+
+                #if defined(LOD_FADE_CROSSFADE)
+                    LODFadeCrossFade(input.positionCS);
+                #endif
+
+                return 0;
+            }
             ENDHLSL
         }
 
