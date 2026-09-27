@@ -17,7 +17,7 @@ Shader "Experimental/2D Sprite Lit"
         _NoiseOffset("Noise Offset", Vector)                = (0,0,0,0)
         _NoiseScale("Noise Scale", Float)                   = 5.0
         _EdgeWidth("Edge Width", Range(0.0, 0.5))           = 0.045
-        _EdgeColor("Edge Color", Color)               = (1.0,0.32,0.32,1.0)
+        _EdgeColor("Edge Color", Color)                     = (1.0,0.32,0.32,1.0)
         _EdgeBrightness("Edge Brightness", Float)           = 3.0
         _EdgeSaturation("Edge Saturation", Float)           = 1.311 
 
