@@ -4,6 +4,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
+    
+    // knockback
+    private Vector3 _knockbackVelocity;
+    private float _hitstunDuration;
+    private float _hitstunRemaining;
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
@@ -37,8 +42,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_hitstunRemaining > 0f)
+        {
+            var remainingFraction = _hitstunRemaining / _hitstunDuration;
+            var velocity = _knockbackVelocity * remainingFraction;
+            
+            _rb.linearVelocity = new  Vector3(velocity.x, _rb.linearVelocity.y, velocity.z);
+            _hitstunRemaining -= Time.fixedDeltaTime;
+            
+            return;
+        }
+        
         var moveDir = _moveAction.ReadValue<Vector2>();
         var hVelocity = Vector3.ClampMagnitude(new Vector3(moveDir.x, 0, moveDir.y), 1f) * moveSpeed;
         _rb.linearVelocity = new Vector3(hVelocity.x, _rb.linearVelocity.y, hVelocity.z);
+    }
+
+    public void ApplyHitReaction(Vector3 dir, float knockback, float hitstunDuration)
+    {
+        dir.y = 0f;
+        
+        _knockbackVelocity = dir.normalized * knockback;
+        _hitstunDuration = hitstunDuration;
+        _hitstunRemaining = hitstunDuration;
     }
 }

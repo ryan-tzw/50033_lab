@@ -23,7 +23,6 @@ public class MeleeHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit " + other.name);
         EnemyHealth target = other.GetComponentInParent<EnemyHealth>();
 
         if (target is null || !_hitTargets.Add(target)) return;

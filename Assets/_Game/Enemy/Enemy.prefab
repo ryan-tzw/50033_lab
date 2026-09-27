@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 9036170943158055271}
   - component: {fileID: 6704796967020373692}
   - component: {fileID: 1985998171013359938}
+  - component: {fileID: 4189415219595576923}
+  - component: {fileID: 3912799525883879344}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -192,6 +194,35 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   contactDmgCollider: {fileID: 9208016904171459392}
+--- !u!114 &4189415219595576923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375008f17316146fc966068cfed515c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  moveSpeed: 2
+--- !u!114 &3912799525883879344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5703b4c792e98d8b887639f38d6bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContactDamage
+  damage: 1
+  knockback: 10
+  hitstunDuration: 0.2
+  recoveryDuration: 0.2
 --- !u!1 &7178382778442638832
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class EnemyHealth : MonoBehaviour
     private float _flashRemaining;
     private float _dissolveElapsed;
     private bool _isDying;
+    public bool IsDying => _isDying;
 
     private void Awake()
     {
