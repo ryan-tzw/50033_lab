@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 346721932271881371}
   - component: {fileID: 8091821116113264885}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1053899660164252929}
   - component: {fileID: 3454586318941378048}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HitboxLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5206107212907052309}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hitboxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
