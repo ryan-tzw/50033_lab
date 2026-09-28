@@ -79,7 +79,6 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("collision with "  + other.gameObject.name);
         if (_isCollecting) return;
         if (other.gameObject.layer != _playerHitboxLayer) return;
 
