@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4448715427215634006, guid: 79ba5169390ef69f0b8cd05eff9d32b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -140,6 +140,7 @@ MonoBehaviour:
   recoilSpeed: 25
   recoilFalloffPower: 3
   collisionDamage: 1
+  points: 10
   hitstopDuration: 0.1
 --- !u!61 &4472803222021401695
 BoxCollider2D:

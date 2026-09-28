@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform spriteTransform;
     private PolygonCollider2D _playerCollider;
     public PolygonCollider2D PlayerCollider => _playerCollider;
+    [SerializeField] private InteractionDetector _interactionCollider;
     [SerializeField] private float _staggerSpeed = 8;
     [SerializeField] private float hitstunDuration = 0.5f;
 
@@ -35,9 +36,11 @@ public class Player : MonoBehaviour
     // player inputs
     private PlayerInput _playerInput;
     private InputActionMap _combatActions;
+    private InputActionMap _interactions;
     private InputAction _moveAction;
     private InputAction _attackAction;
     private InputAction _aimAction;
+    private InputAction _interactAction;
     private bool _immune;
     
     private Vector2 facingDir = Vector2.right;
@@ -66,12 +69,19 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
         _playerCollider = GetComponentInChildren<PolygonCollider2D>();
+        _interactionCollider = GetComponentInChildren<InteractionDetector>();
         _combatActions = _playerInput.actions.FindActionMap("Combat");
+        _interactions = _playerInput.actions.FindActionMap("Interaction");
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         _moveAction = _combatActions.FindAction("Move");
         _aimAction = _combatActions.FindAction("Aim");
         _attackAction = _combatActions.FindAction("Attack");
+
+        _interactAction = _interactions.FindAction("Interact");
+
+        _combatActions.Enable();
+        _interactions.Enable();
     }
 
     private void Attack()
@@ -84,6 +94,12 @@ public class Player : MonoBehaviour
         GameObject swing =  Instantiate(swingPrefab, transform.position, spriteTransform.rotation, transform);
         Destroy(swing, swingLifetime);
     }
+
+    private void Interact()
+    {
+        _interactionCollider.OnInteract();
+    }
+
 
     //public fn so that enemy can callback
     public void TakeDamage(int damage, Vector2 enemyPosition)
@@ -135,7 +151,14 @@ public class Player : MonoBehaviour
         
         if (_attackAction.WasPressedThisFrame())
         {
+            Debug.Log("m1 was pressed");
             Attack();
+        }
+
+        if (_interactAction.WasPressedThisFrame())
+        {
+            Debug.Log("E was pressed");
+            Interact();
         }
         
         // only turn the player when not locked in an animation
