@@ -131,7 +131,6 @@ public class Player : MonoBehaviour
     private void DamageImmunity(float duration)
     {
         _immune = true;
-        //_playerCollider.enabled = false;
         _immunityEndTime = Time.time + duration;
     }
 
@@ -140,6 +139,21 @@ public class Player : MonoBehaviour
     {
         _hitstopEndTime = Time.time + duration;
         _rb.linearVelocity = Vector2.zero;
+    }
+
+    public bool CanHeal()
+    {
+        if(healthPoints < 3)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void Heal(int health)
+    {
+        healthPoints += health;
+        OnHealthChanged?.Invoke(healthPoints);
     }
 
     private void Update()
@@ -151,13 +165,11 @@ public class Player : MonoBehaviour
         
         if (_attackAction.WasPressedThisFrame())
         {
-            Debug.Log("m1 was pressed");
             Attack();
         }
 
         if (_interactAction.WasPressedThisFrame())
         {
-            Debug.Log("E was pressed");
             Interact();
         }
         
@@ -196,10 +208,8 @@ public class Player : MonoBehaviour
             spriteTransform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
         }
 
-        //if (!_playerCollider.enabled && Time.time >= _immunityEndTime)
         if (_immune && Time.time >= _immunityEndTime)
         {
-            //_playerCollider.enabled = true;
             _immune = false;
             _spriteRenderer.color = Color.white;
         }
@@ -207,12 +217,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (Time.time < _hitstopEndTime)
-        //{
-        //    _rb.linearVelocity = Vector2.zero;
-        //    return;
-        //}
-
         switch (_state)
         {
             case PlayerState.Hitstopped:

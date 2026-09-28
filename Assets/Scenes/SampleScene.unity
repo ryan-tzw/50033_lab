@@ -1920,8 +1920,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c1fb98a337e6f4cb101f45b1a41278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  dropOffsetPosition: {x: 0, y: -0.1, z: 0}
-  itemPrefab: {fileID: 462873173614459859, guid: ba7d6e0632d1e68fcaae644caa476326, type: 3}
+  dropOffsetPosition: {x: 0, y: -0.3, z: 0}
+  itemPrefab: {fileID: 611199458102998264, guid: 63813506b9e6e5b42a2e894d24db66ff, type: 3}
   openedSprite: {fileID: 21300040, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
