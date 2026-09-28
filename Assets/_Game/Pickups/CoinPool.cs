@@ -14,7 +14,9 @@ public class CoinPool : MonoBehaviour
     [SerializeField, Min(1)] private int maxPoolSize = 500;
 
     private ObjectPool<Coin> _pool;
-    private readonly HashSet<Coin> _activeCoins = new(); 
+    private readonly HashSet<Coin> _activeCoins = new();
+
+    public event System.Action CoinCollected;
 
     private void Awake()
     {
@@ -29,7 +31,10 @@ public class CoinPool : MonoBehaviour
             actionOnDestroy: coin =>
             {
                 _activeCoins.Remove(coin);
-                Destroy(coin.gameObject);
+                if (coin is not null)
+                {
+                    Destroy(coin.gameObject);
+                }
             },
             collectionCheck: true,
             defaultCapacity: initialCapacity,
@@ -60,8 +65,14 @@ public class CoinPool : MonoBehaviour
     {
         var coin = Instantiate(coinPrefab, transform);
         coin.SetDespawnCallback(ReleaseCoin);
+        coin.SetCollectedCallback(HandleCoinCollected);
         coin.gameObject.SetActive(false);
         return coin;
+    }
+
+    private void HandleCoinCollected()
+    {
+        CoinCollected?.Invoke();
     }
 
     private void ReleaseCoin(Coin coin)

@@ -16,6 +16,7 @@ public class Coin : MonoBehaviour
     private Collider _worldCollider;
     private Collider _pickupCollider;
     private System.Action<Coin> _despawnCallback;
+    private System.Action _collectedCallback;
 
     private Vector3 _pickupStartPosition;
     private float _pickupElapsed;
@@ -121,6 +122,11 @@ public class Coin : MonoBehaviour
         _despawnCallback = despawnCallback;
     }
 
+    public void SetCollectedCallback(System.Action collectedCallback)
+    {
+        _collectedCallback = collectedCallback;
+    }
+
     private void BeginPickup()
     {
         _isCollecting = true;
@@ -133,6 +139,8 @@ public class Coin : MonoBehaviour
 
         _worldCollider.enabled = false;
         _pickupCollider.enabled = false;
+        
+        _collectedCallback.Invoke();
     }
 
     private void Despawn()
