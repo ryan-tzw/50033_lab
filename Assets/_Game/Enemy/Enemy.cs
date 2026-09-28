@@ -1,16 +1,44 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyHealth), typeof(EnemyMovement))]
+[RequireComponent( typeof(EnemyHealth), typeof(EnemyMovement), typeof(EnemyDeath))]
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private Collider contactDmgCollider;
+
     private EnemyHealth _health;
-    private System.Action<Enemy> _despawnCallback;
-    public bool IsDying => _health.IsDying;
+    private EnemyDeath _death;
+    private Action<Enemy> _releaseCallback;
+    private bool _isDying;
+    public bool IsDying => _isDying;
+    public event Action<Enemy> Killed;
 
     private void Awake()
     {
         _health = GetComponent<EnemyHealth>();
-        _health.SetDeathCompletedCallback(Despawn);
+        _death = GetComponent<EnemyDeath>();
+        _health.Depleted += HandleHealthDepleted;
+    }
+
+    private void OnEnable()
+    {
+        _isDying = false;
+        contactDmgCollider.enabled = true;
+    }
+
+    private void Update()
+    {
+        if (!_isDying) return;
+
+        if (_death.Tick(Time.deltaTime))
+        {
+            Release();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _health.Depleted -= HandleHealthDepleted;
     }
 
     public void Spawn(Vector3 position)
@@ -19,9 +47,9 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void SetDespawnCallback(System.Action<Enemy> despawnCallback)
+    public void SetReleaseCallback(Action<Enemy> releaseCallback)
     {
-        _despawnCallback = despawnCallback;
+        _releaseCallback = releaseCallback;
     }
 
     public void ReceiveHit(HitData hit)
@@ -29,15 +57,24 @@ public class Enemy : MonoBehaviour
         _health.ReceiveHit(hit);
     }
 
-    private void Despawn()
+    private void HandleHealthDepleted()
     {
-        if (_despawnCallback is null)
+        _isDying = true;
+        contactDmgCollider.enabled = false;
+
+        Killed?.Invoke(this);
+        _death.Begin();
+    }
+
+    private void Release()
+    {
+        if (_releaseCallback is null)
         {
             gameObject.SetActive(false);
         }
         else
         {
-            _despawnCallback.Invoke(this);
+            _releaseCallback.Invoke(this);
         }
     }
 }

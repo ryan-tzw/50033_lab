@@ -3,6 +3,7 @@ using UnityEngine.Pool;
 
 public class EnemySpawner3D : MonoBehaviour
 {
+    [SerializeField] private CoinPool coinPool;
     [SerializeField] private Enemy enemyPrefab;
     [SerializeField] private Camera worldCamera;
 
@@ -26,13 +27,24 @@ public class EnemySpawner3D : MonoBehaviour
             createFunc: () =>
             {
                 var enemy = Instantiate(enemyPrefab);
-                enemy.SetDespawnCallback(ReleaseEnemy);
+                enemy.SetReleaseCallback(ReleaseEnemy);
+                if (coinPool is not null)
+                {
+                    enemy.Killed += coinPool.DropCoin;
+                }
                 enemy.gameObject.SetActive(false);
                 return enemy;
             },
             actionOnGet: enemy => enemy.Spawn(GetSpawnPosition()),
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
-            actionOnDestroy: enemy => Destroy(enemy.gameObject),
+            actionOnDestroy: enemy =>
+            {
+                if (coinPool is not null)
+                {
+                    enemy.Killed -= coinPool.DropCoin;
+                }
+                Destroy(enemy.gameObject);
+            },
             collectionCheck: true,
             defaultCapacity: initialCap,
             maxSize: maxPoolSize

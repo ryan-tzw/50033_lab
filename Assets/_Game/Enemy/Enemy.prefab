@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 1707747566586976308}
   - component: {fileID: 4189415219595576923}
   - component: {fileID: 3912799525883879344}
+  - component: {fileID: 4596204524882534802}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -192,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b14f8845f5832618a432c73694f0a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  contactDmgCollider: {fileID: 9208016904171459392}
 --- !u!114 &1707747566586976308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 3
   currentHealth: 0
-  contactDmgCollider: {fileID: 9208016904171459392}
 --- !u!114 &4189415219595576923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +237,19 @@ MonoBehaviour:
   knockback: 10
   hitstunDuration: 0.2
   recoveryDuration: 0.2
+--- !u!114 &4596204524882534802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1220e92e66294b549e84c76fc2b12239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
+  dissolveDuration: 1
 --- !u!1 &7178382778442638832
 GameObject:
   m_ObjectHideFlags: 0

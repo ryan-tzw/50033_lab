@@ -99,6 +99,7 @@ Shader "Experimental/2D Sprite Lit"
             "RenderPipeline" = "UniversalPipeline"
             "UniversalMaterialType" = "Lit"
             "IgnoreProjector" = "True"
+            "DisableBatching" = "True"
         }
         LOD 300
 

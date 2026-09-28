@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7008380307895481757}
   - component: {fileID: 2646234653009431807}
   - component: {fileID: 8351763293985648779}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: PickupCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 1389855711822097822}
   - component: {fileID: 1086924570085264144}
   - component: {fileID: 2023281439148455294}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 486495081370913617}
   - component: {fileID: 2002464581993955801}
   - component: {fileID: 21713406249364321}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
