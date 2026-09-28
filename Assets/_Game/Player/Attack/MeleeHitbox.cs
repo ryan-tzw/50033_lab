@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeHitbox : MonoBehaviour
 {
-    private readonly HashSet<EnemyHealth> _hitTargets = new();
+    private readonly HashSet<Enemy> _hitTargets = new();
     private HitData _hitData;
 
     public void Activate(HitData hitData, float duration)
@@ -23,7 +23,7 @@ public class MeleeHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        EnemyHealth target = other.GetComponentInParent<EnemyHealth>();
+        Enemy target = other.GetComponentInParent<Enemy>();
 
         if (target is null || !_hitTargets.Add(target)) return;
         

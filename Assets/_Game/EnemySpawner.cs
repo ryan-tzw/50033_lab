@@ -5,26 +5,26 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private Legacy.Enemy enemyPrefab;
     [SerializeField] private Camera spawnCamera;  // spawn enemies outside the field of view of the camera
     [SerializeField] private float spawnInterval = 1f;
     [SerializeField] private float spawnMargin = 1f;
     
     private float _nextSpawnTime;
     
-    private ObjectPool<Enemy> _pool;
+    private ObjectPool<Legacy.Enemy> _pool;
 
-    public event System.Action<Enemy> OnEnemySpawned;
+    public event System.Action<Legacy.Enemy> OnEnemySpawned;
 
     private void Awake()
     {
         spawnCamera ??= Camera.main;
         _nextSpawnTime = Time.time + spawnInterval;
 
-        _pool = new ObjectPool<Enemy>(
+        _pool = new ObjectPool<Legacy.Enemy>(
                 createFunc: () =>
                 {
-                    Enemy enemy = Instantiate(enemyPrefab);
+                    Legacy.Enemy enemy = Instantiate(enemyPrefab);
                     enemy.gameObject.SetActive(false);
                     OnEnemySpawned?.Invoke(enemy);
                     return enemy;
@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (closestPlayer is null) return;
 
-        Enemy enemy = _pool.Get();
+        Legacy.Enemy enemy = _pool.Get();
         enemy.Spawn(spawnPosition, closestPlayer, _pool);
         _nextSpawnTime = Time.time + spawnInterval;
     }

@@ -124,7 +124,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9036170943158055271}
   - component: {fileID: 6704796967020373692}
-  - component: {fileID: 1985998171013359938}
+  - component: {fileID: 7330804512894295157}
+  - component: {fileID: 1707747566586976308}
   - component: {fileID: 4189415219595576923}
   - component: {fileID: 3912799525883879344}
   m_Layer: 15
@@ -179,7 +180,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1985998171013359938
+--- !u!114 &7330804512894295157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +189,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6889018576111517930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c42f68b10347b3866fcf2a293f9847, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b14f8845f5832618a432c73694f0a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+--- !u!114 &1707747566586976308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7861c98235b5467190647f6618c8d1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 3

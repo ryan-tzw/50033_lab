@@ -13,12 +13,21 @@ MonoBehaviour:
   m_Name: MeleeAttackSchedule
   m_EditorClassIdentifier: Assembly-CSharp::AttackSchedule
   attackString:
-  - duration: 0.2
+  - animDuration: 0.2
+    hitboxDuration: 0.15
     recovery: 0.2
-  - duration: 0.2
+    damage: 1
+    knockback: 1
+  - animDuration: 0.2
+    hitboxDuration: 0.15
     recovery: 0.2
-  - duration: 0.25
+    damage: 1
+    knockback: 1
+  - animDuration: 0.25
+    hitboxDuration: 0.15
     recovery: 0.4
+    damage: 1
+    knockback: 5
   repeatWhileHeld: 1
   inputBufferDuration: 0.15
   comboContinuationWindow: 0.3

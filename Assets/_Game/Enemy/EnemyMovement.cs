@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,7 @@ public class EnemyMovement : MonoBehaviour
     private SpriteRenderer _sr;
     private Animator _animator;
     
-    private EnemyHealth _health;
+    private Enemy _enemy;
     private Transform _target;
     private float _pauseRemaining;
 
@@ -20,12 +21,23 @@ public class EnemyMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
-        _health = GetComponent<EnemyHealth>();
+        _enemy = GetComponent<Enemy>();
+    }
+
+    private void OnEnable()
+    {
+        // reset everything since we're using a pool
+        _target = null;
+        _pauseRemaining = 0f;
+        _rb.linearVelocity = Vector3.zero;
+        _sr.flipX = false;
+        _animator.speed = 1f;
+        _animator.SetBool(IsMovingId, false);
     }
 
     private void FixedUpdate()
     {
-        if (_health.IsDying)
+        if (_enemy.IsDying)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
             _animator.SetBool(IsMovingId, false);

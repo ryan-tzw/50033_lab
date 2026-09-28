@@ -45,12 +45,12 @@ public class GameController : MonoBehaviour
         playerInputManager.onPlayerJoined -= InitializePlayerReference;
     }
 
-    private void SubscribeToEnemy(Enemy enemy)
+    private void SubscribeToEnemy(Legacy.Enemy enemy)
     {
         enemy.OnDeath += addPoints;
     }
 
-    private void addPoints(Enemy enemy, int points)
+    private void addPoints(Legacy.Enemy enemy, int points)
     {
         score += points;
     }
