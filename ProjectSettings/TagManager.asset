@@ -17,7 +17,7 @@ TagManager:
   - 
   - PlayerWorldCollider
   - PlayerAttack
-  - PlayerHurtbox
+  - PlayerHitbox
   - 
   - 
   - EnemyCollider
@@ -25,8 +25,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - PickupWorld
+  - PickupTrigger
   - 
   - 
   - 
