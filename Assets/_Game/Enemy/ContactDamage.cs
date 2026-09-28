@@ -9,17 +9,17 @@ public class ContactDamage : MonoBehaviour
     [SerializeField, Min(0f)] private float recoveryDuration = 0.35f;
 
     private EnemyMovement _movement;
-    private int _playerHurtboxLayer;
+    private int _playerHitboxLayer;
 
     private void Awake()
     {
         _movement = GetComponent<EnemyMovement>();
-        _playerHurtboxLayer = LayerMask.NameToLayer("PlayerHurtbox");
+        _playerHitboxLayer = LayerMask.NameToLayer("PlayerHitbox");
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer != _playerHurtboxLayer) return;
+        if (other.gameObject.layer != _playerHitboxLayer) return;
         
         var player = other.GetComponentInParent<PlayerHealth>();
         if (player == null) return;

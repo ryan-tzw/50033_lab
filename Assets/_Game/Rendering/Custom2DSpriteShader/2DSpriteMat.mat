@@ -98,7 +98,7 @@ Material:
     - _DissolveAmount: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeBrightness: 5
+    - _EdgeBrightness: 10
     - _EdgeSaturation: 1.311
     - _EdgeWidth: 0.045
     - _EnvironmentReflections: 1
