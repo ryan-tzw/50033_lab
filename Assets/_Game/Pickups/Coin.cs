@@ -21,6 +21,13 @@ public class Coin : MonoBehaviour
     private float _pickupElapsed;
     private bool _isCollecting;
     private int _playerHitboxLayer;
+    
+    // magnet stuff
+    [SerializeField, Min(0f)] private float magnetAccel = 20f;
+    [SerializeField, Min(0f)] private float magnetMaxSpd = 10f;
+    private Transform _magnetTarget;
+    private float _magnetSpeed;
+    private bool isMagnetised;
 
     private void Awake()
     {
@@ -55,6 +62,25 @@ public class Coin : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        // move the coin towards the player if magnetised
+        if (_isCollecting || _magnetTarget is null) return;
+        
+        _magnetSpeed = Mathf.MoveTowards(_magnetSpeed, magnetMaxSpd, magnetAccel * Time.fixedDeltaTime);
+        var nextPosition = Vector3.MoveTowards(_rb.position, _magnetTarget.position, Time.fixedDeltaTime * _magnetSpeed);
+        
+        _rb.MovePosition(nextPosition);
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_isCollecting) return;
+        if (other.gameObject.layer != _playerHitboxLayer) return;
+
+        BeginPickup();
+    }
+
     public void Spawn(Vector3 position, Vector3 impulse)
     {
         transform.SetPositionAndRotation(position, Quaternion.identity);
@@ -66,10 +92,28 @@ public class Coin : MonoBehaviour
         _pickupCollider.enabled = true;
         _rb.isKinematic = false;
         _rb.linearVelocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
+        _magnetTarget = null;
+        _magnetSpeed = 0f;
+        isMagnetised = false;
 
         gameObject.SetActive(true);
         _rb.AddForce(impulse, ForceMode.Impulse);
+    }
+
+    // only sets the target and some settings. actual movement in FixedUpdate
+    public void AttractTo(Transform target)
+    {
+        if (_isCollecting) return;
+        if (isMagnetised) return;
+
+        // disable physics and prevent collision with the world
+        _magnetTarget = target;
+        _magnetSpeed = 0f;
+        _rb.isKinematic = true;
+        _worldCollider.enabled = false;
+
+        // keep the magnetised state so that subsequent magnets dont reset the speed
+        isMagnetised = true;
     }
 
     public void SetDespawnCallback(System.Action<Coin> despawnCallback)
@@ -77,23 +121,14 @@ public class Coin : MonoBehaviour
         _despawnCallback = despawnCallback;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (_isCollecting) return;
-        if (other.gameObject.layer != _playerHitboxLayer) return;
-
-        BeginPickup();
-    }
-
     private void BeginPickup()
     {
         _isCollecting = true;
         _pickupElapsed = 0f;
         _pickupStartPosition = transform.position;
+        _magnetTarget = null;
 
         // stop physics from interfering with the animation
-        _rb.linearVelocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
         _rb.isKinematic = true;
 
         _worldCollider.enabled = false;

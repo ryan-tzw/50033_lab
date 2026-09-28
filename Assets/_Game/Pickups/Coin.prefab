@@ -186,6 +186,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  magnetAccel: 20
+  magnetMaxSpd: 10
 --- !u!135 &1086924570085264144
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -245,6 +247,7 @@ GameObject:
   - component: {fileID: 486495081370913617}
   - component: {fileID: 2002464581993955801}
   - component: {fileID: 21713406249364321}
+  - component: {fileID: 7750278156080077740}
   m_Layer: 20
   m_Name: Sprite
   m_TagString: Untagged
@@ -348,3 +351,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7750278156080077740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7413603865220916648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8425b4a6218309328a8334fb812a62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatingAnimation
+  frequency: 2
+  frequencyOffset: 1.5
+  amplitude: 0.1
+  offset: 0.1
