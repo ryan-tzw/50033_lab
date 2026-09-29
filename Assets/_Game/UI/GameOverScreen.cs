@@ -1,22 +1,20 @@
-using Legacy;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    [SerializeField] private GameController gameController;
-    public void Setup(int score)
+    [SerializeField] private TextMeshProUGUI scoreText;
+    
+    public void Show(int score)
     {
         gameObject.SetActive(true);
-        scoreText.text = score.ToString() + " points";
+        scoreText.text = $"{score}";
     }
 
     public void RestartButton()
     {
-        gameController.ResetValues();
-        SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
