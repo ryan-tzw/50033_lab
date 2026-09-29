@@ -21,7 +21,14 @@ public class CoinPool : MonoBehaviour
     private void Awake()
     {
         _pool = new ObjectPool<Coin>(
-            createFunc: CreateCoin,
+            createFunc: () =>
+            {
+                var coin = Instantiate(coinPrefab, transform);
+                coin.SetReleaseCallback(ReleaseCoin);
+                coin.SetCollectedCallback(HandleCoinCollected);
+                coin.gameObject.SetActive(false);
+                return coin; 
+            },
             actionOnGet: coin => _activeCoins.Add(coin),
             actionOnRelease: coin =>
             {
@@ -59,15 +66,6 @@ public class CoinPool : MonoBehaviour
         {
             coin.AttractTo(target);
         }
-    }
-
-    private Coin CreateCoin()
-    {
-        var coin = Instantiate(coinPrefab, transform);
-        coin.SetDespawnCallback(ReleaseCoin);
-        coin.SetCollectedCallback(HandleCoinCollected);
-        coin.gameObject.SetActive(false);
-        return coin;
     }
 
     private void HandleCoinCollected()

@@ -13,6 +13,8 @@ public class MagnetPool : MonoBehaviour
     [SerializeField, Min(1)] private int initialCapacity = 2;
     [SerializeField, Min(1)] private int maxPoolSize = 20;
     private ObjectPool<Magnet> _pool;
+    
+    public event System.Action MagnetCollected;
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class MagnetPool : MonoBehaviour
             {
                 var magnet = Instantiate(magnetPrefab, transform);
                 magnet.SetReleaseCallback(ReleaseMagnet);
+                magnet.SetCollectedCallback(HandleMagnetCollected);
                 magnet.gameObject.SetActive(false);
                 return magnet;
             },
@@ -42,6 +45,11 @@ public class MagnetPool : MonoBehaviour
 
         var magnet = _pool.Get();
         magnet.Spawn(spawnPosition, impulse, coinPool);
+    }
+
+    private void HandleMagnetCollected()
+    {
+        MagnetCollected?.Invoke();
     }
 
     private void ReleaseMagnet(Magnet magnet)

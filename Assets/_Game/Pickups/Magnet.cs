@@ -6,6 +6,8 @@ public class Magnet : MonoBehaviour
     private Collider _worldCollider;
     private CoinPool _coinPool;
     private System.Action<Magnet> _releaseCallback;
+    private System.Action _collectedCallback;
+    
     private int _playerHitboxLayer;
     private bool _collected;
 
@@ -23,6 +25,9 @@ public class Magnet : MonoBehaviour
         
         _collected = true;
         _coinPool.AttractAll(other.transform);
+        
+        _collectedCallback.Invoke();
+        
         Release();
     }
 
@@ -42,6 +47,11 @@ public class Magnet : MonoBehaviour
     public void SetReleaseCallback(System.Action<Magnet> callback)
     {
         _releaseCallback = callback;
+    }
+
+    public void SetCollectedCallback(System.Action callback)
+    {
+        _collectedCallback = callback;
     }
 
     private void Release()
