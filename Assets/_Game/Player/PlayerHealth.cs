@@ -66,6 +66,12 @@ public class PlayerHealth : MonoBehaviour
         return true;
     }
 
+    public void RestoreHealth(int health)
+    {
+        CurrentHealth += health;
+        OnHealthChanged?.Invoke(CurrentHealth);
+    }
+
     private void SetFlash(float amount)
     {
         _sr.GetPropertyBlock(_mpb);

@@ -50,6 +50,15 @@ public class Player : MonoBehaviour
         _movement.ApplyHitReaction(hit.Direction, hit.Knockback, hit.HitstunDuration);
         return true;
     }
+    
+    public bool ReceiveHeal()
+    {
+        if (_state != PlayerState.Dead && _health.CurrentHealth < _health.MaxHealth)
+        {
+            return true;
+        }
+        return false;
+    }
 
     private void HandleHealthDepleted()
     {
