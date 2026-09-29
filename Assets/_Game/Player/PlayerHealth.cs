@@ -6,18 +6,19 @@ public class PlayerHealth : MonoBehaviour
     private static readonly int FlashAmountId = Shader.PropertyToID("_FlashAmount");
     private static readonly int FlashColorId = Shader.PropertyToID("_FlashColor");
 
-    [SerializeField, Min(1)] private int maxHealth = 3;
     [SerializeField, Min(0f)] private float invulnDuration = 0.8f;
+    
+    [SerializeField, Min(1)] private int maxHealth = 3;
 
-    private int _currentHealth;
+    public int CurrentHealth { get; private set; }
+    public int MaxHealth => maxHealth;
+    
     private float _invulnRemaining;
     private bool _isDead;
 
     private PlayerMovement _movement;
     private SpriteRenderer _sr;
     private MaterialPropertyBlock _mpb;
-
-    public int CurrentHealth => _currentHealth;
 
     public event Action<int> OnHealthChanged;
     public event Action OnDeath;
@@ -27,15 +28,14 @@ public class PlayerHealth : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _mpb = new MaterialPropertyBlock();
-    }
-
-    private void OnEnable()
-    {
+        
         // reset
-        _currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
         _invulnRemaining = 0f;
         _isDead = false;
         SetFlash(0f);
+        
+        OnHealthChanged?.Invoke(CurrentHealth);
     }
 
     private void Update()
@@ -53,10 +53,10 @@ public class PlayerHealth : MonoBehaviour
     {
         if (_isDead || _invulnRemaining > 0f) { return false; }
 
-        _currentHealth = Mathf.Max(0, _currentHealth - hit.Damage);
-        OnHealthChanged?.Invoke(_currentHealth);
+        CurrentHealth = Mathf.Max(0, CurrentHealth - hit.Damage);
+        OnHealthChanged?.Invoke(CurrentHealth);
 
-        if (_currentHealth == 0)
+        if (CurrentHealth == 0)
         {
             _isDead = true;
             OnDeath?.Invoke();
