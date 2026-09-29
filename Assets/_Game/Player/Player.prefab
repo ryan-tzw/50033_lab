@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 5351002776742519891}
   - component: {fileID: 3711408899903600883}
   m_Layer: 12
-  m_Name: HurtboxCollider
+  m_Name: HitboxCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,9 +239,11 @@ GameObject:
   - component: {fileID: 9036170943158055271}
   - component: {fileID: 6704796967020373692}
   - component: {fileID: 3052127270199834353}
+  - component: {fileID: 7835247642227559365}
   - component: {fileID: 6240795612520611362}
   - component: {fileID: 8079971823224309528}
   - component: {fileID: 1553315470764370238}
+  - component: {fileID: 1138394584334687430}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -336,6 +338,18 @@ MonoBehaviour:
   m_DefaultActionMap: Combat
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7835247642227559365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2703294eda6043e28c981b5a0dbe1aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
 --- !u!114 &6240795612520611362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,8 +390,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddc67b38e522c79d84b88108ca3a4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 3
   invulnDuration: 0.2
+  maxHealth: 3
+--- !u!114 &1138394584334687430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1220e92e66294b549e84c76fc2b12239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DissolveEffect
+  dissolveDuration: 1
 --- !u!1 &7680870583070295396
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-[RequireComponent( typeof(EnemyHealth), typeof(EnemyMovement), typeof(EnemyDeath))]
+[RequireComponent( typeof(EnemyHealth), typeof(EnemyMovement), typeof(DissolveEffect))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Collider contactDmgCollider;
 
     private EnemyHealth _health;
-    private EnemyDeath _death;
+    private DissolveEffect _dissolveEffect;
     private Action<Enemy> _releaseCallback;
     private bool _isDying;
     public bool IsDying => _isDying;
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _health = GetComponent<EnemyHealth>();
-        _death = GetComponent<EnemyDeath>();
+        _dissolveEffect = GetComponent<DissolveEffect>();
         _health.Depleted += HandleHealthDepleted;
     }
 
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     {
         if (!_isDying) return;
 
-        if (_death.Tick(Time.deltaTime))
+        if (_dissolveEffect.Tick(Time.deltaTime))
         {
             Release();
         }
@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         contactDmgCollider.enabled = false;
 
         Killed?.Invoke(this);
-        _death.Begin();
+        _dissolveEffect.Begin();
     }
 
     private void Release()

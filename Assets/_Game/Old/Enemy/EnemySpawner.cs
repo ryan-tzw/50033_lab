@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
         if (Time.time < _nextSpawnTime) return;
 
         Vector2 spawnPosition = GetSpawnPosition();
-        Player closestPlayer = null;
+        Legacy.Player closestPlayer = null;
         float closestDistSqr = Mathf.Infinity;
 
         foreach (PlayerInput playerInput in PlayerInput.all)
@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
             // in the final game players wouldn't be able to join in the middle of the game,
             // so instead we'd save references to each player
             // this would apply for example if the boss has an attack that targets players individually
-            var player = playerInput.GetComponent<Player>();
+            var player = playerInput.GetComponent<Legacy.Player>();
             if (player is null) continue;
             
             float distSqr = ((Vector2)player.transform.position - spawnPosition).sqrMagnitude;

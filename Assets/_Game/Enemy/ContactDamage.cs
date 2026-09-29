@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ContactDamage : MonoBehaviour
@@ -21,7 +20,7 @@ public class ContactDamage : MonoBehaviour
     {
         if (other.gameObject.layer != _playerHitboxLayer) return;
         
-        var player = other.GetComponentInParent<PlayerHealth>();
+        var player = other.GetComponentInParent<Player>();
         if (player == null) return;
         var dir = player.transform.position - transform.position;
         dir.y = 0f;

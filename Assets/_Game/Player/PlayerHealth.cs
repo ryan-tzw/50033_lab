@@ -14,25 +14,23 @@ public class PlayerHealth : MonoBehaviour
     public int MaxHealth => maxHealth;
     
     private float _invulnRemaining;
-    private bool _isDead;
+    private bool _isDepleted;
 
-    private PlayerMovement _movement;
     private SpriteRenderer _sr;
     private MaterialPropertyBlock _mpb;
 
     public event Action<int> OnHealthChanged;
-    public event Action OnDeath;
+    public event Action Depleted;
 
     private void Awake()
     {
-        _movement = GetComponent<PlayerMovement>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _mpb = new MaterialPropertyBlock();
         
         // reset
         CurrentHealth = maxHealth;
         _invulnRemaining = 0f;
-        _isDead = false;
+        _isDepleted = false;
         SetFlash(0f);
         
         OnHealthChanged?.Invoke(CurrentHealth);
@@ -51,23 +49,20 @@ public class PlayerHealth : MonoBehaviour
     // to use later for sfx etc
     public bool ReceiveHit(HitData hit)
     {
-        if (_isDead || _invulnRemaining > 0f) { return false; }
+        if (_isDepleted || _invulnRemaining > 0f) { return false; }
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - hit.Damage);
         OnHealthChanged?.Invoke(CurrentHealth);
 
-        if (CurrentHealth == 0)
-        {
-            _isDead = true;
-            OnDeath?.Invoke();
-            return true;
-        }
-
         _invulnRemaining = invulnDuration;
         SetFlash(1f);
 
-        _movement.ApplyHitReaction( hit.Direction, hit.Knockback, hit.HitstunDuration);
-        
+        if (CurrentHealth == 0)
+        {
+            _isDepleted = true;
+            Depleted?.Invoke();
+        }
+
         return true;
     }
 

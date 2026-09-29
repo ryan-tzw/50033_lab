@@ -8,7 +8,7 @@ public class AttackHitbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var enemy = other.GetComponentInParent<Legacy.Enemy>();
-        Player player = GetComponentInParent<Player>();
+        var player = GetComponentInParent<Legacy.Player>();
 
         if (enemy == null || player == null) return;
         
