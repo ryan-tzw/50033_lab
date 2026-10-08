@@ -317,7 +317,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "4fbca58f1b9947e2bf2c95a37137fd58"
+                    "m_Id": "580d2ba3d8c849e4a4749e3743e2af9f"
                 },
                 "m_SlotId": 1
             }
@@ -849,7 +849,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "580d2ba3d8c849e4a4749e3743e2af9f"
+                    "m_Id": "4fbca58f1b9947e2bf2c95a37137fd58"
                 },
                 "m_SlotId": 1
             }
@@ -1851,10 +1851,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 506.0000305175781,
-            "y": 504.0000305175781,
-            "width": 128.00003051757813,
-            "height": 34.000030517578128
+            "x": 379.0,
+            "y": 353.9999694824219,
+            "width": 127.99996948242188,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -2760,12 +2760,12 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.3499999940395355,
-    "m_FloatType": 0,
+    "m_Value": 1.399999976158142,
+    "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
-        "y": 1.0
+        "y": 2.0
     },
     "m_SliderType": 0,
     "m_SliderPower": 3.0,
@@ -3737,7 +3737,7 @@
     "m_Title": "Center UV",
     "m_Position": {
         "x": -1478.9998779296875,
-        "y": 163.99998474121095
+        "y": 164.0
     }
 }
 
@@ -4600,8 +4600,8 @@
     "m_ObjectId": "535cf560c3a44348a2a36b2ab969bb3f",
     "m_Title": "outlines",
     "m_Position": {
-        "x": -856.9998779296875,
-        "y": 125.99996185302735
+        "x": -857.0,
+        "y": 126.0
     }
 }
 
@@ -4611,8 +4611,8 @@
     "m_ObjectId": "53cdad004d4b4d4196183c78b50bb4f8",
     "m_Title": "depth reject",
     "m_Position": {
-        "x": -681.999755859375,
-        "y": 946.9999389648438
+        "x": -682.0,
+        "y": 946.9998168945313
     }
 }
 
@@ -5011,8 +5011,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 371.0000305175781,
-            "y": 336.0000305175781,
+            "x": 501.9999694824219,
+            "y": 502.0,
             "width": 131.00003051757813,
             "height": 34.0
         }
@@ -5217,7 +5217,7 @@
     "m_Title": "Normals",
     "m_Position": {
         "x": -1062.9998779296875,
-        "y": 1306.9998779296875
+        "y": 1307.0
     }
 }
 
@@ -6027,8 +6027,8 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 1.399999976158142,
-    "m_FloatType": 0,
+    "m_Value": 0.3499999940395355,
+    "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
@@ -7163,7 +7163,7 @@
     "m_Title": "L/R/U/D UVs",
     "m_Position": {
         "x": -1355.9998779296875,
-        "y": 385.0
+        "y": 384.9999694824219
     }
 }
 
@@ -7898,7 +7898,7 @@
     "m_Title": "colouring",
     "m_Position": {
         "x": 152.0,
-        "y": 186.99998474121095
+        "y": 187.00001525878907
     }
 }
 
@@ -8899,7 +8899,7 @@
     "m_ObjectId": "d0c98240316643b58c8504aedf52fea7",
     "m_Title": "size of one texel",
     "m_Position": {
-        "x": -1655.9998779296875,
+        "x": -1656.0,
         "y": 462.0
     }
 }
@@ -9436,11 +9436,11 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": 0.029999999329447748,
-    "m_FloatType": 0,
+    "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
-        "y": 1.0
+        "y": 0.5
     },
     "m_SliderType": 0,
     "m_SliderPower": 3.0,
@@ -9610,11 +9610,11 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": 0.0020000000949949028,
-    "m_FloatType": 0,
+    "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
-        "y": 1.0
+        "y": 0.009999999776482582
     },
     "m_SliderType": 0,
     "m_SliderPower": 3.0,
