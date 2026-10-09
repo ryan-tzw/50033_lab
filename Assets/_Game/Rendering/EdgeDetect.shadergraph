@@ -3736,7 +3736,7 @@
     "m_ObjectId": "3e0357d320d14fa2aec22299372480f6",
     "m_Title": "Center UV",
     "m_Position": {
-        "x": -1478.9998779296875,
+        "x": -1479.0,
         "y": 164.0
     }
 }
@@ -4601,7 +4601,7 @@
     "m_Title": "outlines",
     "m_Position": {
         "x": -857.0,
-        "y": 126.0
+        "y": 125.9999771118164
     }
 }
 
@@ -4612,7 +4612,7 @@
     "m_Title": "depth reject",
     "m_Position": {
         "x": -682.0,
-        "y": 946.9998168945313
+        "y": 947.0
     }
 }
 
@@ -5216,8 +5216,8 @@
     "m_ObjectId": "690d84c11207473282354d4d4c34978c",
     "m_Title": "Normals",
     "m_Position": {
-        "x": -1062.9998779296875,
-        "y": 1307.0
+        "x": -1063.0,
+        "y": 1306.9998779296875
     }
 }
 
@@ -7162,7 +7162,7 @@
     "m_ObjectId": "9cd0ccc8368b4f5f8dd7ba0def111f3f",
     "m_Title": "L/R/U/D UVs",
     "m_Position": {
-        "x": -1355.9998779296875,
+        "x": -1356.0,
         "y": 384.9999694824219
     }
 }
@@ -7897,8 +7897,8 @@
     "m_ObjectId": "b2823bbb3e784840b61d663aa3cd63aa",
     "m_Title": "colouring",
     "m_Position": {
-        "x": 152.0,
-        "y": 187.00001525878907
+        "x": 151.99984741210938,
+        "y": 186.99996948242188
     }
 }
 
@@ -8900,7 +8900,7 @@
     "m_Title": "size of one texel",
     "m_Position": {
         "x": -1656.0,
-        "y": 462.0
+        "y": 461.99993896484377
     }
 }
 
@@ -9440,7 +9440,7 @@
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
-        "y": 0.5
+        "y": 1.0
     },
     "m_SliderType": 0,
     "m_SliderPower": 3.0,

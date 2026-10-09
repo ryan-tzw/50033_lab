@@ -38,8 +38,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _DepthThreshold: 0.002
-    - _InnerEdge: 1.4
-    - _NormalThreshold: 0.259
+    - _InnerEdge: 1.28
+    - _NormalThreshold: 0.451
     - _OuterEdge: 0.46
     m_Colors: []
   m_BuildTextureStacks: []
