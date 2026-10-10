@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,7 +13,6 @@ public class CoinPool : MonoBehaviour
     [SerializeField, Min(1)] private int maxPoolSize = 500;
 
     private ObjectPool<Coin> _pool;
-    private readonly HashSet<Coin> _activeCoins = new();
 
     public event System.Action CoinCollected;
 
@@ -29,20 +27,9 @@ public class CoinPool : MonoBehaviour
                 coin.gameObject.SetActive(false);
                 return coin; 
             },
-            actionOnGet: coin => _activeCoins.Add(coin),
-            actionOnRelease: coin =>
-            {
-                _activeCoins.Remove(coin);
-                coin.gameObject.SetActive(false);
-            },
-            actionOnDestroy: coin =>
-            {
-                _activeCoins.Remove(coin);
-                if (coin is not null)
-                {
-                    Destroy(coin.gameObject);
-                }
-            },
+            actionOnGet: null,
+            actionOnRelease: coin => coin.gameObject.SetActive(false),
+            actionOnDestroy: coin => Destroy(coin.gameObject),
             collectionCheck: true,
             defaultCapacity: initialCapacity,
             maxSize: maxPoolSize
@@ -58,14 +45,6 @@ public class CoinPool : MonoBehaviour
         
         var coin = _pool.Get();
         coin.Spawn(spawnPosition, impulse);
-    }
-
-    public void AttractAll(Transform target)
-    {
-        foreach (var coin in _activeCoins)
-        {
-            coin.AttractTo(target);
-        }
     }
 
     private void HandleCoinCollected()

@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26805026091b4bf0bd37af05332961e2, type: 3}
-  m_Name: ActivePlayers
+  m_Name: PlayerRuntimeSet
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRuntimeSet

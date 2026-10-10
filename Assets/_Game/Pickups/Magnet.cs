@@ -4,12 +4,13 @@ public class Magnet : MonoBehaviour
 {
     private Rigidbody _rb;
     private Collider _worldCollider;
-    private CoinPool _coinPool;
     private System.Action<Magnet> _releaseCallback;
     private System.Action _collectedCallback;
     
     private int _playerHitboxLayer;
     private bool _collected;
+
+    [SerializeField] private CoinRuntimeSet activeCoins;
 
     private void Awake()
     {
@@ -24,17 +25,20 @@ public class Magnet : MonoBehaviour
         if (other.gameObject.layer != _playerHitboxLayer) return;
         
         _collected = true;
-        _coinPool.AttractAll(other.transform);
+
+        foreach (var coin in activeCoins.Items)
+        {
+            if (coin) coin.AttractTo(other.transform);
+        }
         
         _collectedCallback.Invoke();
         
         Release();
     }
 
-    public void Spawn(Vector3 position, Vector3 impulse, CoinPool pool)
+    public void Spawn(Vector3 position, Vector3 impulse)
     {
         transform.SetPositionAndRotation(position, Quaternion.identity);
-        _coinPool = pool;
         _collected = false;
         _worldCollider.enabled = true;
         _rb.isKinematic = false;

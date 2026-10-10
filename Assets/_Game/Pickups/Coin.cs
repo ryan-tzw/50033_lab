@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private CoinRuntimeSet activeCoins;
+    
     [SerializeField, Min(0.01f)] private float pickupDuration = 0.4f;
     [SerializeField, Min(0f)] private float pickupHeight = 0.75f;
 
@@ -44,6 +47,16 @@ public class Coin : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        activeCoins.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        activeCoins.Remove(this);
     }
 
     private void Update()
