@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private DissolveEffect _dissolve;
 
     [SerializeField] private GameEvent playerDied;
+    [SerializeField] private PlayerRuntimeSet activePlayers;
 
     private void Awake()
     {
@@ -26,6 +28,16 @@ public class Player : MonoBehaviour
         _dissolve = GetComponent<DissolveEffect>();
         _state = PlayerState.Alive;
         _health.Depleted += HandleHealthDepleted;
+    }
+
+    private void OnEnable()
+    {
+        activePlayers.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        activePlayers.Remove(this);
     }
 
     private void Update()

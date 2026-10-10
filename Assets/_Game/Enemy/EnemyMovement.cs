@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] private PlayerRuntimeSet activePlayers;
+    
     [SerializeField] private float moveSpeed = 2f;
     
     private static readonly int IsMovingId = Animator.StringToHash("IsMoving");
@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private Animator _animator;
     
     private Enemy _enemy;
-    private Transform _target;
+    private Player _target;
     private float _pauseRemaining;
 
     private void Awake()
@@ -53,15 +53,18 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        if (_target is null) { _target = FindClosestPlayer(); }
-        if (_target is null)
+        if (!_target || !activePlayers.Contains(_target))
+        {
+            _target = FindClosestPlayer();
+        }
+        if (!_target)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
             _animator.SetBool(IsMovingId, false);
             return;
         }
 
-        var moveDir = _target.position - _rb.position;
+        var moveDir = _target.transform.position - _rb.position;
         moveDir.y = 0f;
 
         if (moveDir.sqrMagnitude < 0.001f)
@@ -91,18 +94,14 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void SetTarget(Transform target)
+    private Player FindClosestPlayer()
     {
-        _target = target;
-    }
-
-    private Transform FindClosestPlayer()
-    {
-        Transform closestPlayer = null;
+        Player closestPlayer = null;
         var closestDistanceSqr = Mathf.Infinity;
 
-        foreach (var player in PlayerInput.all)
+        foreach (var player in activePlayers.Items)
         {
+            if (!player) continue;
             var diff = player.transform.position - transform.position;
             diff.y = 0f;
             var distanceSqr = diff.sqrMagnitude;
@@ -110,7 +109,7 @@ public class EnemyMovement : MonoBehaviour
             if (distanceSqr < closestDistanceSqr)
             {
                 closestDistanceSqr = distanceSqr;
-                closestPlayer = player.transform;
+                closestPlayer = player;
             }
         }
 

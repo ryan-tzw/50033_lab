@@ -472,6 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   playerDied: {fileID: 11400000, guid: 927a7f825e6140343aaee3bbf4396e67, type: 2}
+  activePlayers: {fileID: 11400000, guid: 0c2651d6b5fed22b0ae677b73eef020e, type: 2}
 --- !u!114 &7284272434226558954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   invulnDuration: 0.2
-  maxHealth: 3
+  maxHealth: 5
 --- !u!114 &5193413872463314262
 MonoBehaviour:
   m_ObjectHideFlags: 0
