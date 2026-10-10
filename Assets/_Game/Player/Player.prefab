@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2703294eda6043e28c981b5a0dbe1aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  playerDied: {fileID: 11400000, guid: 927a7f825e6140343aaee3bbf4396e67, type: 2}
 --- !u!114 &7284272434226558954
 MonoBehaviour:
   m_ObjectHideFlags: 0

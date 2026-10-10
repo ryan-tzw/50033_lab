@@ -771,6 +771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128471173}
   - component: {fileID: 128471172}
+  - component: {fileID: 128471174}
   m_Layer: 0
   m_Name: GameSession
   m_TagString: Untagged
@@ -793,7 +794,6 @@ MonoBehaviour:
   healthDisplay: {fileID: 1168173106}
   spawnPoint: {fileID: 1292529528}
   coinPool: {fileID: 676260862}
-  gameOverScreen: {fileID: 666433449}
   runScore: {fileID: 11400000, guid: 25462a1ee8f41f3179189759685119b0, type: 2}
 --- !u!4 &128471173
 Transform:
@@ -810,6 +810,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128471174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128471171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49834aa3688b474095c3f66afd2f56ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 927a7f825e6140343aaee3bbf4396e67, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 666433449}
+        m_TargetAssemblyTypeName: GameOverScreen, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 128471172}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &169522813
 PrefabInstance:
   m_ObjectHideFlags: 0

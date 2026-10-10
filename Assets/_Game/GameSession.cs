@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,15 +7,16 @@ public class GameSession : MonoBehaviour
     [SerializeField] private HealthDisplay healthDisplay;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private CoinPool coinPool;
-    [SerializeField] private GameOverScreen gameOverScreen;
     [SerializeField] private IntVariable runScore;
-
-    private Player _player;
 
     private void OnEnable()
     {
         coinPool.CoinCollected += HandleCoinCollected;
-        if (_player is not null) _player.Died += HandlePlayerDied;
+    }
+
+    private void OnDisable()
+    {
+        coinPool.CoinCollected -= HandleCoinCollected;
     }
 
     public void OnPlayerJoined(PlayerInput player)
@@ -22,11 +24,6 @@ public class GameSession : MonoBehaviour
         player.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
         
         healthDisplay.ReferencePlayer(player.GetComponent<PlayerHealth>());
-
-        if (_player is not null) _player.Died -= HandlePlayerDied;
-        
-        _player = player.GetComponent<Player>();
-        _player.Died += HandlePlayerDied;
     }
 
     private void HandleCoinCollected()
@@ -34,9 +31,8 @@ public class GameSession : MonoBehaviour
         runScore.Add(1);
     }
 
-    private void HandlePlayerDied()
+    public void PauseGame()
     {
-        gameOverScreen.Show();
         Time.timeScale = 0;
     }
     

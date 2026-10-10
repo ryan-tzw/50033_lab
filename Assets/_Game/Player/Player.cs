@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,7 +16,7 @@ public class Player : MonoBehaviour
     private PlayerInput _input;
     private DissolveEffect _dissolve;
 
-    public event System.Action Died;
+    [SerializeField] private GameEvent playerDied;
 
     private void Awake()
     {
@@ -34,7 +33,7 @@ public class Player : MonoBehaviour
         if (_state == PlayerState.Dying && _dissolve.Tick(Time.deltaTime))
         {
             _state = PlayerState.Dead;
-            Died?.Invoke();
+            playerDied.Raise();
         }
     }
 
