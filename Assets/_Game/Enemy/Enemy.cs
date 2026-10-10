@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Collider contactDmgCollider;
+    [SerializeField] private AudioClip hurtSound;
+    private AudioSource _audioSource;
 
     private EnemyHealth _health;
     private DissolveEffect _dissolveEffect;
@@ -15,6 +17,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _health = GetComponent<EnemyHealth>();
         _dissolveEffect = GetComponent<DissolveEffect>();
         _health.Depleted += HandleHealthDepleted;
@@ -55,6 +58,10 @@ public class Enemy : MonoBehaviour
     public void ReceiveHit(HitData hit)
     {
         _health.ReceiveHit(hit);
+        if (hurtSound)
+        {
+            _audioSource.PlayOneShot(hurtSound);
+        }
     }
 
     private void HandleHealthDepleted()
