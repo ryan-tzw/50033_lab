@@ -7,9 +7,9 @@ public class GameSession : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private CoinPool coinPool;
     [SerializeField] private GameOverScreen gameOverScreen;
+    [SerializeField] private IntVariable runScore;
 
     private Player _player;
-    private int _score;
 
     private void OnEnable()
     {
@@ -31,12 +31,12 @@ public class GameSession : MonoBehaviour
 
     private void HandleCoinCollected()
     {
-        _score++;
+        runScore.Add(1);
     }
 
     private void HandlePlayerDied()
     {
-        gameOverScreen.Show(_score);
+        gameOverScreen.Show();
         Time.timeScale = 0;
     }
     
