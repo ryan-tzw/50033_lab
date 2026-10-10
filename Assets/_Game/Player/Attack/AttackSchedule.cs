@@ -9,12 +9,14 @@ public struct AttackStep
     [SerializeField, Min(0f)] private float recovery;
     [SerializeField, Min(0)]  private int   damage;
     [SerializeField, Min(0f)] private float knockback;
+    [SerializeField] private AudioClip sound;
     
     public float AnimDuration => animDuration;
     public float HitboxDuration => hitboxDuration;
     public float Recovery => recovery;
     public int Damage => damage;
     public float Knockback => knockback;
+    public AudioClip Sound => sound;
 
     public AttackStep(float animDuration, float hitboxDuration, float recovery, int  damage, float knockback)
     {
@@ -23,6 +25,7 @@ public struct AttackStep
         this.recovery = recovery;
         this.damage = damage;
         this.knockback = knockback;
+        sound = null;
     }
 }
 

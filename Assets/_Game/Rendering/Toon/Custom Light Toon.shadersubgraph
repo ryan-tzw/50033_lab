@@ -1542,7 +1542,7 @@
     "m_Title": "ignore shadow mapping at grazing angles",
     "m_Position": {
         "x": -1014.0000610351563,
-        "y": 260.00006103515627
+        "y": 260.0000915527344
     }
 }
 
@@ -5903,7 +5903,7 @@
     "m_ObjectId": "b9ccc212a3424b888040789520e60bcf",
     "m_Title": "Ambient Posterization",
     "m_Position": {
-        "x": 174.99990844726563,
+        "x": 175.0,
         "y": 794.0000610351563
     }
 }
@@ -7613,7 +7613,7 @@
     "m_Title": "Light Color Posterization",
     "m_Position": {
         "x": 534.0,
-        "y": 304.0000305175781
+        "y": 304.0
     }
 }
 
