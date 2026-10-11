@@ -1,7 +1,11 @@
 using System;
 using UnityEngine;
 
-[RequireComponent( typeof(EnemyHealth), typeof(EnemyMovement), typeof(DissolveEffect))]
+[RequireComponent(typeof(EnemyHealth))]
+[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(DissolveEffect))]
+[RequireComponent(typeof(LocalTime))]
+[RequireComponent(typeof(AudioSource))]
 public class Enemy : StateController
 {
     [SerializeField] private Collider contactDmgCollider;
@@ -13,6 +17,7 @@ public class Enemy : StateController
     private DissolveEffect _dissolveEffect;
     private Action<Enemy> _releaseCallback;
     
+    public LocalTime LocalTime { get; private set; }
     public bool RecoveryRequested { get; private set; }
     public float RecoveryDuration { get; private set; }
     public bool IsHealthDepleted => _health.IsDepleted;
@@ -25,6 +30,7 @@ public class Enemy : StateController
         _health = GetComponent<EnemyHealth>();
         _movement = GetComponent<EnemyMovement>();
         _dissolveEffect = GetComponent<DissolveEffect>();
+        LocalTime = GetComponent<LocalTime>();
     }
 
     protected override void OnEnable()
@@ -33,6 +39,12 @@ public class Enemy : StateController
         RecoveryDuration = 0f;
         contactDmgCollider.enabled = true;
         base.OnEnable();
+    }
+
+    protected override void Update()
+    {
+        if (LocalTime.IsPaused) return;
+        base.Update();
     }
 
     //================================================== 
@@ -86,15 +98,16 @@ public class Enemy : StateController
         _releaseCallback = releaseCallback;
     }
 
-    public void ReceiveHit(HitData hit)
+    public bool ReceiveHit(HitData hit)
     {
-        if (_health.IsDepleted) return;
+        if (_health.IsDepleted) return false;
         
         _health.ReceiveHit(hit);
         if (hurtSound)
         {
             _audioSource.PlayOneShot(hurtSound);
         }
+        return true;
     }
 
     private void Release()

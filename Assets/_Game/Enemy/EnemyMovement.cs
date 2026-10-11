@@ -11,29 +11,44 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody _rb;
     private SpriteRenderer _sr;
     private Animator _animator;
+    private LocalTime _localTime;
     
     private Player _target;
     private bool _movementEnabled;
+    private bool _animationPaused;
     
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
+        _localTime = GetComponent<LocalTime>();
     }
 
     private void OnEnable()
     {
         // reset everything since we're using a pool
         _target = null;
+        _animationPaused = false;
         _rb.linearVelocity = Vector3.zero;
         _sr.flipX = false;
         _animator.speed = 1f;
         _animator.SetBool(IsMovingId, false);
     }
 
+    private void Update()
+    {
+        _animator.speed = _animationPaused || _localTime.IsPaused ?  0f : 1f;
+    }
+
     private void FixedUpdate()
     {
+        if (_localTime.IsPaused)
+        {
+            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
+            return;
+        }
+        
         if (!_movementEnabled)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
@@ -81,7 +96,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void SetAnimationPaused(bool animationPaused)
     {
-        _animator.speed = animationPaused ? 0f : 1f;
+        _animationPaused = animationPaused;
+        _animator.speed = _animationPaused || _localTime.IsPaused ? 0f : 1f;
     }
 
     private Player FindClosestPlayer()

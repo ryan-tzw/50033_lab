@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,19 +5,16 @@ public class MeleeHitbox : MonoBehaviour
 {
     private readonly HashSet<Enemy> _hitTargets = new();
     private HitData _hitData;
+    private LocalTime _attackerTime;
+    private HitConfirmedEvent _hitConfirmed;
 
-    public void Activate(HitData hitData, float duration)
+    public void Activate(HitData hitData, LocalTime attackerTime, HitConfirmedEvent hitConfirmed)
     {
         _hitData = hitData;
+        _attackerTime = attackerTime;
+        _hitConfirmed = hitConfirmed;
         _hitTargets.Clear();
         gameObject.SetActive(true);
-        StartCoroutine(DisableAfter(duration));
-    }
-
-    private IEnumerator DisableAfter(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,8 +22,11 @@ public class MeleeHitbox : MonoBehaviour
         Enemy target = other.GetComponentInParent<Enemy>();
 
         if (target is null || !_hitTargets.Add(target)) return;
+
+        if (!target.ReceiveHit(_hitData)) return;
         
-        target.ReceiveHit(_hitData);
+        var hitPos = other.ClosestPoint(transform.position);
+        _hitConfirmed.Raise(new HitEventData(_attackerTime, target.LocalTime, _hitData, hitPos));
     }
     
 }

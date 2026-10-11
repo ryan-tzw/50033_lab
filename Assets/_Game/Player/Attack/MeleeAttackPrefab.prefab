@@ -181,6 +181,7 @@ MonoBehaviour:
   animator: {fileID: 3312622712519124137}
   normalHitbox: {fileID: 4082490185138277686}
   finisherHitbox: {fileID: 1266793635312882753}
+  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
 --- !u!1 &5207348433308625618
 GameObject:
   m_ObjectHideFlags: 0

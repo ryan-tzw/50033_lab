@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 8501136911565817089}
   - component: {fileID: 1186282306562534679}
   - component: {fileID: 3831366992996846661}
+  - component: {fileID: 5592714675034226602}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -491,7 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a631e251c8eb3ab7aa414e8bd6d2701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Experimental.PlayerMovement
-  moveSpeed: 5
+  moveSpeed: 4
 --- !u!114 &8762469268049190359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,6 +658,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5592714675034226602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3412f77e264bc895650ca042c69d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalTime
 --- !u!1 &8607357393179960376
 GameObject:
   m_ObjectHideFlags: 0

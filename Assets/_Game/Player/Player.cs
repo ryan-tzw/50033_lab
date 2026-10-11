@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(DissolveEffect))]
+[RequireComponent(typeof(LocalTime))]
 public class Player : StateController
 {
     private PlayerHealth _health;

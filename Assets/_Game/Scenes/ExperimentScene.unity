@@ -772,6 +772,7 @@ GameObject:
   - component: {fileID: 128471173}
   - component: {fileID: 128471172}
   - component: {fileID: 128471174}
+  - component: {fileID: 128471175}
   m_Layer: 0
   m_Name: GameSession
   m_TagString: Untagged
@@ -850,6 +851,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &128471175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128471171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0bf0e35b824a12a8820aaf69a23b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitstopFeedback
+  hitConfirmed: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
 --- !u!1001 &169522813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6674,6 +6688,7 @@ GameObject:
   - component: {fileID: 1547471326}
   - component: {fileID: 1547471328}
   - component: {fileID: 1547471327}
+  - component: {fileID: 1547471329}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -6800,6 +6815,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547471325}
   m_CullTransparentMesh: 1
+--- !u!114 &1547471329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547471325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11920935c1f146c0811289b9ac62aaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreDisplay
+  runScore: {fileID: 11400000, guid: 25462a1ee8f41f3179189759685119b0, type: 2}
 --- !u!1001 &1557137458
 PrefabInstance:
   m_ObjectHideFlags: 0
