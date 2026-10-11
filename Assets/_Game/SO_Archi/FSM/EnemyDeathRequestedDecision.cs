@@ -5,6 +5,6 @@ public class EnemyDeathRequestedDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        return ((Enemy)controller).DeathRequested;
+        return ((Enemy)controller).IsHealthDepleted;
     }
 }

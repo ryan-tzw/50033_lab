@@ -13,13 +13,9 @@ public class Enemy : StateController
     private DissolveEffect _dissolveEffect;
     private Action<Enemy> _releaseCallback;
     
-    private bool _recoveryRequested;
-    private float _recoveryDuration;
-    public bool RecoveryRequested => _recoveryRequested;
-    public float RecoveryDuration => _recoveryDuration;
-
-    private bool _deathRequested;
-    public bool DeathRequested => _deathRequested;
+    public bool RecoveryRequested { get; private set; }
+    public float RecoveryDuration { get; private set; }
+    public bool IsHealthDepleted => _health.IsDepleted;
     
     public event Action<Enemy> Killed;
 
@@ -29,40 +25,33 @@ public class Enemy : StateController
         _health = GetComponent<EnemyHealth>();
         _movement = GetComponent<EnemyMovement>();
         _dissolveEffect = GetComponent<DissolveEffect>();
-        _health.Depleted += HandleHealthDepleted;
     }
 
     protected override void OnEnable()
     {
-        _recoveryRequested = false;
-        _recoveryDuration = 0f;
-        _deathRequested = false;
+        RecoveryRequested = false;
+        RecoveryDuration = 0f;
         contactDmgCollider.enabled = true;
         base.OnEnable();
     }
 
-    private void OnDestroy()
-    {
-        _health.Depleted -= HandleHealthDepleted;
-    }
-    
     //================================================== 
 
     public void RequestRecovery(float duration)
     {
-        if (_deathRequested || duration <= 0f) return;
-        _recoveryDuration = duration;
-        _recoveryRequested = true;
+        if (_health.IsDepleted || duration <= 0f) return;
+        RecoveryDuration = duration;
+        RecoveryRequested = true;
     }
 
     public void BeginRecoveryState()
     {
-        _recoveryRequested = false;
+        RecoveryRequested = false;
     }
 
-    public void SetMovementEnabled(bool enabled)
+    public void SetMovementEnabled(bool movementEnabled)
     {
-        _movement.SetMovementEnabled(enabled);
+        _movement.SetMovementEnabled(movementEnabled);
     }
 
     public void SetAnimationPaused(bool paused)
@@ -72,7 +61,7 @@ public class Enemy : StateController
 
     public void BeginDeathState()
     {
-        _recoveryRequested = false;
+        RecoveryRequested = false;
         contactDmgCollider.enabled = false;
         Killed?.Invoke(this);
         _dissolveEffect.Begin();
@@ -99,18 +88,13 @@ public class Enemy : StateController
 
     public void ReceiveHit(HitData hit)
     {
-        if (_deathRequested) return;
+        if (_health.IsDepleted) return;
         
         _health.ReceiveHit(hit);
         if (hurtSound)
         {
             _audioSource.PlayOneShot(hurtSound);
         }
-    }
-
-    private void HandleHealthDepleted()
-    {
-        _deathRequested = true;
     }
 
     private void Release()

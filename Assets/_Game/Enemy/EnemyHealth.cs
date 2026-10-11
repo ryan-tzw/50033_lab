@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -13,10 +12,9 @@ public class EnemyHealth : MonoBehaviour
 
     private SpriteRenderer _sr;
     private MaterialPropertyBlock _mpb;
-
     private float _flashRemaining;
-    private bool _isDepleted;
-    public event Action Depleted;
+    
+    public bool IsDepleted { get; private set; }
 
     private void Awake()
     {
@@ -28,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         _flashRemaining = 0f;
-        _isDepleted = false;
+        IsDepleted = false;
         SetFlash(0f);
     }
 
@@ -45,7 +43,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void ReceiveHit(HitData hit)
     {
-        if (_isDepleted) return;
+        if (IsDepleted) return;
 
         _flashRemaining = FlashDuration;
         SetFlash(1f);
@@ -53,8 +51,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - hit.Damage);
         if (currentHealth == 0)
         {
-            _isDepleted = true;
-            Depleted?.Invoke();
+            IsDepleted = true;
         }
     }
 
