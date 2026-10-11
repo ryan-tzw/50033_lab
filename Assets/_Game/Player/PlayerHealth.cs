@@ -12,15 +12,14 @@ public class PlayerHealth : MonoBehaviour
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => maxHealth;
+    public bool IsDepleted { get; private set; }
     
     private float _invulnRemaining;
-    private bool _isDepleted;
 
     private SpriteRenderer _sr;
     private MaterialPropertyBlock _mpb;
 
     public event Action<int> OnHealthChanged;
-    public event Action Depleted;
 
     private void Awake()
     {
@@ -30,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         // reset
         CurrentHealth = maxHealth;
         _invulnRemaining = 0f;
-        _isDepleted = false;
+        IsDepleted = false;
         SetFlash(0f);
         
         OnHealthChanged?.Invoke(CurrentHealth);
@@ -49,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
     // to use later for sfx etc
     public bool ReceiveHit(HitData hit)
     {
-        if (_isDepleted || _invulnRemaining > 0f) { return false; }
+        if (IsDepleted || _invulnRemaining > 0f) { return false; }
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - hit.Damage);
         OnHealthChanged?.Invoke(CurrentHealth);
@@ -59,8 +58,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (CurrentHealth == 0)
         {
-            _isDepleted = true;
-            Depleted?.Invoke();
+            IsDepleted = true;
         }
 
         return true;

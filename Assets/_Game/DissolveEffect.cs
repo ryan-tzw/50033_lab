@@ -12,6 +12,8 @@ public class DissolveEffect : MonoBehaviour
 
     private float _elapsed;
     private bool _isPlaying;
+    
+    public bool IsFinished { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class DissolveEffect : MonoBehaviour
     {
         _elapsed = 0f;
         _isPlaying = false;
+        IsFinished = false;
 
         _sr.GetPropertyBlock(_mpb);
         _mpb.SetFloat(DissolveAmountId, 0f);
@@ -34,6 +37,7 @@ public class DissolveEffect : MonoBehaviour
     {
         _elapsed = 0f;
         _isPlaying = true;
+        IsFinished = false;
     }
 
     // returns true when finished
@@ -51,6 +55,7 @@ public class DissolveEffect : MonoBehaviour
         if (progress < 1f) return false;
         
         _isPlaying = false;
+        IsFinished = true;
         return true;
     }
 }
