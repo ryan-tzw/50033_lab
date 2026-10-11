@@ -10,6 +10,8 @@ public abstract class StateController : MonoBehaviour
     [SerializeField] private State currentState;
     [SerializeField] private bool isActive = true;
 
+    private bool _hasStarted = false;
+
     public State StartState => startState;
     public State RemainState => remainState;
     public State CurrentState => currentState;
@@ -19,6 +21,15 @@ public abstract class StateController : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        if (_hasStarted)
+        {
+            ResetToStartState();
+        }
+    }
+
+    protected virtual void Start()
+    {
+        _hasStarted = true;
         ResetToStartState();
     }
 
