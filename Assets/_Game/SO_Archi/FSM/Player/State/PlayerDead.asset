@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de3d7c3fe2e41a586c6819e461f8fc1, type: 3}
   m_Name: PlayerDead
   m_EditorClassIdentifier: Assembly-CSharp::State
-  setupActions: []
+  setupActions:
+  - {fileID: 11400000, guid: bc40d1038342bc9d79f12f72c93524d7, type: 2}
   actions: []
   eventTriggeredActions: []
   exitActions: []

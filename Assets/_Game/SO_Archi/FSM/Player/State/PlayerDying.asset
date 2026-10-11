@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de3d7c3fe2e41a586c6819e461f8fc1, type: 3}
   m_Name: PlayerDying
   m_EditorClassIdentifier: Assembly-CSharp::State
-  setupActions: []
-  actions: []
+  setupActions:
+  - {fileID: 11400000, guid: 6f4092365e87013bcad21ce00e7b94b3, type: 2}
+  actions:
+  - {fileID: 11400000, guid: 700889586defec0968211bcd21e5abda, type: 2}
   eventTriggeredActions: []
   exitActions: []
-  transitions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: b2fa5dd8c3413e51ba5ef3fefcb6c473, type: 2}
+    trueState: {fileID: 11400000, guid: 5771bc3a6438091a0a7ff7e4d0adeeef, type: 2}
+    falseState: {fileID: 11400000, guid: 498f733f4fee0afd2b4b39094960801a, type: 2}
   sceneGizmoColor: {r: 0, g: 0, b: 0, a: 0}
