@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +7,12 @@ public class GameSession : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private CoinPool coinPool;
     [SerializeField] private IntVariable runScore;
+
+    private void Awake()
+    {
+        Time.timeScale = 1;
+        runScore.ResetValue();
+    }
 
     private void OnEnable()
     {

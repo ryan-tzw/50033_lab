@@ -140,6 +140,18 @@ public class Coin : MonoBehaviour
         // keep the magnetised state so that subsequent magnets dont reset the speed
         _isMagnetised = true;
     }
+    
+    public void StopAttracting(Transform target)
+    {
+        if (_isCollecting || _magnetTarget != target) return;
+        
+        _magnetTarget = null;
+        _magnetSpeed = 0f;
+        _isMagnetised = false;
+        _rb.isKinematic = false;
+        _rb.linearVelocity = Vector3.zero;
+        _worldCollider.enabled = true;
+    }
 
     public void SetReleaseCallback(System.Action<Coin> releaseCallback)
     {
