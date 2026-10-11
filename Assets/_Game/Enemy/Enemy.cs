@@ -5,12 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyMovement))]
 [RequireComponent(typeof(DissolveEffect))]
 [RequireComponent(typeof(LocalTime))]
-[RequireComponent(typeof(AudioSource))]
 public class Enemy : StateController
 {
     [SerializeField] private Collider contactDmgCollider;
-    [SerializeField] private AudioClip hurtSound;
-    private AudioSource _audioSource;
 
     private EnemyHealth _health;
     private EnemyMovement _movement;
@@ -26,7 +23,6 @@ public class Enemy : StateController
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
         _health = GetComponent<EnemyHealth>();
         _movement = GetComponent<EnemyMovement>();
         _dissolveEffect = GetComponent<DissolveEffect>();
@@ -103,10 +99,6 @@ public class Enemy : StateController
         if (_health.IsDepleted) return false;
         
         _health.ReceiveHit(hit);
-        if (hurtSound)
-        {
-            _audioSource.PlayOneShot(hurtSound);
-        }
         return true;
     }
 

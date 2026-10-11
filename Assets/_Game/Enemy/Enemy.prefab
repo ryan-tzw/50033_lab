@@ -131,6 +131,8 @@ GameObject:
   - component: {fileID: 4596204524882534802}
   - component: {fileID: 944075831446538731}
   - component: {fileID: 1077799725826984658}
+  - component: {fileID: -9192153133348282808}
+  - component: {fileID: 8102386859502322750}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -201,7 +203,6 @@ MonoBehaviour:
   currentState: {fileID: 0}
   isActive: 1
   contactDmgCollider: {fileID: 9208016904171459392}
-  hurtSound: {fileID: 8300000, guid: 54c552a84da9fce05894c210664bccb2, type: 3}
 --- !u!114 &1707747566586976308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +369,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3412f77e264bc895650ca042c69d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalTime
+--- !u!114 &-9192153133348282808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a273245cc3d49b7834bac6fccb61c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlashFeedback
+  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
+  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  duration: 0.15
+--- !u!114 &8102386859502322750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fe37c6c4784ed6af6c3ce2fd3efce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HurtAudioFeedback
+  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
+  hurtSound: {fileID: 8300000, guid: 54c552a84da9fce05894c210664bccb2, type: 3}
 --- !u!1 &7178382778442638832
 GameObject:
   m_ObjectHideFlags: 0
