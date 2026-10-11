@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de3d7c3fe2e41a586c6819e461f8fc1, type: 3}
+  m_Name: EnemyDying
+  m_EditorClassIdentifier: Assembly-CSharp::State
+  setupActions:
+  - {fileID: 11400000, guid: 583b47deb7e735940a0f0978df0314ae, type: 2}
+  - {fileID: 11400000, guid: 4a56202d197f3764881ab6f518e9b090, type: 2}
+  - {fileID: 11400000, guid: add9dd0253c2e8400812c258c5391ba8, type: 2}
+  actions:
+  - {fileID: 11400000, guid: 4c1358fa2cfbafed2a4ccbb16e02ae42, type: 2}
+  eventTriggeredActions: []
+  exitActions: []
+  transitions: []
+  sceneGizmoColor: {r: 0, g: 0, b: 0, a: 0}

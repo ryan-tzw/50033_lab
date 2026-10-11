@@ -12,7 +12,6 @@ public class EnemyMovement : MonoBehaviour
     private SpriteRenderer _sr;
     private Animator _animator;
     
-    private Enemy _enemy;
     private Player _target;
     private bool _movementEnabled;
     
@@ -21,7 +20,6 @@ public class EnemyMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
-        _enemy = GetComponent<Enemy>();
     }
 
     private void OnEnable()
@@ -36,14 +34,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_enemy.IsDying)
-        {
-            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
-            _animator.SetBool(IsMovingId, false);
-            _animator.speed = 0f;
-            return;
-        }
-
         if (!_movementEnabled)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
@@ -87,6 +77,11 @@ public class EnemyMovement : MonoBehaviour
     public void SetMovementEnabled(bool movementEnabled)
     {
         _movementEnabled = movementEnabled;
+    }
+
+    public void SetAnimationPaused(bool animationPaused)
+    {
+        _animator.speed = animationPaused ? 0f : 1f;
     }
 
     private Player FindClosestPlayer()

@@ -9,14 +9,17 @@ public class Enemy : StateController
     private AudioSource _audioSource;
 
     private EnemyHealth _health;
+    private EnemyMovement _movement;
     private DissolveEffect _dissolveEffect;
     private Action<Enemy> _releaseCallback;
-    private bool _isDying;
-    public bool IsDying => _isDying;
+    
     private bool _recoveryRequested;
     private float _recoveryDuration;
     public bool RecoveryRequested => _recoveryRequested;
     public float RecoveryDuration => _recoveryDuration;
+
+    private bool _deathRequested;
+    public bool DeathRequested => _deathRequested;
     
     public event Action<Enemy> Killed;
 
@@ -24,34 +27,30 @@ public class Enemy : StateController
     {
         _audioSource = GetComponent<AudioSource>();
         _health = GetComponent<EnemyHealth>();
+        _movement = GetComponent<EnemyMovement>();
         _dissolveEffect = GetComponent<DissolveEffect>();
         _health.Depleted += HandleHealthDepleted;
     }
 
     protected override void OnEnable()
     {
-        _isDying = false;
         _recoveryRequested = false;
         _recoveryDuration = 0f;
+        _deathRequested = false;
         contactDmgCollider.enabled = true;
         base.OnEnable();
     }
 
-    protected override void Update()
+    private void OnDestroy()
     {
-        base.Update();
-        
-        if (!_isDying) return;
-
-        if (_dissolveEffect.Tick(Time.deltaTime))
-        {
-            Release();
-        }
+        _health.Depleted -= HandleHealthDepleted;
     }
+    
+    //================================================== 
 
     public void RequestRecovery(float duration)
     {
-        if (_isDying || duration <= 0f) return;
+        if (_deathRequested || duration <= 0f) return;
         _recoveryDuration = duration;
         _recoveryRequested = true;
     }
@@ -61,9 +60,30 @@ public class Enemy : StateController
         _recoveryRequested = false;
     }
 
-    private void OnDestroy()
+    public void SetMovementEnabled(bool enabled)
     {
-        _health.Depleted -= HandleHealthDepleted;
+        _movement.SetMovementEnabled(enabled);
+    }
+
+    public void SetAnimationPaused(bool paused)
+    {
+        _movement.SetAnimationPaused(paused);
+    }
+
+    public void BeginDeathState()
+    {
+        _recoveryRequested = false;
+        contactDmgCollider.enabled = false;
+        Killed?.Invoke(this);
+        _dissolveEffect.Begin();
+    }
+
+    public void TickDeathState()
+    {
+        if (_dissolveEffect.Tick(Time.deltaTime))
+        {
+            Release();
+        }
     }
 
     public void Spawn(Vector3 position)
@@ -79,6 +99,8 @@ public class Enemy : StateController
 
     public void ReceiveHit(HitData hit)
     {
+        if (_deathRequested) return;
+        
         _health.ReceiveHit(hit);
         if (hurtSound)
         {
@@ -88,11 +110,7 @@ public class Enemy : StateController
 
     private void HandleHealthDepleted()
     {
-        _isDying = true;
-        contactDmgCollider.enabled = false;
-
-        Killed?.Invoke(this);
-        _dissolveEffect.Begin();
+        _deathRequested = true;
     }
 
     private void Release()

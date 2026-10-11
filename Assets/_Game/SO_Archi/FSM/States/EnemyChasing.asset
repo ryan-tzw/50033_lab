@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::State
   setupActions:
   - {fileID: 11400000, guid: 01065b13629a62a97ad31b9eeac9b185, type: 2}
+  - {fileID: 11400000, guid: fbff2aaf2283e55d7a33690aadf88517, type: 2}
   actions: []
   eventTriggeredActions: []
   exitActions: []
   transitions:
+  - decision: {fileID: 11400000, guid: 806355d52a048efd4b517a6059fae219, type: 2}
+    trueState: {fileID: 11400000, guid: e3c9854db96ac7d97b6ec54cb52eaeac, type: 2}
+    falseState: {fileID: 11400000, guid: 498f733f4fee0afd2b4b39094960801a, type: 2}
   - decision: {fileID: 11400000, guid: 197bce88b70e4264e9869eb26133c947, type: 2}
     trueState: {fileID: 11400000, guid: f4854c5258d771aaca8c9d4441156cfd, type: 2}
     falseState: {fileID: 11400000, guid: 498f733f4fee0afd2b4b39094960801a, type: 2}

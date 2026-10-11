@@ -7,8 +7,7 @@ public class SetEnemyMovementAction : StateAction
 
     public override void Act(StateController controller)
     {
-        var enemy = (Enemy)controller;
-        enemy.GetComponent<EnemyMovement>().SetMovementEnabled(moveEnabled);
+        ((Enemy)controller).SetMovementEnabled(moveEnabled);
     }
     
 }
