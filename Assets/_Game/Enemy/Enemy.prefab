@@ -247,6 +247,7 @@ MonoBehaviour:
   knockback: 10
   hitstunDuration: 0.2
   recoveryDuration: 0.2
+  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
 --- !u!114 &4596204524882534802
 MonoBehaviour:
   m_ObjectHideFlags: 0

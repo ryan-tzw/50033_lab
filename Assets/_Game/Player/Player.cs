@@ -13,6 +13,7 @@ public class Player : StateController
     private PlayerInput _input;
     private DissolveEffect _dissolve;
 
+    public LocalTime LocalTime { get; private set; }
     public bool IsHealthDepleted => _health.IsDepleted;
     public bool IsDissolveFinished => _dissolve.IsFinished;
 
@@ -25,6 +26,7 @@ public class Player : StateController
         _movement = GetComponent<PlayerMovement>();
         _input = GetComponent<PlayerInput>();
         _dissolve = GetComponent<DissolveEffect>();
+        LocalTime = GetComponent<LocalTime>();
     }
 
     protected override void OnEnable()

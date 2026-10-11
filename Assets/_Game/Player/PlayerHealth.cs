@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private static readonly int FlashAmountId = Shader.PropertyToID("_FlashAmount");
-    private static readonly int FlashColorId = Shader.PropertyToID("_FlashColor");
-
     [SerializeField, Min(0f)] private float invulnDuration = 0.8f;
-    
     [SerializeField, Min(1)] private int maxHealth = 3;
 
     public int CurrentHealth { get; private set; }
@@ -16,21 +12,14 @@ public class PlayerHealth : MonoBehaviour
     
     private float _invulnRemaining;
 
-    private SpriteRenderer _sr;
-    private MaterialPropertyBlock _mpb;
-
     public event Action<int> OnHealthChanged;
 
     private void Awake()
     {
-        _sr = GetComponentInChildren<SpriteRenderer>();
-        _mpb = new MaterialPropertyBlock();
-        
         // reset
         CurrentHealth = maxHealth;
         _invulnRemaining = 0f;
         IsDepleted = false;
-        SetFlash(0f);
         
         OnHealthChanged?.Invoke(CurrentHealth);
     }
@@ -40,7 +29,6 @@ public class PlayerHealth : MonoBehaviour
         if (_invulnRemaining > 0f)
         {
             _invulnRemaining -= Time.deltaTime;
-            if (_invulnRemaining <= 0f) { SetFlash(0f); }
         }
     }
 
@@ -54,7 +42,6 @@ public class PlayerHealth : MonoBehaviour
         OnHealthChanged?.Invoke(CurrentHealth);
 
         _invulnRemaining = invulnDuration;
-        SetFlash(1f);
 
         if (CurrentHealth == 0)
         {
@@ -68,13 +55,5 @@ public class PlayerHealth : MonoBehaviour
     {
         CurrentHealth += health;
         OnHealthChanged?.Invoke(CurrentHealth);
-    }
-
-    private void SetFlash(float amount)
-    {
-        _sr.GetPropertyBlock(_mpb);
-        _mpb.SetColor(FlashColorId, Color.HSVToRGB(0f, 0.7f, 0.8f));
-        _mpb.SetFloat(FlashAmountId, amount);
-        _sr.SetPropertyBlock(_mpb);
     }
 }

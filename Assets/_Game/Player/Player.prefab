@@ -362,6 +362,7 @@ GameObject:
   - component: {fileID: 1186282306562534679}
   - component: {fileID: 3831366992996846661}
   - component: {fileID: 5592714675034226602}
+  - component: {fileID: 3604654572935508414}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -520,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddc67b38e522c79d84b88108ca3a4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  invulnDuration: 0.2
+  invulnDuration: 0.4
   maxHealth: 3
 --- !u!114 &5193413872463314262
 MonoBehaviour:
@@ -670,6 +671,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3412f77e264bc895650ca042c69d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalTime
+--- !u!114 &3604654572935508414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a273245cc3d49b7834bac6fccb61c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlashFeedback
+  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
+  flashColor: {r: 0.8584906, g: 0.25511748, b: 0.25511748, a: 1}
+  duration: 0.4
 --- !u!1 &8607357393179960376
 GameObject:
   m_ObjectHideFlags: 0
