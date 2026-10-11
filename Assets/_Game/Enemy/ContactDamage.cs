@@ -7,12 +7,12 @@ public class ContactDamage : MonoBehaviour
     [SerializeField, Min(0f)] private float hitstunDuration = 0.2f;
     [SerializeField, Min(0f)] private float recoveryDuration = 0.35f;
 
-    private EnemyMovement _movement;
+    private Enemy _enemy;
     private int _playerHitboxLayer;
 
     private void Awake()
     {
-        _movement = GetComponent<EnemyMovement>();
+        _enemy = GetComponent<Enemy>();
         _playerHitboxLayer = LayerMask.NameToLayer("PlayerHitbox");
     }
 
@@ -29,7 +29,7 @@ public class ContactDamage : MonoBehaviour
 
         if (hitAccepted)
         {
-            _movement.Pause(recoveryDuration);
+            _enemy.RequestRecovery(recoveryDuration);
         }
     }
 }

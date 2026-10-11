@@ -14,8 +14,8 @@ public class EnemyMovement : MonoBehaviour
     
     private Enemy _enemy;
     private Player _target;
-    private float _pauseRemaining;
-
+    private bool _movementEnabled;
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -28,7 +28,6 @@ public class EnemyMovement : MonoBehaviour
     {
         // reset everything since we're using a pool
         _target = null;
-        _pauseRemaining = 0f;
         _rb.linearVelocity = Vector3.zero;
         _sr.flipX = false;
         _animator.speed = 1f;
@@ -45,11 +44,10 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        if (_pauseRemaining > 0f)
+        if (!_movementEnabled)
         {
-            _pauseRemaining -= Time.fixedDeltaTime;
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
-            // _animator.SetBool(IsMovingId, false);
+            _animator.SetBool(IsMovingId, false);
             return;
         }
 
@@ -86,12 +84,9 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void Pause(float duration)
+    public void SetMovementEnabled(bool movementEnabled)
     {
-        if (duration > _pauseRemaining)
-        {
-            _pauseRemaining = duration;
-        }
+        _movementEnabled = movementEnabled;
     }
 
     private Player FindClosestPlayer()

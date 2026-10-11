@@ -194,6 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b14f8845f5832618a432c73694f0a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  startState: {fileID: 11400000, guid: ee454b2328bfb2e6eb7e5d7ed148f070, type: 2}
+  remainState: {fileID: 11400000, guid: 498f733f4fee0afd2b4b39094960801a, type: 2}
+  previousState: {fileID: 0}
+  currentState: {fileID: 0}
+  isActive: 1
   contactDmgCollider: {fileID: 9208016904171459392}
   hurtSound: {fileID: 8300000, guid: 54c552a84da9fce05894c210664bccb2, type: 3}
 --- !u!114 &1707747566586976308

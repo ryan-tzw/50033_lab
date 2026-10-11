@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent( typeof(EnemyHealth), typeof(EnemyMovement), typeof(DissolveEffect))]
-public class Enemy : MonoBehaviour
+public class Enemy : StateController
 {
     [SerializeField] private Collider contactDmgCollider;
     [SerializeField] private AudioClip hurtSound;
@@ -13,6 +13,11 @@ public class Enemy : MonoBehaviour
     private Action<Enemy> _releaseCallback;
     private bool _isDying;
     public bool IsDying => _isDying;
+    private bool _recoveryRequested;
+    private float _recoveryDuration;
+    public bool RecoveryRequested => _recoveryRequested;
+    public float RecoveryDuration => _recoveryDuration;
+    
     public event Action<Enemy> Killed;
 
     private void Awake()
@@ -23,20 +28,37 @@ public class Enemy : MonoBehaviour
         _health.Depleted += HandleHealthDepleted;
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         _isDying = false;
+        _recoveryRequested = false;
+        _recoveryDuration = 0f;
         contactDmgCollider.enabled = true;
+        base.OnEnable();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         if (!_isDying) return;
 
         if (_dissolveEffect.Tick(Time.deltaTime))
         {
             Release();
         }
+    }
+
+    public void RequestRecovery(float duration)
+    {
+        if (_isDying || duration <= 0f) return;
+        _recoveryDuration = duration;
+        _recoveryRequested = true;
+    }
+
+    public void BeginRecoveryState()
+    {
+        _recoveryRequested = false;
     }
 
     private void OnDestroy()
