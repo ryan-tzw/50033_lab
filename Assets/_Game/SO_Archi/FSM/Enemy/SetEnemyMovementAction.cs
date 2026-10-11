@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName="SO/FSM/Actions/Set Movement")]
+[CreateAssetMenu(fileName = "SetEnemyMovement", menuName = "SO/FSM/Enemy/Actions/SetMovement", order = -1)]
 public class SetEnemyMovementAction : StateAction
 {
     [SerializeField] private bool moveEnabled;

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="SO/FSM/State")]
+[CreateAssetMenu(menuName = "SO/FSM/State", order = -1)]
 public class State : ScriptableObject
 {
     [SerializeField] private StateAction[] setupActions          = Array.Empty<StateAction>();

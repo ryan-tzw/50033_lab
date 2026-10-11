@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName="IntVariable", menuName="SO/IntVariable")]
+[CreateAssetMenu(fileName = "IntVariable", menuName = "SO/IntVariable", order = -1)]
 public class IntVariable :  ScriptableObject, ISerializationCallbackReceiver
 {
     [SerializeField] private int initVal;

@@ -29,7 +29,7 @@ public struct AttackStep
     }
 }
 
-[CreateAssetMenu(fileName = "AttackSchedule", menuName = "Combat/AttackSchedule")]
+[CreateAssetMenu(fileName = "AttackSchedule", menuName = "SO/Combat/AttackSchedule", order = -1)]
 public class AttackSchedule : ScriptableObject
 {
     [SerializeField] private AttackStep[] attackString =

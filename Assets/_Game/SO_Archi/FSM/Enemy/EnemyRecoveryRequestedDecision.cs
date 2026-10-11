@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyRecoveryRequested", menuName = "SO/FSM/Decisions/RecoveryRequested", order = 0)]
+[CreateAssetMenu(fileName = "EnemyRecoveryRequested", menuName = "SO/FSM/Enemy/Decisions/RecoveryRequested", order = -1)]
 public class EnemyRecoveryRequestedDecision : Decision
 {
     public override bool Decide(StateController controller)

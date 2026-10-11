@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SetEnemyAnimationPaused", menuName = "SO/FSM/Actions/SetEnemyAnimation")]
+[CreateAssetMenu(fileName = "SetAnimationPaused", menuName = "SO/FSM/Enemy/Actions/SetAnimation", order = -1)]
 public class SetEnemyAnimationPausedAction : StateAction
 {
     [SerializeField] private bool paused;
