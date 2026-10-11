@@ -11,12 +11,11 @@ public class Magnet : MonoBehaviour
     private int _playerHitboxLayer;
     private bool _collected;
 
-    [SerializeField] private CoinRuntimeSet activeCoins;
-
+    [SerializeField, Min(0f)] private float buffDuration = 5f;
     [SerializeField, Min(0f)] private float lifetime = 15f;
     private float _remainingLifetime;
     
-    [SerializeField, Min(0f)] private float blinkStartTime = 15f;
+    [SerializeField, Min(0f)] private float blinkStartTime = 3f;
     [SerializeField, Range(0.01f, 0.5f)] private float blinkInterval = 0.1f;
     private float _blinkTimer;
 
@@ -55,14 +54,12 @@ public class Magnet : MonoBehaviour
     {
         if (_collected) return;
         if (other.gameObject.layer != _playerHitboxLayer) return;
+
+        var magnetBuff = other.GetComponentInParent<CoinMagnetBuff>();
+        if (!magnetBuff) return;
         
         _collected = true;
-
-        foreach (var coin in activeCoins.Items)
-        {
-            if (coin) coin.AttractTo(other.transform);
-        }
-        
+        magnetBuff.Activate(buffDuration);
         _collectedCallback.Invoke();
         
         Release();
