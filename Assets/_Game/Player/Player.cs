@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerInput))]
@@ -12,10 +13,12 @@ public class Player : StateController
     private PlayerMovement _movement;
     private PlayerInput _input;
     private DissolveEffect _dissolve;
+    private PlayerAttack _attack;
 
     public LocalTime LocalTime { get; private set; }
     public bool IsHealthDepleted => _health.IsDepleted;
     public bool IsDissolveFinished => _dissolve.IsFinished;
+    public bool IsAttacking => _attack.IsAttacking;
 
     [SerializeField] private GameEvent playerDied;
     [SerializeField] private PlayerRuntimeSet activePlayers;
@@ -24,6 +27,7 @@ public class Player : StateController
     {
         _health  = GetComponent<PlayerHealth>();
         _movement = GetComponent<PlayerMovement>();
+        _attack = GetComponent<PlayerAttack>();
         _input = GetComponent<PlayerInput>();
         _dissolve = GetComponent<DissolveEffect>();
         LocalTime = GetComponent<LocalTime>();
@@ -56,11 +60,19 @@ public class Player : StateController
     public void BeginAliveState()
     {
         _input.ActivateInput();
+        _movement.SetMovementEnabled(true);
+    }
+
+    public void BeginAttackState()
+    {
+        _movement.SetMovementEnabled(false);
+        _movement.ApplyAttackMomentum(_attack.AttackDirection, _attack.AttackForwardSpeed, _attack.AttackDuration);
     }
 
     public void BeginDeathState()
     {
         _input.DeactivateInput();
+        _movement.SetMovementEnabled(false);
         _dissolve.Begin();
     }
 

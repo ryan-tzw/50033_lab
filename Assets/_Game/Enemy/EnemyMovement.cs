@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private PlayerRuntimeSet activePlayers;
     
     [SerializeField] private float moveSpeed = 2f;
+    [SerializeField, Min(0f)] private float knockbackDecel = 12f;
     
     private static readonly int IsMovingId = Animator.StringToHash("IsMoving");
 
@@ -16,6 +17,7 @@ public class EnemyMovement : MonoBehaviour
     private Player _target;
     private bool _movementEnabled;
     private bool _animationPaused;
+    private Vector3 _knockbackVel;
     
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class EnemyMovement : MonoBehaviour
         // reset everything since we're using a pool
         _target = null;
         _animationPaused = false;
+        _knockbackVel = Vector3.zero;
         _rb.linearVelocity = Vector3.zero;
         _sr.flipX = false;
         _animator.speed = 1f;
@@ -46,6 +49,14 @@ public class EnemyMovement : MonoBehaviour
         if (_localTime.IsPaused)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
+            return;
+        }
+
+        if (_knockbackVel.sqrMagnitude > 0.0001f)
+        {
+            _rb.linearVelocity = new Vector3(_knockbackVel.x, _rb.linearVelocity.y, _knockbackVel.z);
+            _knockbackVel = Vector3.MoveTowards(_knockbackVel, Vector3.zero, knockbackDecel * Time.fixedDeltaTime);
+            _animator.SetBool(IsMovingId, false);
             return;
         }
         
@@ -98,6 +109,12 @@ public class EnemyMovement : MonoBehaviour
     {
         _animationPaused = animationPaused;
         _animator.speed = _animationPaused || _localTime.IsPaused ? 0f : 1f;
+    }
+
+    public void ApplyKnockback(Vector3 dir, float str)
+    {
+        dir.y = 0f;
+        _knockbackVel += dir.normalized * str;
     }
 
     private Player FindClosestPlayer()

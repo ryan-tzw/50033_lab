@@ -5,6 +5,11 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private MeleeAttack attackPrefab;
     [SerializeField] private AttackSchedule attackSchedule;
+
+    public bool IsAttacking => _attackScheduler.IsAttackActive;
+    public Vector3 AttackDirection { get; private set; }
+    public float AttackForwardSpeed { get; private set; }
+    public float AttackDuration { get; private set; }
     
     private Vector3 _facingDirection = Vector3.right;
     
@@ -83,6 +88,10 @@ public class PlayerAttack : MonoBehaviour
         if (_localTime.IsPaused) return;
         if (_attackScheduler.Tick(_localTime.DeltaTime, out ScheduledAttack scheduledAttack))
         {
+            AttackDirection = _facingDirection;
+            AttackForwardSpeed = scheduledAttack.Step.ForwardSpeed;
+            AttackDuration = scheduledAttack.Step.AnimDuration;
+            
             var attackPosition = transform.position + new Vector3(0f, 0.25f, 0f);
             var attack = Instantiate(attackPrefab, attackPosition, Quaternion.identity, transform);
             attack.Spawn(_facingDirection, scheduledAttack.Index, scheduledAttack.Step, _localTime);

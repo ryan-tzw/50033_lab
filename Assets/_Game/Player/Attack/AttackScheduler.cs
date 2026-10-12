@@ -24,12 +24,15 @@ public class AttackScheduler
     // timers
     private float _bufferRemaining; // if attack becomes possible during this time we immediately execute it
     private float _attackLockRemaining;
+    private float _attackActiveRemaining;
     private float _comboWindowRemaining;
 
     // different states
     private bool _attackBuffered;
     private bool _continuousRequest;   // while input button is held continually request to attack
     private bool _comboActive;
+
+    public bool IsAttackActive => _attackActiveRemaining > 0f;
 
     public AttackScheduler(AttackSchedule schedule)
     {
@@ -51,6 +54,7 @@ public class AttackScheduler
     {
         scheduledAttack = default;
 
+        _attackActiveRemaining -=  deltaTime;
         _attackLockRemaining -= deltaTime;
         
         if (_comboActive && _attackLockRemaining <= 0f)
@@ -74,6 +78,7 @@ public class AttackScheduler
             AttackStep attack = _schedule.GetAttack(_nextAttackIndex);
             scheduledAttack = new ScheduledAttack(_nextAttackIndex, attack);
             _attackLockRemaining = attack.AnimDuration + attack.Recovery;
+            _attackActiveRemaining = attack.AnimDuration;
 
             if (_nextAttackIndex >= _schedule.SequenceLength - 1)
             {
@@ -110,6 +115,7 @@ public class AttackScheduler
         _nextAttackIndex = 0;
         _bufferRemaining = 0f;
         _attackLockRemaining = 0f;
+        _attackActiveRemaining = 0f;
         _comboWindowRemaining = 0f;
         _attackBuffered = false;
         _continuousRequest = false;

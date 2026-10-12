@@ -4,11 +4,16 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
+    private bool _movementEnabled = true;
     
     // knockback
     private Vector3 _knockbackVelocity;
     private float _hitstunDuration;
     private float _hitstunRemaining;
+
+    private Vector3 _attackVelocity;
+    private float _attackMomentumDuration;
+    private float _attackMomentumRemaining;
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
@@ -36,6 +41,12 @@ public class PlayerMovement : MonoBehaviour
     {
         _animator.speed = _localTime.IsPaused ? 0f : 1f;
         if (_localTime.IsPaused) return;
+
+        if (!_movementEnabled)
+        {
+            _animator.SetBool(IsMovingId, false);
+            return;
+        }
         
         var move = _moveAction.ReadValue<Vector2>();
         _animator.SetBool(IsMovingId, move.sqrMagnitude > 0.01f);
@@ -53,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         
+        _attackMomentumRemaining -= Time.fixedDeltaTime;
+        
         if (_hitstunRemaining > 0f)
         {
             var remainingFraction = _hitstunRemaining / _hitstunDuration;
@@ -61,6 +74,20 @@ public class PlayerMovement : MonoBehaviour
             _rb.linearVelocity = new  Vector3(velocity.x, _rb.linearVelocity.y, velocity.z);
             _hitstunRemaining -= Time.fixedDeltaTime;
             
+            return;
+        }
+
+        if (_attackMomentumRemaining > 0f)
+        {
+            var remainingFraction = _attackMomentumRemaining / _attackMomentumDuration;
+            var vel = _attackVelocity * remainingFraction;
+            _rb.linearVelocity = new Vector3(vel.x, _rb.linearVelocity.y, vel.z);
+            return;
+        }
+
+        if (!_movementEnabled)
+        {
+            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
             return;
         }
         
@@ -76,5 +103,21 @@ public class PlayerMovement : MonoBehaviour
         _knockbackVelocity = dir.normalized * knockback;
         _hitstunDuration = hitstunDuration;
         _hitstunRemaining = hitstunDuration;
+    }
+
+    public void ApplyAttackMomentum(Vector3 dir, float spd, float dur)
+    {
+        dir.y = 0f;
+        _attackVelocity = dir.normalized * spd;
+        _attackMomentumDuration = dur;
+        _attackMomentumRemaining = dur;
+    }
+    
+    public void SetMovementEnabled(bool moveEnabled)
+    {
+        _movementEnabled = moveEnabled;
+        if (moveEnabled) return;
+        _animator.SetBool(IsMovingId, false);
+        _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
     }
 }

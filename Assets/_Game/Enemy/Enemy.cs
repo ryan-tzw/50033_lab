@@ -99,6 +99,7 @@ public class Enemy : StateController
         if (_health.IsDepleted) return false;
         
         _health.ReceiveHit(hit);
+        _movement.ApplyKnockback(hit.Direction, hit.Knockback);
         return true;
     }
 

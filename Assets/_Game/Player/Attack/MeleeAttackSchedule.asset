@@ -17,15 +17,17 @@ MonoBehaviour:
     hitboxDuration: 0.15
     recovery: 0.2
     damage: 1
-    knockback: 1
+    knockback: 3
     hitstopDuration: 0.04
+    forwardSpeed: 3
     sound: {fileID: 8300000, guid: 31358187f30169e8bab536bf77517753, type: 3}
   - animDuration: 0.2
     hitboxDuration: 0.15
     recovery: 0.2
     damage: 1
-    knockback: 1
+    knockback: 3
     hitstopDuration: 0.04
+    forwardSpeed: 3
     sound: {fileID: 8300000, guid: 31358187f30169e8bab536bf77517753, type: 3}
   - animDuration: 0.25
     hitboxDuration: 0.15
@@ -33,6 +35,7 @@ MonoBehaviour:
     damage: 1
     knockback: 5
     hitstopDuration: 0.04
+    forwardSpeed: 4
     sound: {fileID: 8300000, guid: 1085d4f8f36b461bbbf19305624686dd, type: 3}
   repeatWhileHeld: 1
   inputBufferDuration: 0.15

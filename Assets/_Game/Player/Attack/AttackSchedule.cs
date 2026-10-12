@@ -10,6 +10,7 @@ public struct AttackStep
     [SerializeField, Min(0)]  private int   damage;
     [SerializeField, Min(0f)] private float knockback;
     [SerializeField, Range(0f, 1f)] private float hitstopDuration;
+    [SerializeField, Min(0f)] private float forwardSpeed;
     [SerializeField] private AudioClip sound;
     
     public float AnimDuration => animDuration;
@@ -18,6 +19,7 @@ public struct AttackStep
     public int Damage => damage;
     public float Knockback => knockback;
     public float HitstopDuration => hitstopDuration;
+    public  float ForwardSpeed => forwardSpeed;
     public AudioClip Sound => sound;
 
     public AttackStep
@@ -27,7 +29,8 @@ public struct AttackStep
         float recovery,
         int   damage,
         float knockback,
-        float hitstopDuration = 0f
+        float hitstopDuration = 0f,
+        float forwardSpeed = 0f
     )
     {
         this.animDuration = animDuration;
@@ -36,6 +39,7 @@ public struct AttackStep
         this.damage = damage;
         this.knockback = knockback;
         this.hitstopDuration = hitstopDuration;
+        this.forwardSpeed = forwardSpeed;
         sound = null;
     }
 }
