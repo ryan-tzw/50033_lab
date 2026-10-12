@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private CoinRuntimeSet activeCoins;
+    
     [SerializeField, Min(0.01f)] private float pickupDuration = 0.4f;
     [SerializeField, Min(0f)] private float pickupHeight = 0.75f;
 
@@ -44,6 +47,16 @@ public class Coin : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        activeCoins.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        activeCoins.Remove(this);
     }
 
     private void Update()
@@ -126,6 +139,18 @@ public class Coin : MonoBehaviour
 
         // keep the magnetised state so that subsequent magnets dont reset the speed
         _isMagnetised = true;
+    }
+    
+    public void StopAttracting(Transform target)
+    {
+        if (_isCollecting || _magnetTarget != target) return;
+        
+        _magnetTarget = null;
+        _magnetSpeed = 0f;
+        _isMagnetised = false;
+        _rb.isKinematic = false;
+        _rb.linearVelocity = Vector3.zero;
+        _worldCollider.enabled = true;
     }
 
     public void SetReleaseCallback(System.Action<Coin> releaseCallback)

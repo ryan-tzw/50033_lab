@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Camera worldCamera;
 
     private AttackScheduler _attackScheduler;
+    private LocalTime _localTime;
     private AudioSource _audioSource;
     private PlayerInput _playerInput;
     private InputAction _attackAction;
@@ -21,8 +22,8 @@ public class PlayerAttack : MonoBehaviour
     private void Awake()
     {
         _attackScheduler = new AttackScheduler(attackSchedule);
+        _localTime = GetComponent<LocalTime>();
         _audioSource = GetComponent<AudioSource>();
-        
         _playerInput = GetComponent<PlayerInput>();
         var combatActions = _playerInput.actions.FindActionMap("Combat");
 
@@ -79,11 +80,12 @@ public class PlayerAttack : MonoBehaviour
         
         _attackScheduler.SetContinuousRequest(_attackAction.IsPressed());
 
-        if (_attackScheduler.Tick(Time.deltaTime, out ScheduledAttack scheduledAttack))
+        if (_localTime.IsPaused) return;
+        if (_attackScheduler.Tick(_localTime.DeltaTime, out ScheduledAttack scheduledAttack))
         {
             var attackPosition = transform.position + new Vector3(0f, 0.25f, 0f);
             var attack = Instantiate(attackPrefab, attackPosition, Quaternion.identity, transform);
-            attack.Spawn(_facingDirection, scheduledAttack.Index, scheduledAttack.Step);
+            attack.Spawn(_facingDirection, scheduledAttack.Index, scheduledAttack.Step, _localTime);
 
             if (scheduledAttack.Step.Sound)
             {

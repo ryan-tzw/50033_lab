@@ -1,20 +1,14 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private IntVariable runScore;
     
-    public void Show(int score)
+    public void Show()
     {
         gameObject.SetActive(true);
-        scoreText.text = $"{score}";
-    }
-
-    public void RestartButton()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        scoreText.text = $"{runScore.Value}";
     }
 }

@@ -1,23 +1,24 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+[RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(DissolveEffect))]
+[RequireComponent(typeof(LocalTime))]
+public class Player : StateController
 {
-    private enum PlayerState
-    {
-        Alive,
-        Dying,
-        Dead
-    }
-    
-    private PlayerState _state;
     private PlayerHealth _health;
     private PlayerMovement _movement;
     private PlayerInput _input;
     private DissolveEffect _dissolve;
 
-    public event System.Action Died;
+    public LocalTime LocalTime { get; private set; }
+    public bool IsHealthDepleted => _health.IsDepleted;
+    public bool IsDissolveFinished => _dissolve.IsFinished;
+
+    [SerializeField] private GameEvent playerDied;
+    [SerializeField] private PlayerRuntimeSet activePlayers;
 
     private void Awake()
     {
@@ -25,27 +26,23 @@ public class Player : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _input = GetComponent<PlayerInput>();
         _dissolve = GetComponent<DissolveEffect>();
-        _state = PlayerState.Alive;
-        _health.Depleted += HandleHealthDepleted;
+        LocalTime = GetComponent<LocalTime>();
     }
 
-    private void Update()
+    protected override void OnEnable()
     {
-        if (_state == PlayerState.Dying && _dissolve.Tick(Time.deltaTime))
-        {
-            _state = PlayerState.Dead;
-            Died?.Invoke();
-        }
+        activePlayers.Add(this);
+        base.OnEnable();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        _health.Depleted -= HandleHealthDepleted;
+        activePlayers.Remove(this);
     }
 
     public bool ReceiveHit(HitData hit)
     {
-        if (_state != PlayerState.Alive || !_health.ReceiveHit(hit)) return false;
+        if (_health.IsDepleted || !_health.ReceiveHit(hit)) return false;
 
         _movement.ApplyHitReaction(hit.Direction, hit.Knockback, hit.HitstunDuration);
         return true;
@@ -53,17 +50,27 @@ public class Player : MonoBehaviour
     
     public bool ReceiveHeal()
     {
-        if (_state != PlayerState.Dead && _health.CurrentHealth < _health.MaxHealth)
-        {
-            return true;
-        }
-        return false;
+        return !_health.IsDepleted && _health.CurrentHealth < _health.MaxHealth;
     }
 
-    private void HandleHealthDepleted()
+    public void BeginAliveState()
     {
-        _state =  PlayerState.Dying;
+        _input.ActivateInput();
+    }
+
+    public void BeginDeathState()
+    {
         _input.DeactivateInput();
         _dissolve.Begin();
+    }
+
+    public void TickDeathState()
+    {
+        _dissolve.Tick(Time.deltaTime);
+    }
+
+    public void RaisePlayerDied()
+    {
+        playerDied.Raise();
     }
 }

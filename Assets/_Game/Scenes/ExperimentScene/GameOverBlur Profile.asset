@@ -35,7 +35,7 @@ MonoBehaviour:
     m_Value: 0
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.03
   gaussianMaxRadius:
     m_OverrideState: 1
     m_Value: 1.5
@@ -47,10 +47,10 @@ MonoBehaviour:
     m_Value: 10
   aperture:
     m_OverrideState: 1
-    m_Value: 14.4
+    m_Value: 12
   focalLength:
-    m_OverrideState: 0
-    m_Value: 50
+    m_OverrideState: 1
+    m_Value: 47
   bladeCount:
     m_OverrideState: 0
     m_Value: 5

@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb4b2d2e39a81f2bbb186698bea0b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Coin
+  activeCoins: {fileID: 11400000, guid: d0f5dbb2c4ed27f7b9d2c7560a36ab57, type: 2}
   pickupDuration: 0.4
   pickupHeight: 0.75
   pickupHeightCurve:

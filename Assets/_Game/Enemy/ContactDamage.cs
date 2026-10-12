@@ -6,13 +6,15 @@ public class ContactDamage : MonoBehaviour
     [SerializeField, Min(0f)] private float knockback = 3f;
     [SerializeField, Min(0f)] private float hitstunDuration = 0.2f;
     [SerializeField, Min(0f)] private float recoveryDuration = 0.35f;
+    [SerializeField] private HitConfirmedEvent hitConfirmedEvent;
+    
 
-    private EnemyMovement _movement;
+    private Enemy _enemy;
     private int _playerHitboxLayer;
 
     private void Awake()
     {
-        _movement = GetComponent<EnemyMovement>();
+        _enemy = GetComponent<Enemy>();
         _playerHitboxLayer = LayerMask.NameToLayer("PlayerHitbox");
     }
 
@@ -25,11 +27,11 @@ public class ContactDamage : MonoBehaviour
         var dir = player.transform.position - transform.position;
         dir.y = 0f;
 
-        var hitAccepted = player.ReceiveHit( new HitData( damage, dir.normalized, knockback, hitstunDuration));
+        var hit = new HitData(damage, dir.normalized, knockback, hitstunDuration);
+        if (!player.ReceiveHit(hit)) return;
 
-        if (hitAccepted)
-        {
-            _movement.Pause(recoveryDuration);
-        }
+        _enemy.RequestRecovery(recoveryDuration);
+        var hitPos = other.ClosestPoint(transform.position);
+        hitConfirmedEvent.Raise(new HitEventData(_enemy.LocalTime, player.LocalTime, hit, hitPos));
     }
 }

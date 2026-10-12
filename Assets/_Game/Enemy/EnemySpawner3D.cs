@@ -41,7 +41,7 @@ public class EnemySpawner3D : MonoBehaviour
             {
                 if (dropSpawner is not null)
                 {
-                    enemy.Killed += dropSpawner.DropPickup;
+                    enemy.Killed -= dropSpawner.DropPickup;
                 }
                 Destroy(enemy.gameObject);
             },

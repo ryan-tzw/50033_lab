@@ -1,20 +1,24 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
     [SerializeField] private HealthDisplay healthDisplay;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private CoinPool coinPool;
-    [SerializeField] private GameOverScreen gameOverScreen;
+    [SerializeField] private IntVariable runScore;
+    [SerializeField] private PlayerInputManager pim;
 
-    private Player _player;
-    private int _score;
-
-    private void OnEnable()
+    private void Awake()
     {
-        coinPool.CoinCollected += HandleCoinCollected;
-        if (_player is not null) _player.Died += HandlePlayerDied;
+        Time.timeScale = 1;
+        runScore.ResetValue();
+    }
+
+    private void Start()
+    {
+        pim.JoinPlayer(controlScheme: "KBM", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
     }
 
     public void OnPlayerJoined(PlayerInput player)
@@ -22,22 +26,29 @@ public class GameSession : MonoBehaviour
         player.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
         
         healthDisplay.ReferencePlayer(player.GetComponent<PlayerHealth>());
-
-        if (_player is not null) _player.Died -= HandlePlayerDied;
-        
-        _player = player.GetComponent<Player>();
-        _player.Died += HandlePlayerDied;
     }
 
-    private void HandleCoinCollected()
+    public void HandleCoinCollected()
     {
-        _score++;
+        runScore.Add(1);
     }
 
-    private void HandlePlayerDied()
+    public void PauseGame()
     {
-        gameOverScreen.Show(_score);
         Time.timeScale = 0;
+    }
+
+    public void RestartGame()
+    {
+        runScore.ResetValue();
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenuScene");
     }
     
 }

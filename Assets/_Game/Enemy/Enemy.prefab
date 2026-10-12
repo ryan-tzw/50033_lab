@@ -130,6 +130,11 @@ GameObject:
   - component: {fileID: 3912799525883879344}
   - component: {fileID: 4596204524882534802}
   - component: {fileID: 944075831446538731}
+  - component: {fileID: 1077799725826984658}
+  - component: {fileID: 1176205205078066633}
+  - component: {fileID: -9192153133348282808}
+  - component: {fileID: 8102386859502322750}
+  - component: {fileID: -8462293536338207536}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -194,8 +199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b14f8845f5832618a432c73694f0a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  startState: {fileID: 11400000, guid: ee454b2328bfb2e6eb7e5d7ed148f070, type: 2}
+  remainState: {fileID: 11400000, guid: 498f733f4fee0afd2b4b39094960801a, type: 2}
+  previousState: {fileID: 0}
+  currentState: {fileID: 0}
+  isActive: 1
   contactDmgCollider: {fileID: 9208016904171459392}
-  hurtSound: {fileID: 8300000, guid: 54c552a84da9fce05894c210664bccb2, type: 3}
 --- !u!114 &1707747566586976308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375008f17316146fc966068cfed515c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  moveSpeed: 3
+  activePlayers: {fileID: 11400000, guid: 0c2651d6b5fed22b0ae677b73eef020e, type: 2}
+  moveSpeed: 2.3
 --- !u!114 &3912799525883879344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +249,7 @@ MonoBehaviour:
   knockback: 10
   hitstunDuration: 0.2
   recoveryDuration: 0.2
+  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
 --- !u!114 &4596204524882534802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +360,109 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1077799725826984658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3412f77e264bc895650ca042c69d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalTime
+--- !u!114 &1176205205078066633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace9ab56c8284796a7895293261f2255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitConfirmedEventListener
+  gameEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8462293536338207536}
+        m_TargetAssemblyTypeName: HitstopFeedback, Assembly-CSharp
+        m_MethodName: ApplyHitstop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -9192153133348282808}
+        m_TargetAssemblyTypeName: HitFlashFeedback, Assembly-CSharp
+        m_MethodName: ApplyHitFlash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8102386859502322750}
+        m_TargetAssemblyTypeName: HurtAudioFeedback, Assembly-CSharp
+        m_MethodName: PlayHurtSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-9192153133348282808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a273245cc3d49b7834bac6fccb61c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlashFeedback
+  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  duration: 0.15
+--- !u!114 &8102386859502322750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fe37c6c4784ed6af6c3ce2fd3efce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HurtAudioFeedback
+  hurtSound: {fileID: 8300000, guid: 54c552a84da9fce05894c210664bccb2, type: 3}
+--- !u!114 &-8462293536338207536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889018576111517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0bf0e35b824a12a8820aaf69a23b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitstopFeedback
 --- !u!1 &7178382778442638832
 GameObject:
   m_ObjectHideFlags: 0

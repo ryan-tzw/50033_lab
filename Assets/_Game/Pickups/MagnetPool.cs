@@ -4,7 +4,7 @@ using UnityEngine.Pool;
 public class MagnetPool : MonoBehaviour
 {
     [SerializeField] private Magnet magnetPrefab;
-    [SerializeField] private CoinPool coinPool;
+    [SerializeField] private GameEvent magnetCollected;
 
     [SerializeField, Min(0f)] private float spawnHeight = 0.25f;
     [SerializeField, Min(0f)] private float horizontalImpulse = 2f;
@@ -13,8 +13,6 @@ public class MagnetPool : MonoBehaviour
     [SerializeField, Min(1)] private int initialCapacity = 2;
     [SerializeField, Min(1)] private int maxPoolSize = 20;
     private ObjectPool<Magnet> _pool;
-    
-    public event System.Action MagnetCollected;
 
     private void Awake()
     {
@@ -44,12 +42,12 @@ public class MagnetPool : MonoBehaviour
         var spawnPosition = enemy.transform.position + Vector3.up * spawnHeight;
 
         var magnet = _pool.Get();
-        magnet.Spawn(spawnPosition, impulse, coinPool);
+        magnet.Spawn(spawnPosition, impulse);
     }
 
     private void HandleMagnetCollected()
     {
-        MagnetCollected?.Invoke();
+        magnetCollected.Raise();
     }
 
     private void ReleaseMagnet(Magnet magnet)

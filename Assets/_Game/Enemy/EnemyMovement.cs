@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] private PlayerRuntimeSet activePlayers;
+    
     [SerializeField] private float moveSpeed = 2f;
     
     private static readonly int IsMovingId = Animator.StringToHash("IsMoving");
@@ -11,57 +11,63 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody _rb;
     private SpriteRenderer _sr;
     private Animator _animator;
+    private LocalTime _localTime;
     
-    private Enemy _enemy;
-    private Transform _target;
-    private float _pauseRemaining;
-
+    private Player _target;
+    private bool _movementEnabled;
+    private bool _animationPaused;
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
-        _enemy = GetComponent<Enemy>();
+        _localTime = GetComponent<LocalTime>();
     }
 
     private void OnEnable()
     {
         // reset everything since we're using a pool
         _target = null;
-        _pauseRemaining = 0f;
+        _animationPaused = false;
         _rb.linearVelocity = Vector3.zero;
         _sr.flipX = false;
         _animator.speed = 1f;
         _animator.SetBool(IsMovingId, false);
     }
 
+    private void Update()
+    {
+        _animator.speed = _animationPaused || _localTime.IsPaused ?  0f : 1f;
+    }
+
     private void FixedUpdate()
     {
-        if (_enemy.IsDying)
+        if (_localTime.IsPaused)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
-            _animator.SetBool(IsMovingId, false);
-            _animator.speed = 0f;
             return;
         }
-
-        if (_pauseRemaining > 0f)
-        {
-            _pauseRemaining -= Time.fixedDeltaTime;
-            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
-            // _animator.SetBool(IsMovingId, false);
-            return;
-        }
-
-        if (_target is null) { _target = FindClosestPlayer(); }
-        if (_target is null)
+        
+        if (!_movementEnabled)
         {
             _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
             _animator.SetBool(IsMovingId, false);
             return;
         }
 
-        var moveDir = _target.position - _rb.position;
+        if (!_target || !activePlayers.Contains(_target))
+        {
+            _target = FindClosestPlayer();
+        }
+        if (!_target)
+        {
+            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
+            _animator.SetBool(IsMovingId, false);
+            return;
+        }
+
+        var moveDir = _target.transform.position - _rb.position;
         moveDir.y = 0f;
 
         if (moveDir.sqrMagnitude < 0.001f)
@@ -83,26 +89,25 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void Pause(float duration)
+    public void SetMovementEnabled(bool movementEnabled)
     {
-        if (duration > _pauseRemaining)
-        {
-            _pauseRemaining = duration;
-        }
+        _movementEnabled = movementEnabled;
     }
 
-    public void SetTarget(Transform target)
+    public void SetAnimationPaused(bool animationPaused)
     {
-        _target = target;
+        _animationPaused = animationPaused;
+        _animator.speed = _animationPaused || _localTime.IsPaused ? 0f : 1f;
     }
 
-    private Transform FindClosestPlayer()
+    private Player FindClosestPlayer()
     {
-        Transform closestPlayer = null;
+        Player closestPlayer = null;
         var closestDistanceSqr = Mathf.Infinity;
 
-        foreach (var player in PlayerInput.all)
+        foreach (var player in activePlayers.Items)
         {
+            if (!player) continue;
             var diff = player.transform.position - transform.position;
             diff.y = 0f;
             var distanceSqr = diff.sqrMagnitude;
@@ -110,7 +115,7 @@ public class EnemyMovement : MonoBehaviour
             if (distanceSqr < closestDistanceSqr)
             {
                 closestDistanceSqr = distanceSqr;
-                closestPlayer = player.transform;
+                closestPlayer = player;
             }
         }
 

@@ -9,6 +9,7 @@ public struct AttackStep
     [SerializeField, Min(0f)] private float recovery;
     [SerializeField, Min(0)]  private int   damage;
     [SerializeField, Min(0f)] private float knockback;
+    [SerializeField, Range(0f, 1f)] private float hitstopDuration;
     [SerializeField] private AudioClip sound;
     
     public float AnimDuration => animDuration;
@@ -16,20 +17,30 @@ public struct AttackStep
     public float Recovery => recovery;
     public int Damage => damage;
     public float Knockback => knockback;
+    public float HitstopDuration => hitstopDuration;
     public AudioClip Sound => sound;
 
-    public AttackStep(float animDuration, float hitboxDuration, float recovery, int  damage, float knockback)
+    public AttackStep
+    (
+        float animDuration,
+        float hitboxDuration,
+        float recovery,
+        int   damage,
+        float knockback,
+        float hitstopDuration = 0f
+    )
     {
         this.animDuration = animDuration;
         this.hitboxDuration = hitboxDuration;
         this.recovery = recovery;
         this.damage = damage;
         this.knockback = knockback;
+        this.hitstopDuration = hitstopDuration;
         sound = null;
     }
 }
 
-[CreateAssetMenu(fileName = "AttackSchedule", menuName = "Combat/AttackSchedule")]
+[CreateAssetMenu(fileName = "AttackSchedule", menuName = "SO/Combat/AttackSchedule", order = -1)]
 public class AttackSchedule : ScriptableObject
 {
     [SerializeField] private AttackStep[] attackString =

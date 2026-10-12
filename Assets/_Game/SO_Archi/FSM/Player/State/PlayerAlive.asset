@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de3d7c3fe2e41a586c6819e461f8fc1, type: 3}
+  m_Name: PlayerAlive
+  m_EditorClassIdentifier: Assembly-CSharp::State
+  setupActions:
+  - {fileID: 11400000, guid: e7feff1f8eb9d23caac655f13b49dcc6, type: 2}
+  actions: []
+  eventTriggeredActions: []
+  exitActions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: 5a1d85b062c46a3ddaa1fe1a7c42837f, type: 2}
+    trueState: {fileID: 11400000, guid: 6cc221dc5c4bf01c68d72904ca633a30, type: 2}
+    falseState: {fileID: 11400000, guid: 498f733f4fee0afd2b4b39094960801a, type: 2}
+  sceneGizmoColor: {r: 0, g: 0, b: 0, a: 0}

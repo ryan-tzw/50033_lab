@@ -1,47 +1,86 @@
 using System;
 using UnityEngine;
 
-[RequireComponent( typeof(EnemyHealth), typeof(EnemyMovement), typeof(DissolveEffect))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(EnemyHealth))]
+[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(DissolveEffect))]
+[RequireComponent(typeof(LocalTime))]
+public class Enemy : StateController
 {
     [SerializeField] private Collider contactDmgCollider;
-    [SerializeField] private AudioClip hurtSound;
-    private AudioSource _audioSource;
 
     private EnemyHealth _health;
+    private EnemyMovement _movement;
     private DissolveEffect _dissolveEffect;
     private Action<Enemy> _releaseCallback;
-    private bool _isDying;
-    public bool IsDying => _isDying;
+    
+    public LocalTime LocalTime { get; private set; }
+    public bool RecoveryRequested { get; private set; }
+    public float RecoveryDuration { get; private set; }
+    public bool IsHealthDepleted => _health.IsDepleted;
+    
     public event Action<Enemy> Killed;
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
         _health = GetComponent<EnemyHealth>();
+        _movement = GetComponent<EnemyMovement>();
         _dissolveEffect = GetComponent<DissolveEffect>();
-        _health.Depleted += HandleHealthDepleted;
+        LocalTime = GetComponent<LocalTime>();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        _isDying = false;
+        RecoveryRequested = false;
+        RecoveryDuration = 0f;
         contactDmgCollider.enabled = true;
+        base.OnEnable();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (!_isDying) return;
+        if (LocalTime.IsPaused) return;
+        base.Update();
+    }
 
+    //================================================== 
+
+    public void RequestRecovery(float duration)
+    {
+        if (_health.IsDepleted || duration <= 0f) return;
+        RecoveryDuration = duration;
+        RecoveryRequested = true;
+    }
+
+    public void BeginRecoveryState()
+    {
+        RecoveryRequested = false;
+    }
+
+    public void SetMovementEnabled(bool movementEnabled)
+    {
+        _movement.SetMovementEnabled(movementEnabled);
+    }
+
+    public void SetAnimationPaused(bool paused)
+    {
+        _movement.SetAnimationPaused(paused);
+    }
+
+    public void BeginDeathState()
+    {
+        RecoveryRequested = false;
+        contactDmgCollider.enabled = false;
+        Killed?.Invoke(this);
+        _dissolveEffect.Begin();
+    }
+
+    public void TickDeathState()
+    {
         if (_dissolveEffect.Tick(Time.deltaTime))
         {
             Release();
         }
-    }
-
-    private void OnDestroy()
-    {
-        _health.Depleted -= HandleHealthDepleted;
     }
 
     public void Spawn(Vector3 position)
@@ -55,22 +94,12 @@ public class Enemy : MonoBehaviour
         _releaseCallback = releaseCallback;
     }
 
-    public void ReceiveHit(HitData hit)
+    public bool ReceiveHit(HitData hit)
     {
+        if (_health.IsDepleted) return false;
+        
         _health.ReceiveHit(hit);
-        if (hurtSound)
-        {
-            _audioSource.PlayOneShot(hurtSound);
-        }
-    }
-
-    private void HandleHealthDepleted()
-    {
-        _isDying = true;
-        contactDmgCollider.enabled = false;
-
-        Killed?.Invoke(this);
-        _dissolveEffect.Begin();
+        return true;
     }
 
     private void Release()

@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class CoinPickupAudio : MonoBehaviour
 {
-    [SerializeField] private CoinPool coinPool;
     [SerializeField] private AudioClip pickupClip;
 
     [SerializeField, Min(0.01f)] private float basePitch = 1f;
@@ -20,18 +19,8 @@ public class CoinPickupAudio : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
     }
-
-    private void OnEnable()
-    {
-        coinPool.CoinCollected += PlayPickupSound;
-    }
-
-    private void OnDisable()
-    {
-        coinPool.CoinCollected -= PlayPickupSound;
-    }
-
-    private void PlayPickupSound()
+    
+    public void PlayPickupSound()
     {
         if (Time.time - _lastPickupTime > chainWindow)
         {

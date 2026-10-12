@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private InputAction _moveAction;
 
     private Rigidbody _rb;
+    private LocalTime _localTime;
         
     private void Awake()
     {
@@ -28,10 +29,14 @@ public class PlayerMovement : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _combatActions = _playerInput.actions.FindActionMap("Combat");
         _moveAction = _combatActions.FindAction("Move");
+        _localTime = GetComponent<LocalTime>();
     }
 
     private void Update()
     {
+        _animator.speed = _localTime.IsPaused ? 0f : 1f;
+        if (_localTime.IsPaused) return;
+        
         var move = _moveAction.ReadValue<Vector2>();
         _animator.SetBool(IsMovingId, move.sqrMagnitude > 0.01f);
         if (move.x != 0)
@@ -42,6 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_localTime.IsPaused)
+        {
+            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
+            return;
+        }
+        
         if (_hitstunRemaining > 0f)
         {
             var remainingFraction = _hitstunRemaining / _hitstunDuration;
