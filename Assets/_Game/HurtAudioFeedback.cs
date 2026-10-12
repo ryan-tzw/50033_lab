@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class HurtAudioFeedback : MonoBehaviour
 {
-    [SerializeField] private HitConfirmedEvent hitConfirmedEvent;
     [SerializeField] private AudioClip hurtSound;
     
     private AudioSource _audioSrc;
@@ -16,17 +15,7 @@ public class HurtAudioFeedback : MonoBehaviour
         _localTime = GetComponent<LocalTime>();
     }
 
-    private void OnEnable()
-    {
-        hitConfirmedEvent.Raised += HandleHit;
-    }
-
-    private void OnDisable()
-    {
-        hitConfirmedEvent.Raised -= HandleHit;
-    }
-    
-    private void HandleHit(HitEventData data)
+    public void PlayHurtSound(HitEventData data)
     {
         if (data.TargetTime != _localTime) return;
         if (!hurtSound) return;

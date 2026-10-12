@@ -1,24 +1,19 @@
-using System;
 using UnityEngine;
 
+[RequireComponent(typeof(LocalTime))]
 public class HitstopFeedback : MonoBehaviour
 {
-    [SerializeField] private HitConfirmedEvent hitConfirmed;
+    private LocalTime _localTime;
 
-    private void OnEnable()
+    private void Awake()
     {
-        hitConfirmed.Raised += HandleHit;
+        _localTime = GetComponent<LocalTime>();
     }
 
-    private void OnDisable()
+    public void ApplyHitstop(HitEventData data)
     {
-        hitConfirmed.Raised -= HandleHit;
-    }
-
-    private void HandleHit(HitEventData data)
-    {
-        data.AttackerTime.Pause(data.Hit.HitstopDuration);
-        data.TargetTime.Pause(data.Hit.HitstopDuration);
+        if (data.AttackerTime != _localTime && data.TargetTime != _localTime) return;
+        _localTime.Pause(data.Hit.HitstopDuration);
     }
 }
 

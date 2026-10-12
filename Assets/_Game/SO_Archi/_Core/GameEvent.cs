@@ -1,26 +1,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GameEvent", menuName = "SO/GameEvent", order = -1)]
-public class GameEvent : ScriptableObject
+public class GameEvent<T> : ScriptableObject
 {
-    private readonly List<GameEventListener> _listeners = new();
+    private readonly List<GameEventListener<T>> _listeners = new();
 
-    public void Raise()
+    public virtual void Raise(T data)
     {
         for (var i = _listeners.Count - 1; i >= 0; i--)
         {
-            _listeners[i].OnEventRaised();
+            _listeners[i].OnEventRaised(data);
         }
     }
 
-    public void RegisterListener(GameEventListener listener)
+    public void RegisterListener(GameEventListener<T> listener)
     {
         if (!_listeners.Contains(listener)) _listeners.Add(listener);
     }
 
-    public void UnregisterListener(GameEventListener listener)
+    public void UnregisterListener(GameEventListener<T> listener)
     {
         _listeners.Remove(listener);
+    }
+}
+
+public class Void { }
+
+[CreateAssetMenu(fileName = "GameEvent", menuName = "SO/GameEvent", order = -1)]
+public class GameEvent : GameEvent<Void>
+{
+    public void Raise()
+    {
+        base.Raise(new Void());
     }
 }

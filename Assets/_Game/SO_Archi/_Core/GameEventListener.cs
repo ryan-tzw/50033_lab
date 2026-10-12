@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+public class GameEventListener<T> : MonoBehaviour
 {
-    [SerializeField] private GameEvent gameEvent;
-    [SerializeField] private UnityEvent response;
+    [SerializeField] private GameEvent<T> gameEvent;
+    [SerializeField] private UnityEvent<T> response;
 
     private void OnEnable()
     {
@@ -16,8 +16,10 @@ public class GameEventListener : MonoBehaviour
         gameEvent.UnregisterListener(this);
     }
 
-    public void OnEventRaised()
+    public void OnEventRaised(T data)
     {
-        response.Invoke();
+        response.Invoke(data);
     }
 }
+
+public class GameEventListener : GameEventListener<Void> { }

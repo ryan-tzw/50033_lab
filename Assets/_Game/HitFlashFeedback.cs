@@ -6,7 +6,6 @@ public class HitFlashFeedback : MonoBehaviour
     private static readonly int FlashAmountId = Shader.PropertyToID("_FlashAmount");
     private static readonly int FlashColorId = Shader.PropertyToID("_FlashColor");
 
-    [SerializeField] private HitConfirmedEvent hitConfirmedEvent;
     [SerializeField] private Color flashColor;
     [SerializeField, Range(0f,1f)] private float duration;
 
@@ -24,14 +23,12 @@ public class HitFlashFeedback : MonoBehaviour
 
     private void OnEnable()
     {
-        hitConfirmedEvent.Raised += HandleHit;
         _remainingTime = 0f;
         SetFlash(0f);
     }
 
     private void OnDisable()
     {
-        hitConfirmedEvent.Raised -= HandleHit;
         SetFlash(0f);
     }
 
@@ -46,7 +43,7 @@ public class HitFlashFeedback : MonoBehaviour
         }
     }
 
-    private void HandleHit(HitEventData data)
+    public void ApplyHitFlash(HitEventData data)
     {
         if (data.TargetTime != _localTime) return;
         _remainingTime = duration;

@@ -362,7 +362,10 @@ GameObject:
   - component: {fileID: 1186282306562534679}
   - component: {fileID: 3831366992996846661}
   - component: {fileID: 5592714675034226602}
+  - component: {fileID: 5877848431394013525}
   - component: {fileID: 3604654572935508414}
+  - component: {fileID: 5621498449741136061}
+  - component: {fileID: -4751945499767023345}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -671,6 +674,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3412f77e264bc895650ca042c69d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalTime
+--- !u!114 &5877848431394013525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace9ab56c8284796a7895293261f2255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitConfirmedEventListener
+  gameEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4751945499767023345}
+        m_TargetAssemblyTypeName: HitstopFeedback, Assembly-CSharp
+        m_MethodName: ApplyHitstop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3604654572935508414}
+        m_TargetAssemblyTypeName: HitFlashFeedback, Assembly-CSharp
+        m_MethodName: ApplyHitFlash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5621498449741136061}
+        m_TargetAssemblyTypeName: HurtAudioFeedback, Assembly-CSharp
+        m_MethodName: PlayHurtSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3604654572935508414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,9 +738,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a273245cc3d49b7834bac6fccb61c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlashFeedback
-  hitConfirmedEvent: {fileID: 11400000, guid: 37637ebf526d9fd1586a9d422b31f6ce, type: 2}
   flashColor: {r: 0.8584906, g: 0.25511748, b: 0.25511748, a: 1}
   duration: 0.4
+--- !u!114 &5621498449741136061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fe37c6c4784ed6af6c3ce2fd3efce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HurtAudioFeedback
+  hurtSound: {fileID: 8300000, guid: 5dc81bf7657e817929197eba6bc7e257, type: 3}
+--- !u!114 &-4751945499767023345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0bf0e35b824a12a8820aaf69a23b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitstopFeedback
 --- !u!1 &8607357393179960376
 GameObject:
   m_ObjectHideFlags: 0
