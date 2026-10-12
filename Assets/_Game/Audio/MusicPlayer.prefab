@@ -49,7 +49,7 @@ MonoBehaviour:
   firstSource: {fileID: 4342263859927370483}
   secondSource: {fileID: 2479810491650239207}
   startingClip: {fileID: 0}
-  crossfadeDuration: 2
+  crossfadeDuration: 1
 --- !u!82 &4342263859927370483
 AudioSource:
   m_ObjectHideFlags: 0
