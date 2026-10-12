@@ -298,9 +298,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 666433449}
-        m_TargetAssemblyTypeName: GameOverScreen, Assembly-CSharp
-        m_MethodName: RestartButton
+      - m_Target: {fileID: 11400000, guid: a260bb7e0c41c2883a40c37e60de64cb, type: 2}
+        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
+        m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 43432812}
   - component: {fileID: 43432811}
   - component: {fileID: 43432810}
+  - component: {fileID: 43432813}
   m_Layer: 0
   m_Name: CoinPickupAudio
   m_TagString: Untagged
@@ -444,7 +445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7197df4ce12e4354915149d1f0d6fd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinPickupAudio
-  coinPool: {fileID: 676260862}
   pickupClip: {fileID: 8300000, guid: ff32df515de9a87c2963c88a56bfc735, type: 3}
   basePitch: 1
   pitchStep: 0.08
@@ -563,6 +563,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1044941944}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43432813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43432809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49834aa3688b474095c3f66afd2f56ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: ed2fb054ca4c3963e8439939a221725f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 43432810}
+        m_TargetAssemblyTypeName: CoinPickupAudio, Assembly-CSharp
+        m_MethodName: PlayPickupSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &81650063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -772,6 +800,8 @@ GameObject:
   - component: {fileID: 128471173}
   - component: {fileID: 128471172}
   - component: {fileID: 128471174}
+  - component: {fileID: 128471175}
+  - component: {fileID: 128471176}
   m_Layer: 0
   m_Name: GameSession
   m_TagString: Untagged
@@ -793,7 +823,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
   healthDisplay: {fileID: 1168173106}
   spawnPoint: {fileID: 1292529528}
-  coinPool: {fileID: 676260862}
   runScore: {fileID: 11400000, guid: 25462a1ee8f41f3179189759685119b0, type: 2}
 --- !u!4 &128471173
 Transform:
@@ -841,6 +870,62 @@ MonoBehaviour:
       - m_Target: {fileID: 128471172}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: PauseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &128471175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128471171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49834aa3688b474095c3f66afd2f56ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: ed2fb054ca4c3963e8439939a221725f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 128471172}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: HandleCoinCollected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &128471176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128471171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49834aa3688b474095c3f66afd2f56ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: a260bb7e0c41c2883a40c37e60de64cb, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 128471172}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2447,135 +2532,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1ff7662a97796740ca6c3b2963576610, type: 3}
   m_PrefabInstance: {fileID: 668561149}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &668598544
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 668598546}
-  - component: {fileID: 668598545}
-  m_Layer: 0
-  m_Name: BGM
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &668598545
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668598544}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -5639442900652865057, guid: 44f62b84cf18949f08d182657f0c8fc0, type: 2}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: d992424e01ffbb2d7abfdfd6e7250de0, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &668598546
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668598544}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -270.8352, y: 0.49623, z: -608.2724}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1044941944}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &676045887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3782,6 +3738,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1706492956}
     m_Modifications:
+    - target: {fileID: 11200918225178578, guid: af9184cb4335ab3b190bcf4106d8d06e, type: 3}
+      propertyPath: coinCollected
+      value: 
+      objectReference: {fileID: 11400000, guid: ed2fb054ca4c3963e8439939a221725f, type: 2}
     - target: {fileID: 3092460341920685409, guid: af9184cb4335ab3b190bcf4106d8d06e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.328392
@@ -4397,7 +4357,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 43432812}
-  - {fileID: 668598546}
   - {fileID: 1141153401}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4966,6 +4925,7 @@ GameObject:
   - component: {fileID: 1141153401}
   - component: {fileID: 1141153400}
   - component: {fileID: 1141153399}
+  - component: {fileID: 1141153402}
   m_Layer: 0
   m_Name: MagnetPickupAudio
   m_TagString: Untagged
@@ -4985,7 +4945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6081061064414845a4b510c422f1af80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagnetPickupAudio
-  magnetPool: {fileID: 458398448}
   pickupClip: {fileID: 8300000, guid: 933fd270dec6ec79091b2c536c06acc7, type: 3}
   basePitch: 1
   randomPitchVariation: 0.03
@@ -5101,6 +5060,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1044941944}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1141153402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141153398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49834aa3688b474095c3f66afd2f56ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: cf07a96b53d684448be85f7cbb4886c5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1141153399}
+        m_TargetAssemblyTypeName: MagnetPickupAudio, Assembly-CSharp
+        m_MethodName: PlayPickupSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1148363803
 GameObject:
   m_ObjectHideFlags: 0
@@ -5551,6 +5538,10 @@ PrefabInstance:
       propertyPath: m_PlayerPrefab
       value: 
       objectReference: {fileID: 3543823556715700746, guid: e480ce8c628d1b91495f1c65a0030ad9, type: 3}
+    - target: {fileID: 3262500924396020728, guid: 922d60696a4e2457ca0d4fbabccbaf7a, type: 3}
+      propertyPath: m_MaxPlayerCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3262500924396020728, guid: 922d60696a4e2457ca0d4fbabccbaf7a, type: 3}
       propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -6339,6 +6330,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436151466}
   m_CullTransparentMesh: 1
+--- !u!1001 &1477758097
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2215089598900651659, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_Name
+      value: MusicPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030658007330146546, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: startingClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b591c98c8ec8d9abb81eb9358e07dc5, type: 3}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -102.80516
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.88596
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.45918
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334785455122697591, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 522cbdae1b2a824c18ab66deb9b50af4, type: 3}
 --- !u!1001 &1479953632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8881,6 +8933,10 @@ PrefabInstance:
       propertyPath: coinPool
       value: 
       objectReference: {fileID: 676260862}
+    - target: {fileID: 4623435189938828554, guid: 960efd7acd82a56bc932bf8862f0fdc3, type: 3}
+      propertyPath: magnetCollected
+      value: 
+      objectReference: {fileID: 11400000, guid: cf07a96b53d684448be85f7cbb4886c5, type: 2}
     - target: {fileID: 5593847201278280539, guid: 960efd7acd82a56bc932bf8862f0fdc3, type: 3}
       propertyPath: m_Name
       value: MagnetPool
@@ -8906,3 +8962,4 @@ SceneRoots:
   - {fileID: 1044941944}
   - {fileID: 128471173}
   - {fileID: 7777204032566524808}
+  - {fileID: 1477758097}
