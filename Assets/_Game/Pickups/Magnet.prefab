@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2899f35932320fda4a0bb557315c63f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Magnet
-  activeCoins: {fileID: 11400000, guid: d0f5dbb2c4ed27f7b9d2c7560a36ab57, type: 2}
+  buffDuration: 8
   lifetime: 15
   blinkStartTime: 3
   blinkInterval: 0.1
