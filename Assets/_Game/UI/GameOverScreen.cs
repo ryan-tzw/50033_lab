@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -11,10 +10,5 @@ public class GameOverScreen : MonoBehaviour
     {
         gameObject.SetActive(true);
         scoreText.text = $"{runScore.Value}";
-    }
-
-    public void RestartButton()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

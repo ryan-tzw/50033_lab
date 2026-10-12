@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
@@ -28,6 +29,13 @@ public class GameSession : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+    }
+
+    public void RestartGame()
+    {
+        runScore.ResetValue();
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
 }
