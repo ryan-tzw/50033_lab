@@ -4,6 +4,7 @@ using UnityEngine.Pool;
 public class CoinPool : MonoBehaviour
 {
     [SerializeField] private Coin coinPrefab;
+    [SerializeField] private GameEvent coinCollected;
 
     [SerializeField, Min(0f)] private float spawnHeight = 0.25f;
     [SerializeField, Min(0f)] private float horizontalImpulse = 2f;
@@ -13,8 +14,6 @@ public class CoinPool : MonoBehaviour
     [SerializeField, Min(1)] private int maxPoolSize = 500;
 
     private ObjectPool<Coin> _pool;
-
-    public event System.Action CoinCollected;
 
     private void Awake()
     {
@@ -49,7 +48,7 @@ public class CoinPool : MonoBehaviour
 
     private void HandleCoinCollected()
     {
-        CoinCollected?.Invoke();
+        coinCollected.Raise();
     }
 
     private void ReleaseCoin(Coin coin)

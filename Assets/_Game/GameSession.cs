@@ -5,23 +5,12 @@ public class GameSession : MonoBehaviour
 {
     [SerializeField] private HealthDisplay healthDisplay;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private CoinPool coinPool;
     [SerializeField] private IntVariable runScore;
 
     private void Awake()
     {
         Time.timeScale = 1;
         runScore.ResetValue();
-    }
-
-    private void OnEnable()
-    {
-        coinPool.CoinCollected += HandleCoinCollected;
-    }
-
-    private void OnDisable()
-    {
-        coinPool.CoinCollected -= HandleCoinCollected;
     }
 
     public void OnPlayerJoined(PlayerInput player)
@@ -31,7 +20,7 @@ public class GameSession : MonoBehaviour
         healthDisplay.ReferencePlayer(player.GetComponent<PlayerHealth>());
     }
 
-    private void HandleCoinCollected()
+    public void HandleCoinCollected()
     {
         runScore.Add(1);
     }
