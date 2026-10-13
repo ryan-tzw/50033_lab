@@ -6,22 +6,8 @@ public class Potion : MonoBehaviour
     private Collider _worldCollider;
     private Collider _pickupCollider;
     [SerializeField] private int healAmount = 1;
+    [SerializeField] private GameEvent potionCollectedEvent;
 
-    //private void Awake()
-    //{
-    //    _rb = GetComponent<Rigidbody>();
-    //    _worldCollider = GetComponent<Collider>();
-    //    _playerHitboxLayer = LayerMask.NameToLayer("PlayerHitbox");
-
-    //    foreach (var childCollider in GetComponentsInChildren<Collider>())
-    //    {
-    //        if (childCollider.isTrigger)
-    //        {
-    //            _pickupCollider = childCollider;
-    //            break;
-    //        }
-    //    }
-    //}
     private void OnTriggerEnter(Collider collision)
     {
         Player player = collision.GetComponentInParent<Player>();
@@ -34,6 +20,7 @@ public class Potion : MonoBehaviour
         if (player && player.ReceiveHeal())
         {
             playerHealth.RestoreHealth(healAmount);
+            potionCollectedEvent.Raise();
             Destroy(gameObject);
         }
     }

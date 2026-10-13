@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   healAmount: 1
+  potionCollectedEvent: {fileID: 11400000, guid: dd34c8e833541af4d87e1b294e3e3919, type: 2}
 --- !u!136 &1406252436931387729
 CapsuleCollider:
   m_ObjectHideFlags: 0
