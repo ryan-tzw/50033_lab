@@ -53,7 +53,7 @@ public class MusicPlayer : MonoBehaviour
             return;
         }
 
-        if ((firstSource.clip == clip && firstSource.isPlaying) || (secondSource.clip == clip && secondSource.isPlaying))
+        if (_currentSource.clip == clip && _currentSource.isPlaying)
         {
             return;
         }
@@ -63,20 +63,37 @@ public class MusicPlayer : MonoBehaviour
             StopCoroutine(_crossfadeCoroutine);
         }
 
-        _currentSource = firstSource.volume >= secondSource.volume ? firstSource : secondSource;
-        AudioSource nextSource = _currentSource == firstSource ? secondSource : firstSource;
+        AudioSource nextSource;
+        if (firstSource.clip == clip && firstSource.isPlaying)
+        {
+            nextSource = firstSource;
+        }
+        else if (secondSource.clip == clip && secondSource.isPlaying)
+        {
+            nextSource = secondSource;
+        }
+        else
+        {
+            AudioSource louderSource = firstSource.volume >= secondSource.volume ? firstSource : secondSource;
+            nextSource = louderSource == firstSource ? secondSource : firstSource;
+            
+            nextSource.Stop();
+            nextSource.clip = clip;
+            nextSource.volume = 0;
+            nextSource.Play();
+        }
+        
+        AudioSource prevSource = nextSource == firstSource ? secondSource : firstSource;
+        _currentSource = nextSource;
 
-        nextSource.Stop();
-        nextSource.clip = clip;
-        nextSource.volume = 0;
-        nextSource.Play();
-
-        _crossfadeCoroutine = StartCoroutine(Crossfade(_currentSource, nextSource, duration));
+        
+        _crossfadeCoroutine = StartCoroutine(Crossfade(prevSource, nextSource, duration));
     }
 
     private IEnumerator Crossfade(AudioSource previousSource, AudioSource nextSource, float duration)
     {
         float previousStartVolume = previousSource.volume;
+        float nextStartVolume = nextSource.volume;
         float elapsed = 0;
 
         while (elapsed < duration)
@@ -85,7 +102,7 @@ public class MusicPlayer : MonoBehaviour
             float progress = Mathf.Clamp01(elapsed / duration);
 
             previousSource.volume = Mathf.Lerp(previousStartVolume, 0, progress);
-            nextSource.volume = Mathf.Lerp(0, 1, progress);
+            nextSource.volume = Mathf.Lerp(nextStartVolume, 1, progress);
 
             yield return null;
         }
@@ -95,7 +112,6 @@ public class MusicPlayer : MonoBehaviour
         previousSource.volume = 0;
         nextSource.volume = 1;
 
-        _currentSource = nextSource;
         _crossfadeCoroutine = null;
     }
 
