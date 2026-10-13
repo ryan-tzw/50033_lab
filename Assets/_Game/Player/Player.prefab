@@ -366,6 +366,8 @@ GameObject:
   - component: {fileID: 3604654572935508414}
   - component: {fileID: 5621498449741136061}
   - component: {fileID: -4751945499767023345}
+  - component: {fileID: -1442510909152319452}
+  - component: {fileID: -3144429939621531479}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -450,16 +452,20 @@ MonoBehaviour:
     m_ActionName: 'Combat/Attack[/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 3e90dfa2-0a6b-4530-b29c-1feef5153a7a
-    m_ActionName: 'Combat/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: ecde4c0c-a55b-456e-8bb5-4cd84b6f6a62
     m_ActionName: 'Combat/Aim[/Mouse/position]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: e638e012-ebce-4463-80ea-01eced468322
     m_ActionName: 'Interaction/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ff223732-9b8d-4f75-9b03-d336d2574635
+    m_ActionName: 'Movement/Dash[/Keyboard/leftShift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b2bf3892-cff2-4ee1-b229-2c505fb1e968
+    m_ActionName: 'Movement/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat
@@ -497,6 +503,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Experimental.PlayerMovement
   moveSpeed: 4
+  dashSpeed: 10
+  dashDuration: 0.4
+  dashCooldown: 2
 --- !u!114 &8762469268049190359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +774,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0bf0e35b824a12a8820aaf69a23b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitstopFeedback
+--- !u!114 &-1442510909152319452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd276bfffda613d44b5c7fa86bae82a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashEffect
+  ghostMaterial: {fileID: 2100000, guid: 39153ae6f8b60c74e8a1b60364bd1844, type: 2}
+  fadeSteps: 2
+  ghostCount: 4
+  fadeAmount: 0.4
+  stepTime: 0.1
+  ghostInterval: 0.06
+  opacity: 0.7
+--- !u!114 &-3144429939621531479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543823556715700746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b588cf8462ee2d43a97e08f26efa75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashAudio
+  dashClip: {fileID: 8300000, guid: 1f1e652c064f78c43854e554811a90b0, type: 3}
+  basePitch: 1
+  randomPitchVariation: 0.03
 --- !u!1 &8607357393179960376
 GameObject:
   m_ObjectHideFlags: 0

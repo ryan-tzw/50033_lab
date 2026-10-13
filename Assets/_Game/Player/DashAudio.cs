@@ -1,0 +1,25 @@
+using UnityEngine;
+
+[RequireComponent(typeof(AudioSource))]
+public class DashAudio : MonoBehaviour
+{
+    [SerializeField] private AudioClip dashClip;
+
+    [SerializeField, Min(0.01f)] private float basePitch = 1f;
+    [SerializeField, Min(0f)] private float randomPitchVariation = 0.03f;
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlayDashSound()
+    {
+        var randomOffset = Random.Range(-randomPitchVariation, randomPitchVariation);
+
+        _audioSource.pitch = basePitch + randomOffset;
+
+        _audioSource.PlayOneShot(dashClip);
+    }
+}
