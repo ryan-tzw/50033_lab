@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyMovement))]
 [RequireComponent(typeof(DissolveEffect))]
 [RequireComponent(typeof(LocalTime))]
-public class Enemy : StateController
+public class Enemy : StateController, IHittable
 {
     [SerializeField] private Collider contactDmgCollider;
 

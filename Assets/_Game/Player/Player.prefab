@@ -505,7 +505,7 @@ MonoBehaviour:
   moveSpeed: 4
   dashSpeed: 10
   dashDuration: 0.4
-  dashCooldown: 2
+  dashCooldown: 1.5
 --- !u!114 &8762469268049190359
 MonoBehaviour:
   m_ObjectHideFlags: 0

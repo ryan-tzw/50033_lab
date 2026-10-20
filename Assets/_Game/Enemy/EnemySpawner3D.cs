@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using System.Collections.Generic;  
 
 public class EnemySpawner3D : MonoBehaviour
 {
@@ -13,7 +14,10 @@ public class EnemySpawner3D : MonoBehaviour
 
     [SerializeField, Min(1)] private int initialCap = 10;
     [SerializeField, Min(1)] private int maxPoolSize = 100;
-    
+
+    [SerializeField] private GameEvent enemyKilledEvent;
+
+    private readonly List<Enemy> _activeEnemies = new();
     private float _nextSpawnTime;
     private Plane _groundPlane;
     private ObjectPool<Enemy> _pool;
@@ -32,17 +36,27 @@ public class EnemySpawner3D : MonoBehaviour
                 {
                     enemy.Killed += dropSpawner.DropPickup;
                 }
+                enemy.Killed += OnEnemyKilled;
                 enemy.gameObject.SetActive(false);
                 return enemy;
             },
-            actionOnGet: enemy => enemy.Spawn(GetSpawnPosition()),
-            actionOnRelease: enemy => enemy.gameObject.SetActive(false),
+            actionOnGet: enemy =>
+            {
+                _activeEnemies.Add(enemy);
+                enemy.Spawn(GetSpawnPosition());
+            },
+            actionOnRelease: enemy =>
+            {
+                _activeEnemies.Remove(enemy);
+                enemy.gameObject.SetActive(false);
+            },
             actionOnDestroy: enemy =>
             {
                 if (dropSpawner is not null)
                 {
                     enemy.Killed -= dropSpawner.DropPickup;
                 }
+                enemy.Killed -= OnEnemyKilled;
                 Destroy(enemy.gameObject);
             },
             collectionCheck: true,
@@ -59,6 +73,11 @@ public class EnemySpawner3D : MonoBehaviour
     private void OnEnable()
     {
         _nextSpawnTime = Time.time + Random.Range(minSpawnInterval, maxSpawnInterval);
+    }
+
+    private void OnEnemyKilled(Enemy enemy)   
+    {
+        enemyKilledEvent.Raise();   
     }
 
     private void Update()
@@ -90,5 +109,22 @@ public class EnemySpawner3D : MonoBehaviour
         var ray = worldCamera.ViewportPointToRay( new Vector3(viewportX, viewportY));
         _groundPlane.Raycast(ray, out var distance);
         return ray.GetPoint(distance);
+    }
+
+    public void StopAndClear()
+    {
+        enabled = false;          
+        StopAllCoroutines();
+
+        for (int i = _activeEnemies.Count - 1; i >= 0; i--)
+        {
+            var enemy = _activeEnemies[i];
+            if (enemy == null)                    
+            {
+                _activeEnemies.RemoveAt(i);
+                continue;
+            }
+            _pool.Release(enemy);
+        }
     }
 }

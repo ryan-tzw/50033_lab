@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MeleeHitbox : MonoBehaviour
 {
-    private readonly HashSet<Enemy> _hitTargets = new();
+    private readonly HashSet<IHittable> _hitTargets = new();
     private HitData _hitData;
     private LocalTime _attackerTime;
     private HitConfirmedEvent _hitConfirmed;
@@ -19,7 +19,8 @@ public class MeleeHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Enemy target = other.GetComponentInParent<Enemy>();
+        //Enemy target = other.GetComponentInParent<Enemy>();
+        IHittable target = other.GetComponentInParent<IHittable>();
 
         if (target is null || !_hitTargets.Add(target)) return;
 

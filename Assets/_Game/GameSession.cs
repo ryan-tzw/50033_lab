@@ -8,12 +8,14 @@ public class GameSession : MonoBehaviour
     [SerializeField] private HealthDisplay healthDisplay;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private IntVariable runScore;
+    [SerializeField] private IntVariable killCount;
     [SerializeField] private PlayerInputManager pim;
 
     private void Awake()
     {
         Time.timeScale = 1;
         runScore.ResetValue();
+        killCount.ResetValue();
     }
 
     private void Start()
@@ -33,6 +35,12 @@ public class GameSession : MonoBehaviour
         runScore.Add(1);
     }
 
+    public void HandleEnemyKilled()
+    {
+        killCount.Add(1);
+        Debug.Log(killCount.Value);
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0;
@@ -41,6 +49,7 @@ public class GameSession : MonoBehaviour
     public void RestartGame()
     {
         runScore.ResetValue();
+        killCount.ResetValue();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
