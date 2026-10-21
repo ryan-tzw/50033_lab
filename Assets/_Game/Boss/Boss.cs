@@ -9,17 +9,12 @@ namespace Lab50033
         private Animator _animator;
         private BoxCollider HitBoxCollider;
         private SpriteRenderer _sr;
-        private SphereCollider AttackRange;
         private Player _target;
         private static readonly int IsMovingId = Animator.StringToHash("IsMoving");
         private static readonly int IsAttackingId = Animator.StringToHash("IsAttacking");
         public LocalTime LocalTime { get; private set; }
         private bool _isDead;
         [SerializeField] private BoxCollider swingHitbox;
-
-        [SerializeField] private Color flashColor = Color.red;
-        [SerializeField] private float flashDuration = 0.1f;
-
 
         [SerializeField] private int BossPhase = 0;
         [SerializeField] private int BossMaxHealth = 50;
@@ -41,7 +36,6 @@ namespace Lab50033
         private bool IsAttacking = false;
         private bool _isSpawning; 
         public bool IsDepleted { get; private set; }
-        private Coroutine _flashRoutine;
         [SerializeField] private GameEvent bossDefeatedEvent;
 
         private void Awake()
@@ -209,9 +203,6 @@ namespace Lab50033
 
             Debug.Log($"Boss hit! HP: {BossCurrentHealth}/{BossMaxHealth}");
 
-            if (_flashRoutine != null) StopCoroutine(_flashRoutine);
-            _flashRoutine = StartCoroutine(Flash());
-
             if (BossCurrentHealth == 0)
             {
                 Die();
@@ -238,12 +229,5 @@ namespace Lab50033
             bossDefeatedEvent.Raise();
         }
 
-        private IEnumerator Flash()
-        {
-            _sr.color = flashColor;
-            yield return new WaitForSeconds(flashDuration);
-            _sr.color = Color.white;
-            _flashRoutine = null;
-        }
     }
 }
