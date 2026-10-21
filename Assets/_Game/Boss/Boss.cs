@@ -139,13 +139,11 @@ namespace Lab50033
             if (IsAttacking) return;
             if (Mathf.Abs(x) < 0.01f) return;
 
-            var t = _sr.transform;
-            var scale = t.localScale;
-            scale.x = Mathf.Abs(scale.x) * (x < 0f ? -1f : 1f);
-            t.localScale = scale;
+            bool faceLeft = x < 0f;
+            _sr.flipX = !faceLeft;
 
             var center = swingHitbox.center;
-            center.x = Mathf.Abs(center.x) * (x < 0f ? -1f : 1f);
+            center.x = Mathf.Abs(center.x) * (faceLeft ? -1f : 1f);
             swingHitbox.center = center;
         }
 
