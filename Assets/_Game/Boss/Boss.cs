@@ -104,7 +104,7 @@ namespace Lab50033
             InRange = toStand.sqrMagnitude <= arriveThreshold * arriveThreshold;
 
             FaceDirection(playerPos.x - _rb.position.x);
-
+            
             if (InRange)
             {
                 chaseTimer = chaseDelay;
@@ -136,6 +136,7 @@ namespace Lab50033
 
         private void FaceDirection(float x)
         {
+            if (IsAttacking) return;
             if (Mathf.Abs(x) < 0.01f) return;
 
             var t = _sr.transform;
